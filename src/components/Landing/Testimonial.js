@@ -1,6 +1,6 @@
 import React from "react";
 import { RiDoubleQuotesL } from "react-icons/ri";
-import { monetiseDescription, monetiseTitle } from "../../utils";
+import { testimonialDescription, testimonialTitle } from "../../utils";
 
 function Testimonial() {
   return (
@@ -14,13 +14,13 @@ function Testimonial() {
           />
         </div>
         <div className="row-span-full  col-start-5 col-end-9 flex flex-col  gap-y-8 ">
-          <h1 className="text-3xl font-bold mt-0 mb-20">{monetiseTitle}</h1>
+          <h1 className="text-5xl font-bold mt-0 mb-20">{testimonialTitle}</h1>
           <RiDoubleQuotesL size={80} />
           <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-l ">
-            {monetiseDescription}
+            {testimonialDescription}
           </p>
 
-          <p className="mb-2 w-full text-justify text-gray-800 sm:text-sm lg:text-l ">
+          <p className="mb-2 w-full text-justify text-gray-800 font-black sm:text-sm lg:text-l ">
             Matt Robinson
             <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-l ">
               COO, ABC Company
