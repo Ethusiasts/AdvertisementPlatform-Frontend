@@ -15,7 +15,7 @@ function Trust() {
         </div>
         <div className="row-span-full  col-start-5 col-end-9 flex flex-col gap-y-8 ">
           <h1 className="text-3xl font-bold mt-0">{trustSectionTitle}</h1>
-          <p className="mb-2 w-full text-justify text-gray-700 sm:text-sm lg:text-xl ">
+          <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-xl ">
             {trustSectionDescription}
           </p>
           <button className="flex space-x-10 items-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
