@@ -3,7 +3,7 @@ import { TbArrowUpRhombus } from "react-icons/tb";
 function ConnectForm() {
   return (
     <div>
-      <div class="flex justify-center items-center font-Lato ">
+      <div class="flex justify-center align-center font-Lato ">
         <div class="container mx-auto px-4 lg:px-10">
           <div class="w-full md:px-12 lg:w-12/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl">
             <div class="flex">

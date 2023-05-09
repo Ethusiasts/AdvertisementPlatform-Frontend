@@ -3,8 +3,8 @@ import React from "react";
 function Stat({ styles, title, description, stat }) {
   return (
     <div className={styles}>
-      <div className="flex flex-col  align-center justify-center    h-full ">
-        <div className="sm:text-sm md:text-xl mb-3">
+      <div className="flex flex-col align-center justify-center h-full  ">
+        <div className="sm:text-sm md:text-xl mb-2  ">
           {" "}
           {title}
           <div className="text-xs font-thin">{description}</div>

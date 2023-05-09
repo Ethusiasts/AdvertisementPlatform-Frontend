@@ -4,7 +4,7 @@ import { monetiseDescription, monetiseTitle } from "../../utils";
 
 function Monetise() {
   return (
-    <div class="wrap w-5/6 mx-auto  font-Lato my-40">
+    <div class="wrap w-5/6 mx-auto  font-Lato my-40" data-aos="fade-up">
       <div class="grid grid-cols-8 sm:grid-cols-1 md:grid-cols-8">
         <div class="row-span-full col-start-1 col-end-4 self-center ">
           <img

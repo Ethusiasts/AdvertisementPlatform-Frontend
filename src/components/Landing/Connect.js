@@ -5,7 +5,7 @@ import ConnectForm from "./Form/ConnectForm";
 function Connect() {
   return (
     <div class=" grid  grid-cols-8 sm:grid-cols-1 md:grid-cols-8 bg-gray-700 p-10">
-      <div class="row-span-full  flex flex-col col-start-1 col-end-5  justify-center align-center ">
+      <div class="row-span-full   flex-col col-start-1 col-end-5  justify-center align-center sm:hidden md:flex">
         <div class="mapouter">
           <div class="gmap_canvas">
             <iframe

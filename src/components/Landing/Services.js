@@ -6,9 +6,12 @@ import { FaSwatchbook, FaBullhorn } from "react-icons/fa";
 import { MdNotificationAdd } from "react-icons/md";
 function Services() {
   return (
-    <div class="flex flex-col justify-center w-2/3  gap-y-10 mx-auto  font-Lato my-40">
+    <div
+      class="flex flex-col justify-center sm:w-full md:w-2/3  gap-y-10 mx-auto  font-Lato my-40"
+      data-aos="zoom-in-up"
+    >
       <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ">
-        <div class="flex flex-col justify-center items-center border-r-2 border-b-2 border-blue-300 border-dashed">
+        <div class="flex flex-col justify-center items-center border-r-2 border-b-2 border-blue-300 border-dashed ">
           <Service
             heading="Native Ads"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, necessitatibus!"
