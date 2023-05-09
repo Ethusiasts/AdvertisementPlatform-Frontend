@@ -18,7 +18,7 @@ function Monetise() {
           <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-xl ">
             {monetiseDescription}
           </p>
-          <button className="flex space-x-10 items-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
+          <button className="flex space-x-10 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
             <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">
               Get Started
             </span>

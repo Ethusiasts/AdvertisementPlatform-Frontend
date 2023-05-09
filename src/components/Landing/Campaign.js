@@ -1,18 +1,25 @@
 import React from "react";
 import Services from "./Services";
+import { BsArrowRight } from "react-icons/bs";
 
 function Campaign() {
   return (
     <>
-      <div class="flex flex-col self-center sm:w-full md:w-1/2  gap-y-10 mx-auto  font-Lato my-40">
-        <div className="text-5xl font-black   ">
+      <div class="flex flex-col self-center items-center bg-gray-100 sm:w-full md:w-2/3 p-40  gap-y-10 mx-auto   font-Lato my-40 ">
+        <div className="text-4xl font-black text-center   ">
           Your Campaign is Our Campaign
         </div>
-        <div className="text-xl font-normal text-gray-500 ">
+        <div className="text-xl font-normal text-gray-500 text-center ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor iure
-          blanditiis laborum. Voluptatibus esse autem dolor quia quod quas
-          consequatur quibusdam ea. Sint porro quibusdam eveniet impedit
+          blanditiis laborum.
         </div>
+        <button className="flex space-x-7 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full md:w-1/2  ">
+          <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">
+            Get Started
+          </span>
+
+          <BsArrowRight className="text-white" />
+        </button>
       </div>
     </>
   );
