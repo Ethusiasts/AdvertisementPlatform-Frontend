@@ -12,6 +12,7 @@ import Testimonial from "../../components/Landing/Testimonial";
 import Statistics from "../../components/Landing/Statistics";
 import Grow from "../../components/Landing/Grow";
 import Connect from "../../components/Landing/Connect";
+import Footer from "../../components/Landing/Footer";
 
 function Landing() {
   return (
@@ -28,6 +29,7 @@ function Landing() {
       <Statistics />
       <Grow />
       <Connect />
+      <Footer />
     </>
   );
 }

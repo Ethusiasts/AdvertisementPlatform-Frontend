@@ -4,7 +4,12 @@ import { BsArrowRight } from "react-icons/bs";
 function Hero() {
   return (
     <div>
-      <div className="wrap w-5/6 mx-auto  font-Lato">
+      <div
+        data-aos="fade-right"
+        data-aos-offset="300"
+        data-aos-easing="ease-in-sine"
+        className="wrap w-5/6 mx-auto  font-Lato"
+      >
         <div className="grid grid-cols-10 ">
           <div className="row-span-full  col-span-6 col-end-11 self-center">
             <img

@@ -5,7 +5,12 @@ import { BsArrowRight } from "react-icons/bs";
 function Grow() {
   return (
     <>
-      <div class="flex flex-col self-center items-center  sm:w-full md:w-2/3  gap-y-10 mx-auto   font-Lato my-40 ">
+      <div
+        data-aos="fade-right"
+        data-aos-offset="300"
+        data-aos-easing="ease-in-sine"
+        class="flex flex-col self-center items-center  sm:w-full md:w-2/3  gap-y-10 mx-auto   font-Lato my-40 "
+      >
         <div className="text-4xl font-black text-center   ">
           Your Growth is Our Growth
         </div>
