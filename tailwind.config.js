@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         Lato: ["Lato", "sans-serif"],
+        Josefin: ["Josefin Sans", "sans-serif"],
       },
     },
     screens: {
