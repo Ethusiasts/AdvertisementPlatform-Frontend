@@ -5,11 +5,11 @@ import Detail from "./pages/detail_page/Detail";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/search",
     element: <Home />,
   },
   // {
-  //   path: "/landing",
+  //   path: "/",
   //   element: <Landing />,
   // },
   {
