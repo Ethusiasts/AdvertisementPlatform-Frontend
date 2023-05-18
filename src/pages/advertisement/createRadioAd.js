@@ -1,6 +1,6 @@
 import CreateRadioAdForm from "../../components/advertisement/createRadioAd"
-import SideBar from "../../components/dashboard/sidebar"
-import Header from "../../components/dashboard/header"
+import SideBar from "../../components/user/sidebar"
+import Header from "../../components/user/header"
 import Label from "../../components/advertisement/label"
 
 export default function CreateRadioAd({ status, place, city, width, height, location, imageSrc, alt }) {

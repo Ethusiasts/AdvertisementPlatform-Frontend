@@ -21,7 +21,7 @@ export default function SideBar({ status, place, city, width, height, location, 
       <span class="inline-flex justify-center items-center ml-4">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
       </span>
-      <span class="ml-2 text-sm tracking-wide truncate">My Account</span>
+      <span class="ml-2 text-sm tracking-wide truncate">Dashboard</span>
     </a>
   </li>
   <li>
@@ -29,7 +29,7 @@ export default function SideBar({ status, place, city, width, height, location, 
       <span class="inline-flex justify-center items-center ml-4">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
       </span>
-      <span class="ml-2 text-sm tracking-wide truncate">Advertisements</span>
+      <span class="ml-2 text-sm tracking-wide truncate">Billboards</span>
     </a>
   </li>
   <li>
@@ -43,7 +43,7 @@ export default function SideBar({ status, place, city, width, height, location, 
     <a href="#" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
       <span class="inline-flex justify-center items-center ml-4">
       <svg class="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>          </span>
-      <span class="ml-2 text-sm tracking-wide truncate">Favourites</span>
+      <span class="ml-2 text-sm tracking-wide truncate">Contracts</span>
     </a>
   </li>
   <li class="px-5 hidden md:block">
@@ -52,7 +52,7 @@ export default function SideBar({ status, place, city, width, height, location, 
     </div>
   </li>
   <li>
-    <a href="#" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+    <a href="/Profile" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
       <span class="inline-flex justify-center items-center ml-4">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
       </span>

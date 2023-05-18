@@ -1,6 +1,6 @@
 import CreateMagazineAdForm from "../../components/advertisement/createMagazineAd"
-import SideBar from "../../components/dashboard/sidebar"
-import Header from "../../components/dashboard/header"
+import SideBar from "../../components/user/sidebar"
+import Header from "../../components/user/header"
 import Label from "../../components/advertisement/label"
 
 export default function CreateMagazineAd({ status, place, city, width, height, location, imageSrc, alt }) {

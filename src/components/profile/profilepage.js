@@ -1,8 +1,7 @@
 export default function ProfileCard({ status, place, city, width, height, location, imageSrc, alt }) {
   return (
     <div className="bg-gray-700 rounded-lg overflow-hidden shadow-lg h-full w-full">
-      <img className="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="Your Image"/>
-
+<div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400"></div>
       <div className="flex justify-between ml-10 -mt-14">
         <div className="flex justify-between gap-10">
           <img src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ"  className="w-48 h-48 rounded-full object-cover" alt="Profile picture"/>

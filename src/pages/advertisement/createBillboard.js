@@ -1,6 +1,6 @@
 import CreateBillboardForm from "../../components/advertisement/createBillboard"
-import SideBar from "../../components/dashboard/sidebar"
-import Header from "../../components/dashboard/header"
+import SideBar from "../../components/user/sidebar"
+import Header from "../../components/user/header"
 
 export default function CreateBillboard({ status, place, city, width, height, location, imageSrc, alt }) {
     return (

@@ -1,9 +1,9 @@
-import Card from "../components/dashboard/card"
-import Table from "../components/dashboard/table"
-import SideBar from "../components/dashboard/sidebar"
-import FavouritesCard from "../components/dashboard/favourites"
-import InfoCard from "../components/dashboard/infoCard"
-import Header from "../components/dashboard/header"
+import Card from "../components/user/card"
+import Table from "../components/user/table"
+import SideBar from "../components/user/sidebar"
+import FavouritesCard from "../components/user/favourites"
+import InfoCard from "../components/user/infoCard"
+import Header from "../components/user/header"
 export default function MyAccount({ status, place, city, width, height, location, imageSrc, alt }) {
     return (
         <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">

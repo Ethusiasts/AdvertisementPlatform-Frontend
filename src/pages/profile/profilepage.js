@@ -1,5 +1,5 @@
 import ProfileCard from "../../components/profile/profilepage"
-import SideBar from "../../components/dashboard/sidebar"
+import SideBar from "../../components/user/sidebar"
 
 export default function ProfilePage({ status, place, city, width, height, location, imageSrc, alt }) {
     return (
