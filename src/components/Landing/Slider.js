@@ -10,7 +10,7 @@ import {
 
 function Slider() {
   return (
-    <div className="app">
+    <div className=" wrap w-5/6 mx-auto  font-Lato my-4 ">
       <header>
         <h1>Meet Our Top Clients Around The World</h1>
       </header>

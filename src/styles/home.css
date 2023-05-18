@@ -13,12 +13,20 @@ input::placeholder {
 .home-body{
     background-color: black;
 }
-.filter{
-    /* margin-left: 4rem; */
-}
 .billboard-card{
-    width: 15rem;
+    width: 80%;
 }
 .recommended-card{
-    width: 20rem;
+    width: 30%;
+}
+.card{
+    /* box-shadow: 0 30px 30px rgba(0, 0, 0, 0.1  ); */
+}
+.card-image{
+    height: 8rem;
+}
+.sortBy{
+    /* margin-left: 4rem; */
+    top: 2.2rem;
+    left: 3rem;
 }

@@ -4,7 +4,7 @@ import { monetiseDescription, monetiseTitle } from "../../utils";
 
 function Monetise() {
   return (
-    <div class="wrap w-5/6 mx-auto  font-Lato my-40">
+    <div class="wrap w-5/6 mx-auto  font-Lato my-40" data-aos="fade-up">
       <div class="grid grid-cols-8 sm:grid-cols-1 md:grid-cols-8">
         <div class="row-span-full col-start-1 col-end-4 self-center ">
           <img
@@ -15,10 +15,10 @@ function Monetise() {
         </div>
         <div className="row-span-full  col-start-5 col-end-9 flex flex-col gap-y-8 ">
           <h1 className="text-3xl font-bold mt-0">{monetiseTitle}</h1>
-          <p className="mb-2 w-full text-justify text-gray-700 sm:text-sm lg:text-xl ">
+          <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-xl ">
             {monetiseDescription}
           </p>
-          <button className="flex space-x-10 items-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
+          <button className="flex space-x-10 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
             <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">
               Get Started
             </span>

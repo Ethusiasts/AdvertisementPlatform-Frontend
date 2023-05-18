@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { navMenus } from "../../utils/index";
 function Navigation() {
   const [mobile, setMobile] = useState(false);
+  const handleMobile = () => {
+    setMobile(!mobile);
+  };
   return (
     <div>
-      <nav className="relative px-4 py-4 flex justify-between items-center bg-white">
+      <nav className="relative px-4 py-4 transition ease-in-out delay-150 flex justify-between items-center bg-white">
         <a className="text-3xl font-bold leading-none" href="#">
           <svg className="h-10" alt="logo" viewBox="0 0 10240 10240">
             <path
@@ -19,6 +22,7 @@ function Navigation() {
               className="block h-4 w-4 fill-current"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
+              onClick={handleMobile}
             >
               <title>Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
@@ -71,7 +75,13 @@ function Navigation() {
           Sign up
         </a>
       </nav>
-      <div className="navbar-menu relative z-50 hidden">
+      <div
+        className={
+          mobile
+            ? "navbar-menu relative z-50"
+            : "navbar-menu relative z-50 hidden"
+        }
+      >
         <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
           <div className="flex items-center mb-8">
@@ -83,7 +93,7 @@ function Navigation() {
                 ></path>
               </svg>
             </a>
-            <button className="navbar-close">
+            <button className="navbar-close" onClick={handleMobile}>
               <svg
                 className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
                 xmlns="http://www.w3.org/2000/svg"
