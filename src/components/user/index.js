@@ -1,0 +1,7 @@
+export { default as BillBoardComponent } from './billboardComponent'
+export { default as Card } from './card'
+export { default as Favourites } from './favourites'
+export { default as Header } from './header'
+export { default as InfoCard } from './infoCard'
+export { default as SideBar } from './sidebar'
+export { default as Table } from './table'
