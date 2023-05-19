@@ -17,15 +17,16 @@ import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/contract";
 import ContactUs from "./pages/contactUs/contactUs";
+import Landing from "./pages/Landing/Landing";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
-  // {
-  //   path: "/landing",
-  //   element: <Landing />,
-  // },
+  {
+    path: "/Landing",
+    element: <Landing />,
+  },
   {
     path: "/Myaccount",
     element: <MyAccount />,
