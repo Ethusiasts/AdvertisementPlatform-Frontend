@@ -6,7 +6,6 @@ import { faThList } from "@fortawesome/free-solid-svg-icons";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import Image1 from "../styles/assets/billboard1.jpg";
 import Image2 from "../styles/assets/billboard2.jpg";
-import Image3 from "../styles/assets/billboard3.jpg";
 import Pagination from "../components/Home/Pagination";
 import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
@@ -17,9 +16,11 @@ import SearchBox from "../components/Home/SearchBox";
 import PopUp from "../components/Home/PopUp";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
+  const [activeLink, setActiveLink] = useState("billboard");
   const [showDropdown, setShowDropdown] = useState(false);
   const [mouseOverDropdown, setMouseOverDropdown] = useState(false);
   const timeoutRef = useRef(null);
@@ -38,6 +39,9 @@ export default function Home() {
     setMouseOverDropdown(true);
   };
 
+  const checkActiveLink = (link) => {
+    return activeLink === link;
+  };
   useEffect(() => {
     let timerId;
 
@@ -63,26 +67,36 @@ export default function Home() {
     <div>
       <HomeNavbar />
 
-      <div className="header2 py-11 pl-11">
-        <a className="text-[#2785AE]" href="/">
-          {" "}
-          Billboards
-        </a>{" "}
-        <span className="md:mr-3 text-[#D0CFCE]">|</span>{" "}
-        <a className="" href="/">
-          {" "}
-          Media Agencies
-        </a>
-      </div>
+      <div className="backgroundImg">
+        <div className="header2 py-5 ">
+          <Link
+            to={"/"}
+            className={checkActiveLink("billboard") ? "text-[#2785AE]" : ""}
+            // onClick={setActiveLink("billboard")}
+          >
+            {" "}
+            Billboards
+          </Link>{" "}
+          <span className="md:mr-3 text-[#D0CFCE]">|</span>{" "}
+          <Link
+            to={"/"}
+            className={checkActiveLink("media") ? "text-[#2785AE]" : ""}
+            // onClick={setActiveLink("media")}
+          >
+            {" "}
+            Media Agencies
+          </Link>
+        </div>
 
-      <div className="grid grid-cols-10">
-        <div className="col-span-12 col-start-4 -mx-8">
-          <div className="font-bold text-3xl ">Connect MarketPlace</div>
-          <div className="text-[#7D7D7D]  text-md mb-6">
-            Find the best Places In One Place
+        <div className="grid grid-cols-10">
+          <div className="col-span-12 col-start-4 -mx-8">
+            <div className="font-bold text-3xl ">Connect MarketPlace</div>
+            <div className="text-[#7D7D7D]  text-md mb-6 mx-3">
+              Find the best Places In One Place
+            </div>
+
+            <SearchBox />
           </div>
-
-          <SearchBox />
         </div>
       </div>
 
