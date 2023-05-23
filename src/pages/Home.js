@@ -74,12 +74,17 @@ export default function Home() {
           Media Agencies
         </a>
       </div>
-      <div className="font-bold text-3xl text-center">Connect MarketPlace</div>
-      <div className="text-[#7D7D7D] text-center text-2xl">
-        Find the best Places In One Place
-      </div>
 
-      <SearchBox />
+      <div className="grid grid-cols-10">
+        <div className="col-span-12 col-start-4 -mx-8">
+          <div className="font-bold text-3xl ">Connect MarketPlace</div>
+          <div className="text-[#7D7D7D]  text-md mb-6">
+            Find the best Places In One Place
+          </div>
+
+          <SearchBox />
+        </div>
+      </div>
 
       <div className="py-4 px-4 overflow-hidden md:lg-20 mr-7">
         <div className="hidden md:block">
