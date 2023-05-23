@@ -30,3 +30,7 @@ input::placeholder {
     top: 2.2rem;
     left: 3rem;
 }
+.backgroundImg{
+    background: rgb(255, 255, 255);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(231, 230, 230, 1) 100%);
+}
