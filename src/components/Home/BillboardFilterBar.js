@@ -1,7 +1,13 @@
 import { MdEditLocationAlt } from "react-icons/md";
 import PriceFilter from "./PriceFilter";
+import { useState } from "react";
 export default function BillboardFilterBar({ onClose }) {
   const handleClearAllButton = () => {};
+
+  const [size, setSize] = useState(0);
+  const handleSize = (event) => {
+    setSize(event.target.value);
+  };
   return (
     <div className=" bg-white p-4 rounded-md shadow-lg md:float-left md:w-1/4 mt-8">
       <div className="">
@@ -59,15 +65,19 @@ export default function BillboardFilterBar({ onClose }) {
           </div>
           <li className="text-[#2E4541] font-bold text-l py-4">Price</li>
           <PriceFilter />
-          <li className="text-[#2E4541] font-bold text-l py-4">Size</li>
+          <li className="text-[#2E4541] font-bold text-l py-4">Size (max)</li>
 
           <div className="flex  rounded-full text-[#D9D9D9]">
             <input
               className=" w-1/2 bg-[#D9D9D9] text-black border outline-none py-2 pl-2 placeholder-gray-900 rounded-md "
-              type="text"
+              type="number"
               placeholder="300"
+              value={size}
+              onChange={handleSize}
             />
-            <div className="pl-4 pt-4 text-[#7D7D7D] font-bold">Max</div>
+            <div className="pl-4 pt-4 text-[#7D7D7D]">
+              {Math.sqrt(size)}m x {Math.sqrt(size)}m
+            </div>
           </div>
         </ul>
       </div>
