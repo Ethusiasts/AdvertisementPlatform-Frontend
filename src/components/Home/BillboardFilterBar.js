@@ -1,13 +1,22 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { MdEditLocationAlt } from "react-icons/md";
 import PriceFilter from "./PriceFilter";
+import { useState } from "react";
 export default function BillboardFilterBar({ onClose }) {
+  const handleClearAllButton = () => {};
+
+  const [size, setSize] = useState(0);
+  const handleSize = (event) => {
+    setSize(event.target.value);
+  };
   return (
     <div className=" bg-white p-4 rounded-md shadow-lg md:float-left md:w-1/4 mt-8">
       <div className="">
         <div className="flex justify-between">
-          <h1 className="text-3xl font-bold text-[#2E4541]">Filters</h1>
-          <button className="hidden mt-2 md:flex border-transparent text-red-700">
+          <h1 className="text-2xl font-bold text-[#2E4541]">Filters</h1>
+          <button
+            className="hidden mt-2 md:flex border-transparent text-red-700"
+            onClick={handleClearAllButton}
+          >
             Clear All
           </button>
           <button
@@ -18,25 +27,22 @@ export default function BillboardFilterBar({ onClose }) {
           </button>
         </div>
         <ul>
-          <li className=" text-[#2E4541] font-bold text-xl py-4 ml-2">
-            Location
-          </li>
-          <div className="text-center items-center rounded-full relative ">
-            <FontAwesomeIcon
-              icon={faLocationDot}
-              className="text-xs absolute left-10 top-3 xs:left-6 text-[#869EA0]"
+          <li className=" text-[#2E4541] font-bold text-l py-4 ">Location</li>
+          <div className=" rounded-full relative ">
+            <MdEditLocationAlt
+              size={15}
+              className=" absolute left-3 top-3 xs:left-6 text-[#869EA0]"
             />
+
             <input
-              className="w-4/5 placeholder-shown:whitespace-pre-wrap text-black border outline-none py-2 pl-8 placeholder-[#869EA0] rounded-md "
+              className="w-4/5  text-black border outline-none py-2 pl-8 placeholder-[#869EA0] rounded-md "
               type="text"
               placeholder="Addis Ababa, Ethiopia"
             />
           </div>
 
-          <li className=" text-[#2E4541] text-xl font-bold pt-5 pb-4 ml-2">
-            Type
-          </li>
-          <div className="flex items-center px-6">
+          <li className=" text-[#2E4541] font-bold text-l py-4 ">Type</li>
+          <div className="flex items-center ">
             <input
               id="checkbox1"
               type="checkbox"
@@ -47,7 +53,7 @@ export default function BillboardFilterBar({ onClose }) {
               Production
             </label>
           </div>
-          <div className="flex items-center px-6">
+          <div className="flex items-center">
             <input
               id="checkbox1"
               type="checkbox"
@@ -57,21 +63,21 @@ export default function BillboardFilterBar({ onClose }) {
               Without Production
             </label>
           </div>
-          <li className="text-[#2E4541] text-xl font-bold pt-4 pb-2 ml-2">
-            Price
-          </li>
+          <li className="text-[#2E4541] font-bold text-l py-4">Price</li>
           <PriceFilter />
-          <li className="text-[#2E4541] text-xl font-bold pt-5 pb-3 ml-2">
-            Size
-          </li>
+          <li className="text-[#2E4541] font-bold text-l py-4">Size (max)</li>
 
-          <div className="flex pl-6 rounded-full text-[#D9D9D9]">
+          <div className="flex  rounded-full text-[#D9D9D9]">
             <input
               className=" w-1/2 bg-[#D9D9D9] text-black border outline-none py-2 pl-2 placeholder-gray-900 rounded-md "
-              type="text"
+              type="number"
               placeholder="300"
+              value={size}
+              onChange={handleSize}
             />
-            <div className="pl-4 pt-4 text-[#7D7D7D] font-bold">Max</div>
+            <div className="pl-4 pt-4 text-[#7D7D7D]">
+              {Math.sqrt(size)}m x {Math.sqrt(size)}m
+            </div>
           </div>
         </ul>
       </div>
