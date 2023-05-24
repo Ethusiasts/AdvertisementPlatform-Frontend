@@ -17,6 +17,9 @@ import PopUp from "../components/Home/PopUp";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
+import Help from "../components/Home/Help";
+import Hero from "../components/Home/Hero";
+import Navigation from "../components/Landing/Navigation";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -65,8 +68,7 @@ export default function Home() {
 
   return (
     <div>
-      <HomeNavbar />
-
+      <Hero />
       <div className="backgroundImg">
         <div className="header2 py-5 ">
           <Link
@@ -89,9 +91,9 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-10">
-          <div className="col-span-12 col-start-4 -mx-8">
+          <div className="col-span-12 col-start-5 -mx-8">
             <div className="font-bold text-3xl ">Connect MarketPlace</div>
-            <div className="text-[#7D7D7D]  text-md mb-6 mx-3">
+            <div className="text-[#7D7D7D]  text-md mb-6 mx-2">
               Find the best Places In One Place
             </div>
 
@@ -201,6 +203,7 @@ export default function Home() {
           alt="Card Image"
         />
       </div>
+      <Help />
 
       <div className="mt-20">
         <Footer />
