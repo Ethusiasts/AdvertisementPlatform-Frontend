@@ -36,12 +36,12 @@ function Navigation() {
               <>
                 {" "}
                 <li>
-                  <Link
+                  <a
                     className="text-sm text-black hover:text-gray-500"
-                    to={"#" + nav[1]}
+                    href={`#${nav[1]}`}
                   >
                     {nav[0]}
-                  </Link>
+                  </a>
                 </li>
                 <li className="text-gray-300">
                   <svg
@@ -116,12 +116,12 @@ function Navigation() {
               {navMenus.map((nav) => {
                 return (
                   <li className="mb-1">
-                    <Link
+                    <a
                       className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                      to={"#" + nav[1]}
+                      href={`#${nav[1]}`}
                     >
                       {nav[0]}
-                    </Link>
+                    </a>
                   </li>
                 );
               })}

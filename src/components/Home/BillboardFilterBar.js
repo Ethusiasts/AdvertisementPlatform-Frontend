@@ -73,7 +73,9 @@ export default function BillboardFilterBar({ onClose }) {
               type="number"
               placeholder="300"
               value={size}
-              onChange={handleSize}
+              onChange={(event) => {
+                setSize(event.target.value);
+              }}
             />
             <div className="pl-4 pt-4 text-[#7D7D7D]">
               {Math.sqrt(size)}m x {Math.sqrt(size)}m
