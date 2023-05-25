@@ -4,15 +4,11 @@ import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-full flex justify-end bg-gradient-to-t from-black via-transparent to-black overflow-hidden">
+    <div className="home_hero relative w-full h-full flex justify-end bg-gradient-to-t from-black via-transparent to-black overflow-hidden">
       {/* :HERO IMAGE */}
 
-      <div className="absolute  w-full ">
-        {" "}
-        <HomeNavBar />
-      </div>
       <img
-        src="https://fancytailwind.com/static/f9e0992b36915d2ecac18949d7ba0fdf/24862/walking1.webp"
+        src="https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNpdHklMjBuaWdodHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
         alt=""
         className="absolute w-full h-full object-cover object-left sm:object-center opacity-70"
       />
@@ -22,24 +18,26 @@ export default function Hero() {
         {/* ::Hero title & text */}
         <div className="mx-5 md:mx-0 p-8 rounded-xl md:rounded-r-none bg-gray-800 bg-opacity-50 text-white shadow-2xl">
           <h1 className="text-3xl sm:text-5xl font-josefin font-extrabold">
-            Formidable, <br />
+            Welcome, <br />
             <span className="text-yellow-400 text-opacity-80">
-              Fancy Hero 8
-            </span>{" "}
-            est <br />
-            Formidable !
+              to Ad
+            </span> vert <br />
+            Advertisements !
           </h1>
           <p className="mt-3 text-gray-100 font-firacode">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-            blanditiis in asperiores optio est, id, temporibus perspiciatis
-            ratione ipsam quam tempore aliquam distinctio repudiandae iusto
-            facilis, consequatur eligendi illum quos.
+            Advert Billboards is an Online Marketplace for Billboard and other
+            multimedia Advertising. Programmatic Marketplace for Executing
+            Location-Based Out-of-home (OOH) Advertising at Cost-Efficient
+            Scale, Delivering Best in Market Automation and Performance.
+            Servicing for the Outdoor Media & Marketplace,
           </p>
         </div>
 
         {/* ::Hero button */}
         <button className="relative m-5 w-full md:w-2/3 lg:w-2/5 inline-flex items-center text-2xl font-firacode text-white overflow-hidden transition-all duration-300 transform hover:translate-x-4">
-          <span className="relative -top-0.5 mr-2">Explore</span>
+          <Link to={"/landing"} className="relative -top-0.5 mr-2">
+            Explore
+          </Link>
           <img
             src="https://fancytailwind.com/static/53e4540ef179fe51d5a02619660a1a92/arrow1.png"
             alt=""
@@ -89,6 +87,11 @@ export default function Hero() {
             </svg>
           </Link>
         </div>
+      </div>
+
+      <div className="absolute  w-full ">
+        {" "}
+        <HomeNavBar />
       </div>
 
       {/* :BOTTOM OPTIONS */}

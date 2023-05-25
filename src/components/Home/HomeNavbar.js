@@ -9,7 +9,7 @@ function HomeNavBar() {
   };
   return (
     <div>
-      <nav className="relative px-4 py-4 transition ease-in-out delay-150 flex justify-between items-center">
+      <nav className="relative px-4 py-4 transition duration-500 flex justify-between items-center bg-white bg-opacity-30">
         <Link className="text-3xl font-bold leading-none" href="#">
           <svg className="h-10" alt="logo" viewBox="0 0 10240 10240">
             <path
@@ -38,7 +38,7 @@ function HomeNavBar() {
                 {" "}
                 <li>
                   <a
-                    className="text-sm text-black hover:text-gray-500"
+                    className="text-lg text-white hover:font-black transition duration-500"
                     href={`#${nav[1]}`}
                   >
                     {nav[0]}
