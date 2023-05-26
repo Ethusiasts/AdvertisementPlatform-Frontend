@@ -17,6 +17,7 @@ import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/contract";
 import ContactUs from "./pages/contactUs/contactUs";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
         path: "CreateRadioAd",
         element: <CreateRadioAd />,
       },
-    ]
+    ],
   },
   {
     path: "/Proposal",
@@ -82,6 +83,13 @@ const router = createBrowserRouter([
     element: <HelpAndSupport />,
   },
 ]);
+
 export default function App() {
-  return <RouterProvider router={router} />;
+  const client = new QueryClient();
+
+  return (
+    <QueryClientProvider client={client}>
+      {<RouterProvider router={router} />}
+    </QueryClientProvider>
+  );
 }

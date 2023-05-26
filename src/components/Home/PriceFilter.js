@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -23,14 +23,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PriceFilter() {
-  const [value, setValue] = useState([0, 1200]);
+export default function PriceFilter({ resetPriceFilter }) {
+  const [value, setValue] = useState([0, 2000]);
   const classes = useStyles();
+  const initialFilterValue = useRef([0, 2000]);
 
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
   };
+
+  const handleReset = () => {
+    setValue(initialFilterValue.current);
+  };
+
+  // Reset the PriceFilter when the resetPriceFilter prop is true
+  useEffect(() => {
+    if (resetPriceFilter) {
+      handleReset();
+    }
+  }, [resetPriceFilter]);
 
   return (
     <div>
