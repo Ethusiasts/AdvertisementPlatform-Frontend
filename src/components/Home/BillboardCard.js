@@ -1,10 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpandArrowsAlt } from "@fortawesome/free-solid-svg-icons";
 import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
+import { faDollar } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import RatingStars from "./RatingStars";
 export default function Card({
   status,
-  place,
-  city,
+  rate,
+  price,
+  production,
   width,
   height,
   location,
@@ -22,9 +26,23 @@ export default function Card({
         <span className="text-[#0FA958] font-bold text-xs">{status}</span>
       </div>
       <div className="p-4">
-        <p className="font-medium text-gray-800 pt-4 text-xs">{place}</p>
-        <p className="font-medium text-[#7D7D7D] text-xs">{city}</p>
         <p className="text-sm font-bold  text-[#7D7D7D] pt-2">Features</p>
+        <div className="flex pt-3">
+          <FontAwesomeIcon
+            icon={faDollar}
+            className=" text-[#7D7D7D] pr-3 text-xs"
+          />
+          <span className="text-xs">{price} birr</span>
+        </div>
+        <div className="flex pt-3">
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            className="production-icon text-[#7D7D7D] pr-3 text-xs"
+          />
+          <span className="production-text text-xs">
+            {production ? "With Production" : "Without Production"}
+          </span>
+        </div>
         <div className="flex pt-3">
           <FontAwesomeIcon
             icon={faExpandArrowsAlt}
@@ -41,6 +59,9 @@ export default function Card({
           />
           <span className="text-xs">{location}</span>
         </div>
+        <p className="">
+          <RatingStars rating={rate} />
+        </p>
       </div>
     </div>
   );
