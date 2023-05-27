@@ -124,8 +124,16 @@ export default function SignInForm() {
           <div className="mt-6 text-center">
             <p>
               Don’t have any account?{' '}
-              <Link to="/auth/signup" className="text-blue">
+              <Link to="/SignUp" className="text-blue">
                 Sign Up
+              </Link>
+            </p>
+          </div>
+
+          <div className="mt-3 text-center text-sm">
+            <p>
+              <Link to="/ForgotPassword" className="text-blue">
+                Forgot password?
               </Link>
             </p>
           </div>

@@ -7,8 +7,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
-import Proposal from "./pages/proposal/proposal";
-import ProfilePage from "./pages/profile/profilepage";
+import Proposal from "./pages/proposal/userProposal";
 import CreateBillboard from "./pages/advertisement/createBillboard";
 import CreateTvAd from "./pages/advertisement/createTvAd";
 import CreateMagazineAd from "./pages/advertisement/createMagazineAd";
@@ -16,10 +15,29 @@ import CreateRadioAd from "./pages/advertisement/createRadioAd";
 import AdminDashboard from "./pages/admin/adminDashboard";
 import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
-import Contract from "./pages/contract/contract";
+import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
 import Landing from "./pages/Landing/Landing";
+import EditProfilePage from "./pages/profile/editProfilePage";
+import ProfilePage from "./pages/profile/profilePage";
+import ForgotPassword from "./pages/authentication/forgotPassword";
+import ResetPassword from "./pages/authentication/resetPassword";
+import UserStepper from "./pages/profile/userStepper";
+import MediaAgencyStepper from "./pages/profile/mediaAgencyStepper";
+import Dashboard from "./pages/billboardDashboard";
+import BillboardDashboard from "./pages/billboardDashboard";
+import MediaDashboard from "./pages/mediaDashboard";
+import UserProposal from "./pages/proposal/userProposal";
+import UserContract from "./pages/contract/userContract";
+import BillboardProposal from "./pages/proposal/billboardProposal";
+import BillboardContract from "./pages/contract/billboardContract";
+import MediaProposal from "./pages/proposal/mediaProposal";
+import MediaContract from "./pages/contract/mediaContract";
+import Media from "./pages/medias/media";
+import Billboard from "./pages/billboards/billboard";
 const router = createBrowserRouter([
+
+  // Onboarding
   {
     path: "/",
     element: <Home />,
@@ -28,6 +46,9 @@ const router = createBrowserRouter([
     path: "/Landing",
     element: <Landing />,
   },
+
+
+  // Authentication
   {
     path: "/SignIn",
     element: <SignIn />,
@@ -36,6 +57,26 @@ const router = createBrowserRouter([
     path: "/SignUp",
     element: <SignUp />,
   },
+  {
+    path: "/ForgotPassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/ResetPassword",
+    element: <ResetPassword />,
+  },
+
+  {
+    path: "/UserStepper",
+    element: <UserStepper />,
+  },
+  {
+    path: "/MediaAgencyStepper",
+    element: <MediaAgencyStepper />,
+  },
+
+
+  // User
   {
     path: "/Myaccount",
     element: <MyAccount />,
@@ -64,21 +105,57 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "/Proposal",
-    element: <Proposal />,
+    path: "/UserProposal",
+    element: <UserProposal />,
   },
   {
-    path: "/Contract",
-    element: <Contract />,
+    path: "/UserContract",
+    element: <UserContract />,
   },
   {
     path: "/ContactUs",
     element: <ContactUs />,
   },
+
+
+  // Billboard User
   {
-    path: "/Profile",
-    element: <ProfilePage />,
+    path: "/BillboardDashboard",
+    element: <BillboardDashboard />,
   },
+  {
+    path: "/BillboardProposal",
+    element: <BillboardProposal />,
+  },
+  {
+    path: "/BillboardContract",
+    element: <BillboardContract />,
+  },
+  {
+    path: "/Billboard",
+    element: <Billboard />,
+  },
+
+
+  // Media Agency
+  {
+    path: "/MediaDashboard",
+    element: <MediaDashboard />,
+  },
+  {
+    path: "/MediaProposal",
+    element: <MediaProposal />,
+  },
+  {
+    path: "/MediaContract",
+    element: <MediaContract />,
+  },
+  {
+    path: "/Media",
+    element: <Media />,
+  },
+
+  // Admin
   {
     path: "/AdminDashboard",
     element: <AdminDashboard />,
@@ -91,6 +168,20 @@ const router = createBrowserRouter([
     path: "/HelpAndSupport",
     element: <HelpAndSupport />,
   },
+
+
+
+  // Profile
+  {
+    path: "/Profile",
+    element: <ProfilePage />,
+  },
+  {
+    path: "/EditProfile",
+    element: <EditProfilePage />,
+  },
+
+
 ]);
 export default function App() {
   return <RouterProvider router={router} />;

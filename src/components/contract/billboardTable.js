@@ -1,19 +1,19 @@
-export default function Table({ status, place, city, width, height, location, imageSrc, alt }) {
+export default function BillboardTable({ status, place, city, width, height, location, imageSrc, alt }) {
     return (
-<div class="mt-4 mx-4">
-<div class="w-full overflow-hidden rounded-lg shadow-xs">
+  <div class="mt-4 mx-4">
+  <div class="w-full overflow-hidden rounded-lg shadow-sm">
   <div class="w-full overflow-x-auto">
     <table class="w-full">
       <thead>
-        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-300 bg-gray-50 dark:text-gray-500 dark:bg-gray-100">
           <th class="px-4 py-3">Client</th>
           <th class="px-4 py-3">Amount</th>
           <th class="px-4 py-3">Status</th>
           <th class="px-4 py-3">Date</th>
         </tr>
       </thead>
-      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+      <tbody class="bg-white divide-y dark:divide-gray-300 dark:bg-gray-100">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -22,7 +22,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Hans Burger</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">10x Developer</p>
+                <p class="text-xs text-gray-600 dark:text-black">10x Developer</p>
               </div>
             </div>
           </td>
@@ -32,7 +32,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">15-01-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -41,7 +41,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Jolina Angelie</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Unemployed</p>
+                <p class="text-xs text-gray-600 dark:text-black">Unemployed</p>
               </div>
             </div>
           </td>
@@ -51,7 +51,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">23-03-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -60,7 +60,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Dave Li</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Influencer</p>
+                <p class="text-xs text-gray-600 dark:text-black">Influencer</p>
               </div>
             </div>
           </td>
@@ -70,7 +70,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">09-02-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -79,7 +79,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Rulia Joberts</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Actress</p>
+                <p class="text-xs text-gray-600 dark:text-black">Actress</p>
               </div>
             </div>
           </td>
@@ -89,7 +89,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">17-04-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -98,7 +98,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Hitney Wouston</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Singer</p>
+                <p class="text-xs text-gray-600 dark:text-black">Singer</p>
               </div>
             </div>
           </td>
@@ -108,7 +108,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">11-01-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -117,7 +117,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Hans Burger</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">10x Developer</p>
+                <p class="text-xs text-gray-600 dark:text-black">10x Developer</p>
               </div>
             </div>
           </td>
@@ -127,7 +127,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">15-01-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -136,7 +136,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Jolina Angelie</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Unemployed</p>
+                <p class="text-xs text-gray-600 dark:text-black">Unemployed</p>
               </div>
             </div>
           </td>
@@ -146,7 +146,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">23-03-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -155,7 +155,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Dave Li</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Influencer</p>
+                <p class="text-xs text-gray-600 dark:text-black">Influencer</p>
               </div>
             </div>
           </td>
@@ -165,7 +165,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">09-02-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -174,7 +174,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Rulia Joberts</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Actress</p>
+                <p class="text-xs text-gray-600 dark:text-black">Actress</p>
               </div>
             </div>
           </td>
@@ -184,7 +184,7 @@ export default function Table({ status, place, city, width, height, location, im
           </td>
           <td class="px-4 py-3 text-sm">17-04-2021</td>
         </tr>
-        <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
           <td class="px-4 py-3">
             <div class="flex items-center text-sm">
               <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
@@ -193,7 +193,7 @@ export default function Table({ status, place, city, width, height, location, im
               </div>
               <div>
                 <p class="font-semibold">Hitney Wouston</p>
-                <p class="text-xs text-gray-600 dark:text-gray-400">Singer</p>
+                <p class="text-xs text-gray-600 dark:text-black">Singer</p>
               </div>
             </div>
           </td>
@@ -206,7 +206,7 @@ export default function Table({ status, place, city, width, height, location, im
       </tbody>
     </table>
   </div>
-  <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+  <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-300 bg-gray-50 sm:grid-cols-9 dark:text-black dark:bg-gray-100">
     <span class="flex items-center col-span-3"> Showing 21-30 of 100 </span>
     <span class="col-span-2"></span>
     <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
@@ -251,5 +251,5 @@ export default function Table({ status, place, city, width, height, location, im
       </nav>
     </span>
   </div>
-</div>
-</div>)};
+  </div>
+  </div>)};

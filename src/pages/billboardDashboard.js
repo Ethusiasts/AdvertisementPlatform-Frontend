@@ -1,8 +1,8 @@
-import Card from "../components/userDashboard/card"
-import Table from "../components/userDashboard/table"
-import SideBar from "../components/userDashboard/sidebar"
-import Header from "../components/userDashboard/header"
-export default function Dashboard({ status, place, city, width, height, location, imageSrc, alt }) {
+import Card from "../components/billboards/card"
+import Table from "../components/billboards/table"
+import SideBar from "../components/billboards/sidebar"
+import Header from "../components/billboards/header"
+export default function BillboardDashboard({ status, place, city, width, height, location, imageSrc, alt }) {
     return (
         <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
 <div class="fixed flex flex-col left-0 w-14 hover:w-64 md:w-64 bg-gray-100 h-full text-white transition-all duration-300 border-none z-10 sidebar">
