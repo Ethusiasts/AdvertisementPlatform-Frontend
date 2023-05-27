@@ -3,7 +3,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import React, { useState } from "react";
 import PopUp from "./PopUp";
-export default function SearchBox() {
+export default function SearchBox({ handleSearchChange, query }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -12,12 +12,14 @@ export default function SearchBox() {
 
   return (
     <div>
-      <div className="mx-auto max-w-md flex text-center items-center bg-white rounded-full shadow-sm px-6 py-2 my-4">
+      <div className="max-w-md flex text-center items-center bg-white rounded-full shadow-sm py-2 my-4">
         <FontAwesomeIcon icon={faSearch} className="text-[#2785AE] text-2xl" />
         <input
           className="bg-transparent ml-4 mr-11 outline-none placeholder-[#2785AE]"
           type="text"
+          value={query}
           placeholder="Search Here"
+          onChange={handleSearchChange}
         />
         <Button text="Find" searchBtn="true" />
       </div>

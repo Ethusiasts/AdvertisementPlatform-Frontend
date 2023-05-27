@@ -17,6 +17,7 @@ import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Landing from "./pages/Landing/Landing";
 import EditProfilePage from "./pages/profile/editProfilePage";
 import ProfilePage from "./pages/profile/profilePage";
@@ -102,7 +103,7 @@ const router = createBrowserRouter([
         path: "CreateRadioAd",
         element: <CreateRadioAd />,
       },
-    ]
+    ],
   },
   {
     path: "/UserProposal",
@@ -183,6 +184,13 @@ const router = createBrowserRouter([
 
 
 ]);
+
 export default function App() {
-  return <RouterProvider router={router} />;
+  const client = new QueryClient();
+
+  return (
+    <QueryClientProvider client={client}>
+      {<RouterProvider router={router} />}
+    </QueryClientProvider>
+  );
 }
