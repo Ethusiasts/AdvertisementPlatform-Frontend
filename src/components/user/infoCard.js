@@ -1,12 +1,12 @@
 export default function InfoCard({ status, place, city, width, height, location, imageSrc, alt }) {
   return (
-<div className="w-96 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow-md mb-8">
+<div className="w-96 bg-gray-100 rounded-lg overflow-hidden shadow-md mb-8">
 <div class="ml-2 mt-5 mb-5 grid grid-cols-5">
   <div class="mb-3 flex justify-center items-center col-span-1">
   <img className="h-12 w-12 rounded-full object-cover mx-2" src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" loading="lazy" />
   </div>
   <div class="mb-3 flex items-center col-span-4">
-  <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Abenezer Fekadu</h1>
+  <h1 className="text-xl font-semibold text-gray-800">Abenezer Fekadu</h1>
   </div>
   <div class="mb-3 flex justify-center items-center col-span-1">
   <svg className="w-6 h-6 mr-2 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -14,7 +14,7 @@ export default function InfoCard({ status, place, city, width, height, location,
           </svg>
   </div>
   <div class="mb-3 flex items-center col-span-4">
-  <div className="text-base text-gray-400 font-semibold tracking-wide">Abenezer.fekadu@gmail.com</div>
+  <div className="text-base text-gray-500 font-semibold tracking-wide">Abenezer.fekadu@gmail.com</div>
 </div>
   <div class="mb-3 flex justify-center items-center col-span-1">
   <svg className="w-6 h-6 mr-2 text-gray-500" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -22,11 +22,11 @@ export default function InfoCard({ status, place, city, width, height, location,
           </svg>
   </div>
   <div class="mb-3 flex items-center col-span-4">
-  <div className="text-base text-gray-400 font-semibold tracking-wide">+251938937821</div>
+  <div className="text-base text-gray-500 font-semibold tracking-wide">+251938937821</div>
   </div>
 
   <div class="flex items-center col-start-2 col-span-3">
-  <button class="border border-blue-500 text-blue-500 rounded-md w-full py-1.5 px-3 text-base hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-500 ease select-none">
+  <button class="border border-green-600 text-green-600 rounded-md w-full py-1.5 px-3 text-base hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition duration-500 ease select-none">
   Edit Profile
 </button>
   </div>
