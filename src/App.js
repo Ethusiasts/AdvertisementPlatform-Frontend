@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
 import Proposal from "./pages/proposal/userProposal";
-import CreateBillboard from "./pages/advertisement/createBillboard";
+import CreateBillboardAd from "./pages/advertisement/createBillboardAd";
 import CreateTvAd from "./pages/advertisement/createTvAd";
 import CreateMagazineAd from "./pages/advertisement/createMagazineAd";
 import CreateRadioAd from "./pages/advertisement/createRadioAd";
@@ -36,6 +36,7 @@ import MediaProposal from "./pages/proposal/mediaProposal";
 import MediaContract from "./pages/contract/mediaContract";
 import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
+import CreateBillboard from "./pages/billboards/createBillboard";
 const router = createBrowserRouter([
 
   // Onboarding
@@ -86,24 +87,22 @@ const router = createBrowserRouter([
   {
     path: "/Advertisement",
     element: <Advertisement />,
-    children: [
-      {
-        path: "CreateBillboard",
-        element: <CreateBillboard />,
-      },
-      {
-        path: "CreateTvAd",
-        element: <CreateTvAd />,
-      },
-      {
-        path: "CreateMagazineAd",
-        element: <CreateMagazineAd />,
-      },
-      {
-        path: "CreateRadioAd",
-        element: <CreateRadioAd />,
-      },
-    ],
+  },
+  {
+    path: "CreateBillboardAd",
+    element: <CreateBillboardAd />,
+  },
+  {
+    path: "CreateTvAd",
+    element: <CreateTvAd />,
+  },
+  {
+    path: "CreateMagazineAd",
+    element: <CreateMagazineAd />,
+  },
+  {
+    path: "CreateRadioAd",
+    element: <CreateRadioAd />,
   },
   {
     path: "/UserProposal",
@@ -135,6 +134,10 @@ const router = createBrowserRouter([
   {
     path: "/Billboard",
     element: <Billboard />,
+  },
+  {
+    path: "/CreateBillboard",
+    element: <CreateBillboard />,
   },
 
 

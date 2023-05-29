@@ -1,6 +1,6 @@
-import CreateBillboardForm from "../../components/advertisement/createBillboard"
-import SideBar from "../../components/user/sidebar"
-import Header from "../../components/user/header"
+import CreateBillboardForm from "../../components/billboard/createBillboard"
+import SideBar from "../../components/billboards/sidebar"
+import Header from "../../components/billboards/header"
 
 export default function CreateBillboard({ status, place, city, width, height, location, imageSrc, alt }) {
     return (
@@ -9,7 +9,7 @@ export default function CreateBillboard({ status, place, city, width, height, lo
 <SideBar />
 </div>
       <div class="h-full ml-14 mr-14 mt-5 mb-10 md:ml-64">
-<Header title="Advertisement"/>
+<Header title="Billboards"/>
 
 <div class="flex items-center justify-center p-10 px-20"><CreateBillboardForm/></div>
       </div>

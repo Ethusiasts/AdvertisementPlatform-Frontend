@@ -2,7 +2,7 @@ export default function CreateBillboardForm({ photo, title, description}) {
     return (
 
 
-  <div class="bg-gray-500 rounded-lg shadow-lg p-16 w-9/10">
+<div class="bg-gray-100 rounded-lg shadow-lg p-16 w-9/10">
     <h2 class="text-xl text-gray-800 font-bold mb-4">Create A Billboard Ad!</h2>
     <p class="text-gray-600 text-base mb-4">Fill out the form below and let our experts bring your vision to life. Stand out from the crowd and drive real results for your brand. Get started now!</p>
     <div class="mb-4">
