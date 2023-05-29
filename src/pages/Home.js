@@ -21,6 +21,7 @@ import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
 import Navigation from "../components/Landing/Navigation";
 import RecommendedCarousel from "../components/Home/RecommendedCarousel";
+import { Carousel } from "flowbite-react";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -101,7 +102,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       <div className="py-4 px-4 overflow-hidden md:lg-20 mr-7">
         <div className="hidden md:block">
           <BillboardFilterBar />
@@ -186,12 +186,11 @@ export default function Home() {
         </div>
         <Pagination ref={childRef} />
       </div>
-
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
-
-      <RecommendedCarousel />
+      <div className="mx-4">
+        <RecommendedCarousel />
+      </div>
       <Help />
-
       <div className="mt-20">
         <Footer />
       </div>

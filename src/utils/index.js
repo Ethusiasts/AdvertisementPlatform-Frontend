@@ -1,6 +1,6 @@
 export const navMenus = [
   ["Home", "home"],
-  ["About Us", "about"],
+  ["About us", "about"],
   ["Services", "services"],
   ["Pricing", "pricing"],
   ["Contact", "contact"],

@@ -38,7 +38,7 @@ function HomeNavBar() {
                 {" "}
                 <li>
                   <a
-                    className="text-lg text-white hover:font-black transition duration-500"
+                    className="text-lg text-white transition-all duration-300 transform hover:text-gray-300"
                     href={`#${nav[1]}`}
                   >
                     {nav[0]}
@@ -65,13 +65,13 @@ function HomeNavBar() {
           })}
         </ul>
         <Link
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 transition-all duration-300  hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl "
           href="#"
         >
           Sign In
         </Link>
         <Link
-          className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+          className="hidden lg:inline-block py-2 px-6 bg-blue-500 transition-all duration-300 transform hover:bg-blue-600 text-sm text-white font-bold rounded-xl "
           href="#"
         >
           Sign up
