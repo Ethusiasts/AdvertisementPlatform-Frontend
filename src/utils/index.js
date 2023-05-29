@@ -1,4 +1,10 @@
-export const navMenus = ["Home", "About Us", "Services", "Pricing", "Contact"];
+export const navMenus = [
+  ["Home", "home"],
+  ["About Us", "about"],
+  ["Services", "services"],
+  ["Pricing", "pricing"],
+  ["Contact", "contact"],
+];
 export const heroSectionTitle = "Advertising your brands";
 export const trustSectionTitle = "Trusted by content creators across the world";
 export const advertisementTitle = "For Advertisers";
