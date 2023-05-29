@@ -86,13 +86,12 @@ export default function Home() {
             className={checkActiveLink("media") ? "text-[#2785AE]" : ""}
             // onClick={setActiveLink("media")}
           >
-            {" "}
             Media Agencies
           </Link>
         </div>
 
-        <div className="grid grid-cols-10">
-          <div className="col-span-12 col-start-5 -mx-8">
+        <div className="grid grid-cols-12">
+          <div className="col-span-5 col-start-5 -mx-8">
             <div className="font-bold text-3xl ">Connect MarketPlace</div>
             <div className="text-[#7D7D7D]  text-md mb-6 mx-2">
               Find the best Places In One Place
@@ -191,7 +190,7 @@ export default function Home() {
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
 
       <RecommendedCarousel />
-      {/* <Help /> */}
+      <Help />
 
       <div className="mt-20">
         <Footer />
