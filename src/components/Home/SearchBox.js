@@ -3,7 +3,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import React, { useState } from "react";
 import PopUp from "./PopUp";
-export default function SearchBox() {
+export default function SearchBox({ handleSearchChange, query }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -17,7 +17,9 @@ export default function SearchBox() {
         <input
           className="bg-transparent ml-4 mr-11 outline-none placeholder-[#2785AE]"
           type="text"
+          value={query}
           placeholder="Search Here"
+          onChange={handleSearchChange}
         />
         <Button text="Find" searchBtn="true" />
       </div>

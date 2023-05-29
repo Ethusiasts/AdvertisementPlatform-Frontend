@@ -2,12 +2,28 @@ import { MdEditLocationAlt } from "react-icons/md";
 import PriceFilter from "./PriceFilter";
 import { useState } from "react";
 export default function BillboardFilterBar({ onClose }) {
-  const handleClearAllButton = () => {};
-
   const [size, setSize] = useState(0);
+  const [location, setLocation] = useState("");
+  const [type, setType] = useState("");
+  const [resetPriceFilter, setResetPriceFilter] = useState(false);
+
   const handleSize = (event) => {
     setSize(event.target.value);
   };
+  const handleLocation = (event) => {
+    setLocation(event.target.value);
+  };
+  const handleType = (event) => {
+    setType(event.target.value);
+  };
+
+  const handleClearAllButton = () => {
+    setSize(0);
+    setLocation("");
+    setType("");
+    setResetPriceFilter(true); // Set the resetPriceFilter state to trigger PriceFilter reset
+  };
+
   return (
     <div className=" bg-white p-4 rounded-md shadow-lg md:float-left md:w-1/4 mt-8">
       <div className="">
@@ -37,7 +53,9 @@ export default function BillboardFilterBar({ onClose }) {
             <input
               className="w-4/5  text-black border outline-none py-2 pl-8 placeholder-[#869EA0] rounded-md "
               type="text"
+              value={location}
               placeholder="Addis Ababa, Ethiopia"
+              onChange={handleLocation}
             />
           </div>
 
@@ -47,7 +65,8 @@ export default function BillboardFilterBar({ onClose }) {
               id="checkbox1"
               type="checkbox"
               className="form-checkbox h-4 w-4 accent-[#3f51b5]  bg-white-500"
-              checked
+              checked={type === "Production"}
+              onChange={() => setType("Production")}
             />
             <label htmlFor="checkbox1" className="ml-6 block text-gray-500">
               Production
@@ -58,13 +77,15 @@ export default function BillboardFilterBar({ onClose }) {
               id="checkbox1"
               type="checkbox"
               className="form-checkbox h-4 w-4 text-blue-600"
+              checked={type === "Without Production"}
+              onChange={() => setType("Without Production")}
             />
             <label htmlFor="checkbox1" className="ml-6 block text-gray-500">
               Without Production
             </label>
           </div>
           <li className="text-[#2E4541] font-bold text-l py-4">Price</li>
-          <PriceFilter />
+          <PriceFilter resetPriceFilter={resetPriceFilter} />
           <li className="text-[#2E4541] font-bold text-l py-4">Size (max)</li>
 
           <div className="flex  rounded-full text-[#D9D9D9]">

@@ -15,7 +15,8 @@ import Contract from "./pages/contract/contract";
 import ContactUs from "./pages/contactUs/contactUs";
 import Landing from "./pages/Landing/Landing";
 import ErrorPage from "./pages/error_page";
-import "./index.css";
+import "./index.css"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -82,6 +83,13 @@ const router = createBrowserRouter([
     element: <HelpAndSupport />,
   },
 ]);
+
 export default function App() {
-  return <RouterProvider router={router} />;
+  const client = new QueryClient();
+
+  return (
+    <QueryClientProvider client={client}>
+      {<RouterProvider router={router} />}
+    </QueryClientProvider>
+  );
 }
