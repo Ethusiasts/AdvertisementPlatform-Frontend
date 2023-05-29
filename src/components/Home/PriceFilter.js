@@ -23,18 +23,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PriceFilter({ resetPriceFilter }) {
+export default function PriceFilter({ resetPriceFilter, onPriceValueChange }) {
   const [value, setValue] = useState([0, 2000]);
   const classes = useStyles();
   const initialFilterValue = useRef([0, 2000]);
 
   const rangeSelector = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
+    onPriceValueChange(newValue);
   };
 
   const handleReset = () => {
     setValue(initialFilterValue.current);
+    onPriceValueChange(initialFilterValue.current);
   };
 
   // Reset the PriceFilter when the resetPriceFilter prop is true

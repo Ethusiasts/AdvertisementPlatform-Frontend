@@ -18,15 +18,16 @@ import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/contract";
 import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Landing from "./pages/Landing/Landing";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
-  // {
-  //   path: "/landing",
-  //   element: <Landing />,
-  // },
+  {
+    path: "/landing",
+    element: <Landing />,
+  },
   {
     path: "/Myaccount",
     element: <MyAccount />,
