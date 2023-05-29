@@ -1,8 +1,4 @@
 import Home from "./pages/Home";
-// import Landing from "./pages/Landing/Landing";
-import SignIn from "./pages/auth/signIn";
-import Detail from "./pages/detail_page/Detail";
-import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
@@ -17,15 +13,19 @@ import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/contract";
 import ContactUs from "./pages/contactUs/contactUs";
+import Landing from "./pages/Landing/Landing";
+import ErrorPage from "./pages/error_page";
+import "./index.css";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <ErrorPage />,
   },
-  // {
-  //   path: "/landing",
-  //   element: <Landing />,
-  // },
+  {
+    path: "/landing",
+    element: <Landing />,
+  },
   {
     path: "/Myaccount",
     element: <MyAccount />,
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         path: "CreateRadioAd",
         element: <CreateRadioAd />,
       },
-    ]
+    ],
   },
   {
     path: "/Proposal",

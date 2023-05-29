@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
 import Navigation from "../components/Landing/Navigation";
+import RecommendedCarousel from "../components/Home/RecommendedCarousel";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -189,21 +190,8 @@ export default function Home() {
 
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
 
-      <div className="flex flex-wrap ml-20">
-        <RecommendedCard
-          location="Jemo, Addis Ababa "
-          description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <RecommendedCard
-          location="Jemo, Addis Ababa "
-          description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
-          imageSrc={Image2}
-          alt="Card Image"
-        />
-      </div>
-      <Help />
+      <RecommendedCarousel />
+      {/* <Help /> */}
 
       <div className="mt-20">
         <Footer />
