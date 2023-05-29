@@ -20,7 +20,7 @@ import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Landing from "./pages/Landing/Landing";
 import EditProfilePage from "./pages/profile/editProfilePage";
-import ProfilePage from "./pages/profile/profilePage";
+import ProfilePage from "./pages/profile/profilepage";
 import ForgotPassword from "./pages/authentication/forgotPassword";
 import ResetPassword from "./pages/authentication/resetPassword";
 import UserStepper from "./pages/profile/userStepper";
