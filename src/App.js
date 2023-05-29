@@ -38,7 +38,6 @@ import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
 const router = createBrowserRouter([
-
   // Onboarding
   {
     path: "/",
@@ -48,7 +47,6 @@ const router = createBrowserRouter([
     path: "/Landing",
     element: <Landing />,
   },
-
 
   // Authentication
   {
@@ -76,7 +74,6 @@ const router = createBrowserRouter([
     path: "/MediaAgencyStepper",
     element: <MediaAgencyStepper />,
   },
-
 
   // User
   {
@@ -117,7 +114,6 @@ const router = createBrowserRouter([
     element: <ContactUs />,
   },
 
-
   // Billboard User
   {
     path: "/BillboardDashboard",
@@ -139,7 +135,6 @@ const router = createBrowserRouter([
     path: "/CreateBillboard",
     element: <CreateBillboard />,
   },
-
 
   // Media Agency
   {
@@ -173,8 +168,6 @@ const router = createBrowserRouter([
     element: <HelpAndSupport />,
   },
 
-
-
   // Profile
   {
     path: "/Profile",
@@ -184,8 +177,6 @@ const router = createBrowserRouter([
     path: "/EditProfile",
     element: <EditProfilePage />,
   },
-
-
 ]);
 
 export default function App() {
