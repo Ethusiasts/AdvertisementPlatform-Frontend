@@ -7,8 +7,13 @@ import { faList } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Home/Pagination";
 import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
+
+import RecommendedCard from "../components/Home/RecommendedCard";
+import HomeNavbar from "../components/Home/HomeNavbar";
+import { searchBillboards } from "../services/api";
 import BillboardFilterBar from "../components/Home/BillboardFilterBar";
 import SearchBox from "../components/Home/SearchBox";
+import { useQuery } from "@tanstack/react-query";
 import PopUp from "../components/Home/PopUp";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
@@ -22,12 +27,23 @@ export default function Home() {
   const [sortBy, setSortBy] = useState(null);
   const [activeLink, setActiveLink] = useState("billboard");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [dataSize, setDataSize] = useState(0);
   const [mouseOverDropdown, setMouseOverDropdown] = useState(false);
   const timeoutRef = useRef(null);
   const childRef = useRef(null);
+  const [query, setQuery] = useState("");
+
+  // Function to handle search query change
+  const handleSearchChange = (event) => {
+    setQuery(event.target.value);
+  };
 
   const handleChildSort = (property) => {
     childRef.current.handleSort(property);
+  };
+
+  const handlePaginationDataStateChange = (childStateValue) => {
+    setDataSize(childStateValue);
   };
 
   const handleClose = () => {
@@ -93,7 +109,7 @@ export default function Home() {
               Find the best Places In One Place
             </div>
 
-            <SearchBox />
+            <SearchBox handleSearchChange={handleSearchChange} query={query} />
           </div>
         </div>
       </div>
@@ -110,7 +126,7 @@ export default function Home() {
             />
           </button>
           <PopUp isOpen={isOpen} onClose={handleClose} />
-          <div className="pl-4 font-bold text-lg">3 Results</div>
+          <div className="pl-4 font-bold text-lg">{dataSize} Results</div>
 
           <div className="flex relative">
             <button
@@ -179,7 +195,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Pagination ref={childRef} />
+        <Pagination
+          ref={childRef}
+          query={query}
+          onChildStateChange={handlePaginationDataStateChange}
+        />
       </div>
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
       <div className="mx-4">

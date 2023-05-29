@@ -11,8 +11,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        Poppins: ["Poppins", "sans-serif"],
         Lato: ["Lato", "sans-serif"],
-        Josefin: ["Josefin Sans", "sans-serif"],
       },
     },
     screens: {
