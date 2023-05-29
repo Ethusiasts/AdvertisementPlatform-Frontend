@@ -1,5 +1,5 @@
 import Home from "./pages/Home";
-// import Landing from "./pages/Landing/Landing";
+import Landing from "./pages/Landing/Landing";
 import SignIn from "./pages/auth/signIn";
 import Detail from "./pages/detail_page/Detail";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
