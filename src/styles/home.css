@@ -29,3 +29,21 @@ input::placeholder {
     background: rgb(255, 255, 255);
         background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(231, 230, 230, 1) 100%);
 }
+.rating {
+  display: inline-block;
+}
+
+.star {
+  font-size: 24px;
+}
+
+.filled:before {
+  content: '\2605'; /* Unicode character for a filled star */
+  color: gold;
+}
+
+.empty:before {
+  content: '\2606'; /* Unicode character for an empty star */
+  color: gray;
+}
+    

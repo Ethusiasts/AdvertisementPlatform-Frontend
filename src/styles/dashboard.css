@@ -1,4 +1,8 @@
- /* Compiled dark classes from Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
  .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
     border-color: rgba(55, 65, 81);
   }
@@ -105,7 +109,10 @@
     color: rgba(59, 130, 246);
   }
 
-  /* Custom style */
+ 
+
+
+
   .header-right {
       width: calc(100% - 3.5rem);
   }
@@ -116,4 +123,4 @@
       .header-right {
           width: calc(100% - 16rem);
       }        
-  }
+  } */

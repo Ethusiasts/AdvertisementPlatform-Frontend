@@ -1,5 +1,5 @@
 export default function Card({ status, place, city, width, height, location, imageSrc, alt }) {
-    return (<div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+    return (<div class="bg-gray-100 rounded-lg shadow-md overflow-hidden">
     <div class="px-4 py-5 sm:p-6">
       <div class="flex items-center">
         <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
@@ -8,28 +8,28 @@ export default function Card({ status, place, city, width, height, location, ima
           </svg>
         </div>
         <div class="ml-5">
-          <h4 class="text-base font-semibold text-gray-600 dark:text-gray-400 tracking-wide">Total Sales</h4>
+          <h4 class="text-base font-semibold text-gray-700 dark:text-gray-400 tracking-wide">Total Sales</h4>
           <div class="mt-2 text-3xl font-bold text-gray-800">200</div>
         </div>
       </div>
       <div class="mt-5">
-        <div class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">Statistics</div>
+        <div class="text-sm font-semibold text-gray-700 dark:text-gray-400 uppercase tracking-wide">Statistics</div>
         <div class="mt-2 grid grid-cols-2 gap-5">
           <div>
-            <div class="text-xs font-semibold text-gray-600 dark:text-gray-400">Orders</div>
-            <div class="mt-1 text-3xl font-bold text-gray-600 dark:text-gray-400">100</div>
+            <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">Orders</div>
+            <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">100</div>
           </div>
           <div>
-            <div class="text-xs font-semibold text-gray-600 dark:text-gray-400">Revenue</div>
-            <div class="mt-1 text-3xl font-bold text-gray-600 dark:text-gray-400">$50k</div>
+            <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">Revenue</div>
+            <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">$50k</div>
           </div>
           <div>
-            <div class="text-xs font-semibold text-gray-600 dark:text-gray-400">Customers</div>
-            <div class="mt-1 text-3xl font-bold text-gray-600 dark:text-gray-400">50</div>
+            <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">Customers</div>
+            <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">50</div>
           </div>
           <div>
-            <div class="text-xs font-semibold text-gray-600 dark:text-gray-400">Average Order</div>
-            <div class="mt-1 text-3xl font-bold text-gray-600 dark:text-gray-400">$500</div>
+            <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">Average Order</div>
+            <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">$500</div>
           </div>
         </div>
       </div>
