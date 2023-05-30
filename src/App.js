@@ -42,10 +42,9 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/Landing",
+    path: "/",
     element: <Landing />,
   },
-
   // Authentication
   {
     path: "/SignIn",
