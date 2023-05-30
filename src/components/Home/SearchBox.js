@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import Button from "./Button";
 import React, { useState } from "react";
 import PopUp from "./PopUp";
 export default function SearchBox({ handleSearchChange, query }) {
@@ -21,12 +20,8 @@ export default function SearchBox({ handleSearchChange, query }) {
           placeholder="Search Here"
           onChange={handleSearchChange}
         />
-        <Button text="Find" searchBtn="true" />
       </div>
       <div className="flex justify-center">
-        <button className=" md:hidden rounded-lg bg-[#2785AE] text-white py-2 px-6 md:ml-8 hover:bg-indigo-400 duration-500">
-          Find
-        </button>
         <PopUp isOpen={isOpen} onClose={handleClose} />
       </div>
     </div>

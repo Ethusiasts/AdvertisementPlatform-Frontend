@@ -10,7 +10,7 @@ import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
 
 import RecommendedCard from "../components/Home/RecommendedCard";
 import HomeNavbar from "../components/Home/HomeNavbar";
-import { searchBillboards } from "../services/api";
+import { searchBillboards } from "../services/billboard_api";
 import BillboardFilterBar from "../components/Home/BillboardFilterBar";
 import SearchBox from "../components/Home/SearchBox";
 import { useQuery } from "@tanstack/react-query";
@@ -22,13 +22,18 @@ import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
 import RecommendedCarousel from "../components/Home/RecommendedCarousel";
 
+import Navigation from "../components/Landing/Navigation";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
   const [activeLink, setActiveLink] = useState("billboard");
+  const [isBillboard, setIsBillboard] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [dataSize, setDataSize] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [mouseOverDropdown, setMouseOverDropdown] = useState(false);
+  const [filterOn, setFilterOn] = useState(false);
+  const [filterResults, setFilterResults] = useState(null);
   const timeoutRef = useRef(null);
   const childRef = useRef(null);
   const [query, setQuery] = useState("");
@@ -46,6 +51,14 @@ export default function Home() {
     setDataSize(childStateValue);
   };
 
+  const handleFilterStateChange = (childFilterState) => {
+    setFilterOn(childFilterState);
+  };
+
+  const handlePaginationCurrentPageStateChange = (childCurrentPage) => {
+    setCurrentPage(childCurrentPage);
+  };
+
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -55,9 +68,6 @@ export default function Home() {
     setMouseOverDropdown(true);
   };
 
-  const checkActiveLink = (link) => {
-    return activeLink === link;
-  };
   useEffect(() => {
     let timerId;
 
@@ -84,14 +94,7 @@ export default function Home() {
       <Hero />
       <div className="backgroundImg">
         <div className="header2 py-5 ">
-          <Link
-            to={"/"}
-            className={checkActiveLink("billboard") ? "text-[#2785AE]" : ""}
-            // onClick={setActiveLink("billboard")}
-          >
-            {" "}
-            Billboards
-          </Link>{" "}
+          <button onClick={() => setIsBillboard(true)}> Billboards</button>{" "}
           <span className="md:mr-3 text-[#D0CFCE]">|</span>{" "}
           <Link
             to={"/"}
@@ -115,7 +118,13 @@ export default function Home() {
       </div>
       <div className="py-4 px-4 overflow-hidden md:lg-20 mr-7">
         <div className="hidden md:block">
-          <BillboardFilterBar />
+          <BillboardFilterBar
+            query={query}
+            isBillboard={isBillboard}
+            onFilterStateChange={handleFilterStateChange}
+            setFilterResults={setFilterResults}
+            currentPage={currentPage}
+          />
         </div>
         <div className="flex justify-between mb-11">
           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
@@ -198,13 +207,17 @@ export default function Home() {
         <Pagination
           ref={childRef}
           query={query}
+          filterOn={filterOn}
+          filterResults={filterResults}
           onChildStateChange={handlePaginationDataStateChange}
+          onChildCurrentPageChange={handlePaginationCurrentPageStateChange}
         />
       </div>
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
       <div className="mx-4">
         <RecommendedCarousel />
       </div>
+
       <Help />
       <div className="mt-20">
         <Footer />
