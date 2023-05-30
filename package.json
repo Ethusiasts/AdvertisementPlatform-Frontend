@@ -8,14 +8,19 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@material-ui/core": "^4.12.4",
-    "@tanstack/react-query": "^4.29.7",
+    "@tanstack/react-query": "^4.29.12",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
+<<<<<<< HEAD
     "firebase": "^9.22.1",
     "html2pdf.js": "^0.10.1",
+=======
+    "flowbite": "^1.6.5",
+    "flowbite-react": "^0.4.6",
+>>>>>>> 505a887ed91938e315ef8ca0d3dc0b361230bec3
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
