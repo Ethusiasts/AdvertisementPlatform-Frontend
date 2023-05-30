@@ -2,7 +2,9 @@ import Home from "./pages/Home";
 import Landing from "./pages/Landing/Landing";
 import SignIn from "./pages/authentication/signIn";
 import SignUp from "./pages/authentication/signUp";
-import Detail from "./pages/detail_page/Detail";
+import BillboardDetail from "./pages/detail_page/billboardDetailPage";
+import MediaDetail from "./pages/detail_page/mediaDetailPage";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
@@ -74,8 +76,12 @@ const router = createBrowserRouter([
 
   // User
   {
-    path: "/details",
-    element: <Detail />,
+    path: "/billboards/:billboardId",
+    element: <BillboardDetail />,
+  },
+  {
+    path: "/medias/:mediaId",
+    element: <MediaDetail />,
   },
   {
     path: "/signIn",
