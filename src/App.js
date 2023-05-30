@@ -37,6 +37,7 @@ import MediaContract from "./pages/contract/mediaContract";
 import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
+import CreateContract from "./pages/contract/createContract";
 const router = createBrowserRouter([
 
   // Onboarding
@@ -138,6 +139,10 @@ const router = createBrowserRouter([
   {
     path: "/CreateBillboard",
     element: <CreateBillboard />,
+  },
+  {
+    path: "/CreateContract",
+    element: <CreateContract />,
   },
 
 
