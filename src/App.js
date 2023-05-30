@@ -2,6 +2,9 @@ import Home from "./pages/Home";
 import Landing from "./pages/Landing/Landing";
 import SignIn from "./pages/authentication/signIn";
 import SignUp from "./pages/authentication/signUp";
+import BillboardDetail from "./pages/detail_page/billboardDetailPage";
+import MediaDetail from "./pages/detail_page/mediaDetailPage";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
@@ -15,11 +18,8 @@ import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
-import ErrorPage from "./pages/error_page";
-import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import EditProfilePage from "./pages/profile/editProfilePage";
-import ProfilePage from "./pages/profile/profilepage";
 import ProfilePage from "./pages/profile/profilepage";
 import ForgotPassword from "./pages/authentication/forgotPassword";
 import ResetPassword from "./pages/authentication/resetPassword";
@@ -42,14 +42,11 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Home />,
-    errorElement: <ErrorPage />,
   },
-
   {
-    path: "/Landing",
+    path: "/",
     element: <Landing />,
   },
-
   // Authentication
   {
     path: "/SignIn",
@@ -98,32 +95,6 @@ const router = createBrowserRouter([
   {
     path: "/Advertisement",
     element: <Advertisement />,
-    children: [
-      {
-        path: "CreateBillboard",
-        element: <CreateBillboard />,
-      },
-      {
-        path: "CreateTvAd",
-        element: <CreateTvAd />,
-      },
-      {
-        path: "CreateMagazineAd",
-        element: <CreateMagazineAd />,
-      },
-      {
-        path: "CreateRadioAd",
-        element: <CreateRadioAd />,
-      },
-    ],
-  },
-  {
-    path: "/Proposal",
-    element: <Proposal />,
-  },
-  {
-    path: "/Contract",
-    element: <Contract />,
   },
   {
     path: "CreateBillboardAd",

@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { faThList } from "@fortawesome/free-solid-svg-icons";
 import { faList } from "@fortawesome/free-solid-svg-icons";
+import Image1 from "../styles/assets/billboard1.jpg";
+import Image2 from "../styles/assets/billboard2.jpg";
 import Pagination from "../components/Home/Pagination";
 import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
-
 import RecommendedCard from "../components/Home/RecommendedCard";
 import HomeNavbar from "../components/Home/HomeNavbar";
 import { searchBillboards } from "../services/billboard_api";
@@ -20,9 +21,8 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
-import RecommendedCarousel from "../components/Home/RecommendedCarousel";
-
 import Navigation from "../components/Landing/Navigation";
+import RecommendedCarousel from "../components/Home/RecommendedCarousel";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -96,17 +96,11 @@ export default function Home() {
         <div className="header2 py-5 ">
           <button onClick={() => setIsBillboard(true)}> Billboards</button>{" "}
           <span className="md:mr-3 text-[#D0CFCE]">|</span>{" "}
-          <Link
-            to={"/"}
-            className={checkActiveLink("media") ? "text-[#2785AE]" : ""}
-            // onClick={setActiveLink("media")}
-          >
-            Media Agencies
-          </Link>
+          <button onClick={() => setIsBillboard(false)}> Media Agencies</button>
         </div>
 
-        <div className="grid grid-cols-12">
-          <div className="col-span-5 col-start-5 -mx-8">
+        <div className="grid grid-cols-10">
+          <div className="col-span-12 col-start-5 -mx-8">
             <div className="font-bold text-3xl ">Connect MarketPlace</div>
             <div className="text-[#7D7D7D]  text-md mb-6 mx-2">
               Find the best Places In One Place
@@ -116,6 +110,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <div className="py-4 px-4 overflow-hidden md:lg-20 mr-7">
         <div className="hidden md:block">
           <BillboardFilterBar
@@ -213,12 +208,32 @@ export default function Home() {
           onChildCurrentPageChange={handlePaginationCurrentPageStateChange}
         />
       </div>
-      <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
-      <div className="mx-4">
-        <RecommendedCarousel />
-      </div>
 
+      <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
+
+      {/* <div className="flex flex-wrap ml-20">
+        <RecommendedCard
+          location="Jemo, Addis Ababa "
+          description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
+          imageSrc={Image1}
+          alt="Card Image"
+        />
+        <RecommendedCard
+          location="Jemo, Addis Ababa "
+          description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
+          imageSrc={Image2}
+          alt="Card Image"
+        />
+      </div>
+      <RecommendedCard
+        location="Jemo, Addis Ababa "
+        description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
+        imageSrc={Image2}
+        alt="Card Image"
+      /> */}
+      <RecommendedCarousel />
       <Help />
+
       <div className="mt-20">
         <Footer />
       </div>
