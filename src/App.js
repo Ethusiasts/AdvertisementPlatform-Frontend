@@ -20,7 +20,7 @@ import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Landing from "./pages/Landing/Landing";
 import EditProfilePage from "./pages/profile/editProfilePage";
-import ProfilePage from "./pages/profile/profilePage";
+import ProfilePage from "./pages/profile/profilepage";
 import ForgotPassword from "./pages/authentication/forgotPassword";
 import ResetPassword from "./pages/authentication/resetPassword";
 import UserStepper from "./pages/profile/userStepper";
@@ -39,7 +39,6 @@ import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
 import CreateContract from "./pages/contract/createContract";
 const router = createBrowserRouter([
-
   // Onboarding
   {
     path: "/",
@@ -49,7 +48,6 @@ const router = createBrowserRouter([
     path: "/Landing",
     element: <Landing />,
   },
-
 
   // Authentication
   {
@@ -77,7 +75,6 @@ const router = createBrowserRouter([
     path: "/MediaAgencyStepper",
     element: <MediaAgencyStepper />,
   },
-
 
   // User
   {
@@ -118,7 +115,6 @@ const router = createBrowserRouter([
     element: <ContactUs />,
   },
 
-
   // Billboard User
   {
     path: "/BillboardDashboard",
@@ -144,7 +140,6 @@ const router = createBrowserRouter([
     path: "/CreateContract",
     element: <CreateContract />,
   },
-
 
   // Media Agency
   {
@@ -178,8 +173,6 @@ const router = createBrowserRouter([
     element: <HelpAndSupport />,
   },
 
-
-
   // Profile
   {
     path: "/Profile",
@@ -189,8 +182,6 @@ const router = createBrowserRouter([
     path: "/EditProfile",
     element: <EditProfilePage />,
   },
-
-
 ]);
 
 export default function App() {
