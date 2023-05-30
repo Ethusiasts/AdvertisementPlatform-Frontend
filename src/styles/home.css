@@ -30,3 +30,57 @@ input::placeholder {
     top: 2.2rem;
     left: 3rem;
 }
+.backgroundImg{
+    background: rgb(255, 255, 255);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(231, 230, 230, 1) 100%);
+}
+.rating {
+  display: inline-block;
+}
+
+.star {
+  font-size: 24px;
+}
+
+.filled:before {
+  content: '\2605'; /* Unicode character for a filled star */
+  color: gold;
+}
+
+.empty:before {
+  content: '\2606'; /* Unicode character for an empty star */
+  color: gray;
+}
+.dropdown{
+    position: relative;
+    width: fit-content;
+}
+
+.dropdown .dropdown-btn{
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+
+}
+
+.dropdown .dropdown-content {
+    position: absolute;
+    top: 70%;
+    left: 30%;
+    width: 95%;
+    padding: 15px;
+    background: #fff;
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+
+}
+
+.dropdown .dropdown-content .dropdown-item{
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dropdown .dropdown-content .dropdown-item:hover{
+    background: #869EA0;
+} 

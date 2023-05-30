@@ -3,7 +3,7 @@ import React from "react";
 import Stat from "./Stat";
 function Statistics() {
   return (
-    <div>
+    <div id="about">
       <div
         className="wrap w-full mx-auto  font-Lato mb-10"
         data-aos="flip-left"
