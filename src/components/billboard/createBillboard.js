@@ -1,12 +1,115 @@
-import CheckboxFour from "./checkbox";
+import React, { useState } from "react";
+import {storage} from "../../firebase";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+
+import {
+  useMutation
+} from '@tanstack/react-query'
+import { createBillboard } from "../../services/billboard_api";
 
 export default function CreateBillboardForm({ photo, title, description}) {
+
+
+  const mutation = useMutation({
+    mutationFn: (billboard) => {
+      return createBillboard(billboard)
+    },
+    onSuccess: () => {alert("successfully posted")}
+  })
+
+  if (mutation.isLoading){
+    alert("is loading")
+  }
+
+  if (mutation.isSuccess) {
+    alert("is successfull")
+  }
+  const [daily_rate_per_square_feet, setdaily_rate_per_square_feet] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [image, setImage] = useState(null);
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
+  const [production_fee_per_square_feet, setproduction_fee_per_square_feet] = useState(null);
+
+  const handleDailyRateChange = (event) => {
+    setdaily_rate_per_square_feet(event.target.value);
+  };
+  
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+  
+  const handleImageChange = (event) => {
+    setImage(event.target.files[0]);
+  };
+  
+  const handleWidthChange = (event) => {
+    setWidth(event.target.value);
+  };
+  
+  const handleHeightChange = (event) => {
+    setHeight(event.target.value);
+  };
+  
+  const handleProductionFeeChange = (event) => {
+    setproduction_fee_per_square_feet(event.target.value);
+  };
+  const handleSubmit = (url) => {
+    mutation.mutate({
+      rate: 2,
+      monthly_rate_per_sq: "894.00",
+      location: "Addis Ababa, Mexico",
+      image: url,
+      width: 12,
+      height: 12,
+      approved: true,
+      production: true,
+      paid: false,
+      status: "Free",
+      media_agency_id: 1
+    })
+  };
+
+  const uploadImage = (event) => {
+    event.preventDefault();
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    if (image == null) return
+    const imageRef = ref(storage,`${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}` + `images/${image.name}`)
+
+    uploadBytes(imageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        // console.log(url)
+        handleSubmit(url)
+        alert("Image Uploaded")
+      })
+    })
+
+  }
+
     return (
 
+<form onSubmit={uploadImage}>
 
 <div class="bg-gray-100 rounded-lg shadow-lg p-16 w-9/10">
     <h2 class="text-xl text-gray-800 font-bold mb-4">Add your Billboard!</h2>
     <p class="text-gray-600 text-base mb-4">Fill out the form below and let our experts bring your vision to life. Stand out from the crowd and drive real results for your brand. Get started now!</p>
+    <div class="mb-4">
+    <div className="w-full">
+                      <input
+                        className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
+                        type="text"
+                        name="location"
+                        id="location"
+                        placeholder="location"
+                        value={location}
+                        onChange={handleLocationChange}
+                      />
+                    </div>  
+    </div>
     <div className="mb-4 flex flex-col gap-4 sm:flex-row">
     <div className="w-full sm:w-1/2">
                       <input
@@ -15,15 +118,19 @@ export default function CreateBillboardForm({ photo, title, description}) {
                         name="height"
                         id="height"
                         placeholder="height"
+                        value={height}
+                        onChange={handleHeightChange}
                       />
                     </div>
                     <div className="w-full sm:w-1/2">
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
                         type="text"
-                        name="Monthly Rate Per Square Feet"
-                        id="Monthly Rate Per Square Feet"
-                        placeholder="Monthly Rate Per Square Feet"
+                        name="daily Rate Per Square Feet"
+                        id="daily Rate Per Square Feet"
+                        placeholder="daily Rate Per Square Feet"
+                        value={daily_rate_per_square_feet}
+                        onChange={handleDailyRateChange}
                       />
                     </div>
                     
@@ -37,6 +144,8 @@ export default function CreateBillboardForm({ photo, title, description}) {
                         name="width"
                         id="width"
                         placeholder="width"
+                        value={width}
+                        onChange={handleWidthChange}
                       />
                     </div>
                     {/* <CheckboxFour /> */}
@@ -44,24 +153,14 @@ export default function CreateBillboardForm({ photo, title, description}) {
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
                         type="text"
-                        name="height"
-                        id="height"
-                        placeholder="height"
+                        name="Production Fee per square Feet"
+                        id="Production Fee per square Feet"
+                        placeholder="Production Fee per square Feet"
+                        value={production_fee_per_square_feet}
+                        onChange={handleProductionFeeChange}
                       />
                     </div>
                     
-    </div>
-
-    <div class="mb-4">
-    <div className="w-full">
-                      <input
-                        className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-                        type="text"
-                        name="location"
-                        id="location"
-                        placeholder="location"
-                      />
-                    </div>
     </div>
 
     <div
@@ -72,6 +171,7 @@ export default function CreateBillboardForm({ photo, title, description}) {
                       type="file"
                       accept="image/*"
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+                      onChange={handleImageChange}
                     />
                     <div className="flex flex-col items-center justify-center space-y-3">
                       <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -112,9 +212,8 @@ export default function CreateBillboardForm({ photo, title, description}) {
                   </div>
     <div class="w-1/3 h-32"></div>
     <div class="flex justify-end">
-      <button class="bg-gray-200 hover:bg-gray-400 text-gray-600 font-semi-bold py-1 px-4 rounded mr-2 w-60">Cancel</button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60">Save Only</button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60">Save and Continue</button>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60">Save</button>
     </div>
   </div>
+</form>
         )}

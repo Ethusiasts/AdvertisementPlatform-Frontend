@@ -11,6 +11,18 @@ export const getBillboards = ({ currentPage }) => {
     });
 };
 
+export const createBillboard = (billboard) => {
+  return axiosInstance
+    .post(`/billboards`, billboard)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+
 export const searchBillboardsWithQueryOnly = ({ query, currentPage }) => {
   return axiosInstance
     .get(`/billboards/search?q=${query}&page=${currentPage}`)
