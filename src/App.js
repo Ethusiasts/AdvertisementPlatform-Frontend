@@ -1,9 +1,10 @@
 import Home from "./pages/Home";
-// import Landing from "./pages/Landing/Landing";
+import Landing from "./pages/Landing/Landing";
 import SignIn from "./pages/authentication/signIn";
 import SignUp from "./pages/authentication/signUp";
-import Detail from "./pages/detail_page/Detail";
-import ReactDOM from "react-dom/client";
+import BillboardDetail from "./pages/detail_page/billboardDetailPage";
+import MediaDetail from "./pages/detail_page/mediaDetailPage";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
@@ -18,7 +19,6 @@ import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Landing from "./pages/Landing/Landing";
 import EditProfilePage from "./pages/profile/editProfilePage";
 import ProfilePage from "./pages/profile/profilepage";
 import ForgotPassword from "./pages/authentication/forgotPassword";
@@ -40,14 +40,13 @@ import CreateBillboard from "./pages/billboards/createBillboard";
 const router = createBrowserRouter([
   // Onboarding
   {
-    path: "/",
+    path: "/search",
     element: <Home />,
   },
   {
-    path: "/Landing",
+    path: "/",
     element: <Landing />,
   },
-
   // Authentication
   {
     path: "/SignIn",
@@ -76,6 +75,18 @@ const router = createBrowserRouter([
   },
 
   // User
+  {
+    path: "/billboards/:billboardId",
+    element: <BillboardDetail />,
+  },
+  {
+    path: "/medias/:mediaId",
+    element: <MediaDetail />,
+  },
+  {
+    path: "/signIn",
+    element: <SignIn />,
+  },
   {
     path: "/Myaccount",
     element: <MyAccount />,
