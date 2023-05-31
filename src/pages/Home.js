@@ -4,24 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { faThList } from "@fortawesome/free-solid-svg-icons";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import Image1 from "../styles/assets/billboard1.jpg";
-import Image2 from "../styles/assets/billboard2.jpg";
 import Pagination from "../components/Home/Pagination";
 import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
-import RecommendedCard from "../components/Home/RecommendedCard";
-import HomeNavbar from "../components/Home/HomeNavbar";
-import { searchBillboards } from "../services/billboard_api";
 import BillboardFilterBar from "../components/Home/BillboardFilterBar";
 import SearchBox from "../components/Home/SearchBox";
-import { useQuery } from "@tanstack/react-query";
 import PopUp from "../components/Home/PopUp";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
 import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
-import Navigation from "../components/Landing/Navigation";
 import RecommendedCarousel from "../components/Home/RecommendedCarousel";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -100,7 +92,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-10">
-          <div className="col-span-12 col-start-5 -mx-8">
+          <div className="col-span-4 col-start-5 -mx-8">
             <div className="font-bold text-3xl ">Connect MarketPlace</div>
             <div className="text-[#7D7D7D]  text-md mb-6 mx-2">
               Find the best Places In One Place
@@ -211,27 +203,7 @@ export default function Home() {
 
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
 
-      {/* <div className="flex flex-wrap ml-20">
-        <RecommendedCard
-          location="Jemo, Addis Ababa "
-          description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <RecommendedCard
-          location="Jemo, Addis Ababa "
-          description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
-          imageSrc={Image2}
-          alt="Card Image"
-        />
-      </div>
-      <RecommendedCard
-        location="Jemo, Addis Ababa "
-        description="Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi"
-        imageSrc={Image2}
-        alt="Card Image"
-      /> */}
-      <RecommendedCarousel />
+      <RecommendedCarousel className />
       <Help />
 
       <div className="mt-20">
