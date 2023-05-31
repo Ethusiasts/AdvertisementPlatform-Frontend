@@ -15,6 +15,7 @@ export const searchBillboardsWithQueryOnly = ({ query, currentPage }) => {
   return axiosInstance
     .get(`/billboards/search?q=${query}&page=${currentPage}`)
     .then((res) => {
+      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
