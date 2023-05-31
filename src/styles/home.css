@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 body {
     font-family: Inter;
 }
@@ -10,9 +7,7 @@ body {
 input::placeholder {
     opacity: 0.5;
 }
-.home-body{
-    background-color: black;
-}
+
 .billboard-card{
     width: 80%;
 }

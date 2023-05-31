@@ -1,8 +1,8 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export const getAgencies = ({ currentPage }) => {
+export const getMediaDetail = ({ mediaId }) => {
   return axiosInstance
-    .get(`/agencies/?page=${currentPage}`)
+    .get(`/agencies/${mediaId}`)
     .then((res) => {
       return res.data;
     })
@@ -71,5 +71,3 @@ export const searchAgencies = ({
       return error;
     });
 };
-
-//
