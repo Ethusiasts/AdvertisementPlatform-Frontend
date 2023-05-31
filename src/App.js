@@ -37,6 +37,37 @@ import MediaContract from "./pages/contract/mediaContract";
 import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
+
+// HOC for checking authentication and authorization
+const withAuthentication = (Component) => {
+  const isAuthenticated = !!localStorage.getItem("token"); // Replace with your authentication logic
+  // Check if the user is authorized
+  const isAuthorized = (role) => {
+    // Implement your authorization logic here
+    // Example: Check if the user has a specific role
+    return role === "Admin";
+  };
+
+  // Usage example:
+  if (isAuthenticated && isAuthorized("admin")) {
+    // User is authenticated and has the 'admin' role
+    // Render authorized content
+  } else {
+    // User is not authenticated or not authorized
+    // Redirect to a login page or display an error message
+  }
+  return function AuthenticatedComponent(props) {
+    if (isAuthenticated) {
+      return <Component {...props} />;
+    } else {
+      // return <Redirect to="/SignIn" />; // Redirect to the sign-in page if not authenticated
+    }
+  };
+};
+
+// Apply the withAuthentication HOC to secure the routes
+const SecuredProfilePage = withAuthentication(ProfilePage);
+
 const router = createBrowserRouter([
   // Onboarding
   {

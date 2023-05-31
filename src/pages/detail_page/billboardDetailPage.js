@@ -2,6 +2,8 @@ import "../../styles/detail.css";
 import { getBillboardDetail } from "../../services/billboard_api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
 import ImageCard from "../../components/billboardDetails/imageCard";
@@ -58,6 +60,8 @@ export default function BillboardDetail() {
   if (billboardDetail) {
     return (
       <>
+        <ToastContainer />
+
         <Navigation />
         {/* Images */}
         <ImageCard
@@ -82,9 +86,9 @@ export default function BillboardDetail() {
         {/* Reviews */}
         <Rating />
         {/* Comments */}
-        <Comments />
+        <Comments billboardId={billboardDetail.id} />
         {/* Message */}
-        <Messages />
+        <Messages billboardId={billboardDetail.id} />
         {/* Nearby Places */}
         <Nearby />
         {/* Footer */}
