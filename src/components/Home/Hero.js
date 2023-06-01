@@ -10,13 +10,14 @@ export default function Hero() {
       <img
         src={HeroImg}
         alt=""
-        className="absolute w-full h-full object-cover object-left sm:object-center opacity-70"
+        className="absolute w-full h-full object-cover object-left sm:object-center opacity-90"
       />
+      <div className="absolute inset-0 bg-black opacity-50"></div>
 
       {/* :HERO MAIN CONTAINER */}
       <div className="relative py-28 xl:py-40 w-full md:w-2/3 lg:w-1/2 h-full flex flex-col justify-center">
         {/* ::Hero title & text */}
-        <div className="mx-5 md:mx-0 p-8 rounded-xl md:rounded-r-none bg-gray-800 bg-opacity-50 text-white shadow-2xl">
+        <div className="mx-5 md:mx-0 p-8 rounded-xl md:rounded-r-none bg-black bg-opacity-50 text-white shadow-2xl">
           <h1 className="text-3xl sm:text-5xl font-josefin font-extrabold">
             Welcome, <br />
             <span className="text-yellow-400 text-opacity-80">
