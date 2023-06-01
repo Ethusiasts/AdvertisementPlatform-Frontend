@@ -1,14 +1,14 @@
 import React from "react";
 import HomeNavBar from "./HomeNavbar";
 import { Link } from "react-router-dom";
+import HeroImg from "../../images/hero.jpg";
 
 export default function Hero() {
   return (
     <div className="home_hero relative w-full h-full flex justify-end bg-gradient-to-t from-black via-transparent to-black overflow-hidden">
       {/* :HERO IMAGE */}
-
       <img
-        src="https://images.unsplash.com/photo-1601042879364-f3947d3f9c16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNpdHklMjBuaWdodHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        src={HeroImg}
         alt=""
         className="absolute w-full h-full object-cover object-left sm:object-center opacity-70"
       />

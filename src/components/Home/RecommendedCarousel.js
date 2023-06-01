@@ -7,7 +7,8 @@ const RecommendedCarousel = () => {
   return (
     <Carousel slideInterval={5000} className="h-screen">
       {[Image1, Image2].map((img) => {
-        return <img alt="..." src={img} />;
+        console.log(img);
+        return <img alt="" src={img} />;
       })}
     </Carousel>
   );
