@@ -203,7 +203,10 @@ export default function Home() {
 
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
 
-      <RecommendedCarousel className />
+      <div className="mx-7">
+        <RecommendedCarousel />
+      </div>
+
       <Help />
 
       <div className="mt-20">
