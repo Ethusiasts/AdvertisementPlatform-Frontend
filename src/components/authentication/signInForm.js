@@ -1,23 +1,65 @@
-import { Link } from 'react-router-dom';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signIn } from "../../services/auth/signin_api";
+import { PropagateLoaderSpinner } from "../spinners";
+import ErrorAlert from "../errorAlert";
 
 export default function SignInForm() {
-    return (
-  
-      <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState();
+
+  const { mutate, isLoading } = useMutation(signIn, {
+    onSuccess: (data) => {
+      if (data.status === 200) {
+        console.log(data);
+        navigate("/search");
+      } else {
+        console.log(data);
+
+        console.log(data.response.data.status);
+        setError(data.response.data.message);
+      }
+    },
+    onError: () => {
+      setError("Some error occured...");
+    },
+  });
+  const onSubmit = (data) => {
+    data.preventDefault();
+    setError();
+    const user = {
+      email: email,
+      role: "customer",
+      is_verified: true,
+      password: password,
+    };
+    mutate(user);
+  };
+
+  return (
+    <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+      {error ? <ErrorAlert message={error} /> : ""}
+
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
           Sign In to Advert
         </h2>
 
-        <form>
+        <form onSubmit={onSubmit} method="POST">
           <div className="mb-4">
-            <label className="mb-2.5 block font-medium text-black">
-              Email
-            </label>
+            <label className="mb-2.5 block font-medium text-black">Email</label>
             <div className="relative">
               <input
                 type="email"
+                name="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
 
@@ -48,6 +90,10 @@ export default function SignInForm() {
             <div className="relative">
               <input
                 type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
                 placeholder="6+ Characters, 1 Capital letter"
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
@@ -77,11 +123,19 @@ export default function SignInForm() {
           </div>
 
           <div className="mb-5">
-            <input
-              type="submit"
-              value="Sign In"
-              className="w-full cursor-pointer rounded-lg border border-blue bg-blue-700 p-4 text-white hover:bg-opacity-90"
-            />
+            {isLoading ? (
+              <div className="flex w-full justify-center align-center items-center p-4">
+                {"  "}
+                <PropagateLoaderSpinner />
+              </div>
+            ) : (
+              <input
+                type="submit"
+                onSubmit={onSubmit}
+                value="Sign In"
+                className="w-full cursor-pointer rounded-lg border border-primary bg-blue-700 p-4 text-white transition hover:bg-opacity-90"
+              />
+            )}
           </div>
 
           <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50">
@@ -123,7 +177,7 @@ export default function SignInForm() {
 
           <div className="mt-6 text-center">
             <p>
-              Don’t have any account?{' '}
+              Don’t have any account?{" "}
               <Link to="/SignUp" className="text-blue">
                 Sign Up
               </Link>
@@ -140,4 +194,5 @@ export default function SignInForm() {
         </form>
       </div>
     </div>
-        )}
+  );
+}

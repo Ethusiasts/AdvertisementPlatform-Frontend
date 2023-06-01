@@ -2,21 +2,30 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { signUp } from "../../services/auth/signup_api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { PropagateLoaderSpinner } from "../spinners";
-import DisplayAlert from "../alert";
+import ErrorAlert from "../errorAlert";
 export default function SignUpForm() {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRepassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
 
   const { mutate, isLoading } = useMutation(signUp, {
     onSuccess: (data) => {
-      console.log(data.response);
+      if (data.status === 200) {
+        navigate("/signin");
+      } else {
+        console.log(data.response.data.status);
+        setError(data.response.data.message);
+      }
     },
     onError: () => {
-      alert("there was an error");
+      setError("Some error occured...");
     },
     onSettled: () => {
       queryClient.invalidateQueries("create");
@@ -28,10 +37,12 @@ export default function SignUpForm() {
       : setError("Password do not match");
   };
   const onSubmit = (data) => {
+    data.preventDefault();
+    setError();
+
     if (password !== rePassword) {
       setError("Password should match");
     } else {
-      data.preventDefault();
       const user = {
         email: email,
         role: "customer",
@@ -43,14 +54,15 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-      {error ? <DisplayAlert message={"Something wrong"} /> : ""}
+    <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 ">
+      {error ? <ErrorAlert message={error} /> : ""}
+
       <div className="w-full p-4 mt-7 sm:p-12.5 xl:p-17.5 ">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
           Sign Up to Advert
         </h2>
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} method="POST">
           <div className="mb-4">
             <label className="mb-2.5 block font-medium text-black">Name</label>
             <div className="relative">
