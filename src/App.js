@@ -19,8 +19,6 @@ import HelpAndSupport from "./pages/admin/helpAndSupport";
 import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import EditProfilePage from "./pages/profile/editProfilePage";
-import ProfilePage from "./pages/profile/profilePage";
 import ForgotPassword from "./pages/authentication/forgotPassword";
 import ResetPassword from "./pages/authentication/resetPassword";
 import UserStepper from "./pages/profile/userStepper";
@@ -38,6 +36,12 @@ import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
 import CreateContract from "./pages/contract/createContract";
+import UserEditProfilePage from "./pages/profile/userEditProfilePage";
+import MediaEditProfilePage from "./pages/profile/mediaEditProfilePage";
+import UserProfilePage from "./pages/profile/userProfilePage";
+import MediaProfilePage from "./pages/profile/mediaProfilePage";
+import BillboardEditProfilePage from "./pages/profile/billboardEditProfilePage";
+import BillboardProfilePage from "./pages/profile/billboardProfilePage";
 const router = createBrowserRouter([
   // Onboarding
   {
@@ -186,12 +190,28 @@ const router = createBrowserRouter([
 
   // Profile
   {
-    path: "/Profile",
-    element: <ProfilePage />,
+    path: "/UserProfile",
+    element: <UserProfilePage />,
   },
   {
-    path: "/EditProfile",
-    element: <EditProfilePage />,
+    path: "/MediaProfile",
+    element: <MediaProfilePage />,
+  },
+  {
+    path: "/BillboardProfile",
+    element: <BillboardProfilePage />,
+  },
+  {
+    path: "/UserEditProfile",
+    element: <UserEditProfilePage />,
+  },
+  {
+    path: "/MediaEditProfile",
+    element: <MediaEditProfilePage />,
+  },
+  {
+    path: "/BillboardEditProfile",
+    element: <BillboardEditProfilePage />,
   },
 ]);
 

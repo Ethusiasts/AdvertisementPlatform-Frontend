@@ -24,10 +24,11 @@ export const getBillboards = ({ currentPage }) => {
 };
 
 export const createBillboard = (billboard) => {
+  console.log(billboard)
   return axiosInstance
-    .post(`/billboards`, billboard)
-    .then((res) => {
-      return res.data;
+  .post(`/billboards/`, billboard)
+  .then((res) => {
+    return res.data;
     })
     .catch((error) => {
       console.error(error);
@@ -90,3 +91,5 @@ export const searchBillboards = ({
 };
 
 //
+
+
