@@ -20,6 +20,8 @@ export default function SignUpForm() {
   const { mutate, isLoading } = useMutation(signUp, {
     onSuccess: (data) => {
       if (data.status === 200) {
+        setTimeout(setError(data.response.data.message), 3000);
+
         navigate("/signin");
       } else {
         console.log(data.response.data.status);
