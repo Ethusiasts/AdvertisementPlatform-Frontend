@@ -37,6 +37,7 @@ import MediaContract from "./pages/contract/mediaContract";
 import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const router = createBrowserRouter([
   // Onboarding
   {
@@ -192,10 +193,11 @@ const router = createBrowserRouter([
 
 export default function App() {
   const client = new QueryClient();
-
   return (
-    <QueryClientProvider client={client}>
-      {<RouterProvider router={router} />}
-    </QueryClientProvider>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
+      <QueryClientProvider client={client}>
+        {<RouterProvider router={router} />}
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   );
 }
