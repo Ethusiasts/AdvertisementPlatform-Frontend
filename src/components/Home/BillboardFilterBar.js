@@ -1,11 +1,16 @@
 import { MdEditLocationAlt } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAmericanSignLanguageInterpreting,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 import PriceFilter from "./PriceFilter";
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { searchBillboards } from "../../services/billboard_api";
 import { searchAgencies } from "../../services/agency_api";
+import Geocode from "react-geocode";
+import axios from "axios";
 export default function BillboardFilterBar({
   onClose,
   query,
@@ -16,6 +21,7 @@ export default function BillboardFilterBar({
 }) {
   const [size, setSize] = useState(0);
   const [location, setLocation] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [type, setType] = useState("");
   const [promotionTime, setpromotionTime] = useState("");
   const [resetPriceFilter, setResetPriceFilter] = useState(false);
@@ -34,6 +40,39 @@ export default function BillboardFilterBar({
   const handleLocation = (event) => {
     setLocation(event.target.value);
   };
+  // const handleLocationChange = (event) => {
+  //   const inputValue = event.target.value;
+  //   setLocation(inputValue);
+
+  //   // Fetch location suggestions from Nominatim API
+  //   const apiUrl = `https://nominatim.openstreetmap.org/search?q=${inputValue}&format=json`;
+
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response) => {
+  //       const { data } = response;
+  //       console.log(data);
+  //       setSuggestions(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+
+  // const handleLocationSelect = (selectedLocation) => {
+  //   // Get the latitude and longitude of the selected location
+  //   // const { lat, lon } = selectedLocation.geometry;
+
+  //   console.log("Selected Location:", selectedLocation);
+  //   // console.log("Latitude:", lat);
+  //   // console.log("Longitude:", lon);
+
+  //   // Further processing or actions with the selected location
+
+  //   setLocation(selectedLocation.display_name);
+  //   setSuggestions([]); // Clear suggestions
+  // };
+
   const handleType = (event) => {
     setType(event.target.value);
   };
@@ -104,6 +143,7 @@ export default function BillboardFilterBar({
     onFilterStateChange(true);
   };
 
+  console.log(suggestions);
   return (
     <div className=" bg-white p-4 rounded-md shadow-lg md:float-left md:w-1/4 mt-8">
       <div className="">
@@ -122,7 +162,7 @@ export default function BillboardFilterBar({
             Close
           </button>
         </div>
-        <ul>
+        <ul className="relative">
           {isBillboard === true && (
             <>
               <li className=" text-[#2E4541] font-bold text-l py-4 ">
@@ -142,6 +182,25 @@ export default function BillboardFilterBar({
                   onChange={handleLocation}
                 />
               </div>
+              {/* <ul
+                style={
+                  {
+                    // position: "absolute",
+                    // bottom: "100%",
+                    // left: 0,
+                    // zIndex: 1,
+                  }
+                }
+              >
+                {suggestions.map((suggest) => (
+                  <li
+                    key={suggest.place_id}
+                    onClick={() => handleLocationSelect(suggest)}
+                  >
+                    {suggest.display_name}
+                  </li>
+                ))}
+              </ul> */}
             </>
           )}
 

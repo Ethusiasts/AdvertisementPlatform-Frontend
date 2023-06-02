@@ -11,6 +11,17 @@ export const getMediaDetail = ({ mediaId }) => {
     });
 };
 
+export const getAgencies = ({ currentPage }) => {
+  return axiosInstance
+    .get(`/agencies/?page=${currentPage}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
 export const searchAgenciesWithQueryOnly = ({ query, currentPage }) => {
   return axiosInstance
     .get(`/agencies/search?q=${query}&page=${currentPage}`)
