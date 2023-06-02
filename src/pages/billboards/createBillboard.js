@@ -2,6 +2,7 @@ import CreateBillboardForm from "../../components/billboard/createBillboard"
 import SideBar from "../../components/billboards/sidebar"
 import Header from "../../components/billboards/header"
 
+
 export default function CreateBillboard({ status, place, city, width, height, location, imageSrc, alt }) {
     return (
         <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
