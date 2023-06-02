@@ -1,7 +1,7 @@
-import ProfileCard from "../../components/profile/profileCard";
+import UserProfileCard from "../../components/profile/userProfileCard";
 import SideBar from "../../components/user/sidebar";
 
-export default function ProfilePage({
+export default function UserProfilePage({
   status,
   place,
   city,
@@ -18,7 +18,7 @@ export default function ProfilePage({
       </div>
       <div class="h-full ml-14 mr-14 mt-5 mb-10 md:ml-64">
         <div class="flex items-center justify-center pl-14">
-          <ProfileCard />
+          <UserProfileCard />
         </div>
       </div>
     </div>

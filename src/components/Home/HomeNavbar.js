@@ -9,7 +9,7 @@ function HomeNavBar() {
   };
   return (
     <div>
-      <nav className="relative px-4 py-4 transition duration-500 flex justify-between items-center bg-white bg-opacity-30">
+      <nav className="relative px-4 py-4 transition duration-500 flex justify-between items-center bg-black bg-opacity-30">
         <Link className="text-3xl font-bold leading-none" href="#">
           <svg className="h-10" alt="logo" viewBox="0 0 10240 10240">
             <path
@@ -38,8 +38,8 @@ function HomeNavBar() {
                 {" "}
                 <li>
                   <a
-                    className="text-lg text-white transition-all duration-300 transform hover:text-gray-300"
-                    href={`#${nav[1]}`}
+                    className="text-xl text-white transition-all duration-300 transform hover:text-gray-300"
+                    href={`/#${nav[1]}`}
                   >
                     {nav[0]}
                   </a>

@@ -1,20 +1,15 @@
-import { Link } from 'react-router-dom';
-import LogoDark from '../../images/logo-dark.svg';
-import Logo from '../../images/logo.svg';
-
-
+import { Link } from "react-router-dom";
 
 export default function SideComponent() {
-    return (
-      <div className="hidden w-full xl:block xl:w-1/2">
+  return (
+    <div className="hidden w-full xl:block xl:w-1/2">
       <div className="py-17.5 px-26 text-center">
         <Link className="mb-5.5 inline-block" to="/">
-            <div class="text-3xl text-blue-800 font-bold"> Advert </div>
+          <div className="text-3xl text-blue-800 font-bold"> Advert </div>
         </Link>
 
         <p className="2xl:px-20 pb-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          suspendisse.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit suspendisse.
         </p>
 
         <span className="mt-15 inline-block">
@@ -141,4 +136,5 @@ export default function SideComponent() {
         </span>
       </div>
     </div>
-        )}
+  );
+}
