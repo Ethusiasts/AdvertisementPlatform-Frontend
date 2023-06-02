@@ -1,14 +1,12 @@
 import axiosInstance from "../../utils/axiosInstance";
 
-export const signUp = ({ email, role, is_verified, password }) => {
+export const signIn = ({ email, password }) => {
   const body = {
     email: email,
-    role: role,
-    is_verified: is_verified,
     password: password,
   };
   return axiosInstance
-    .post("/auth/signup", body)
+    .post("/auth/login", body)
     .then((res) => {
       return res.data;
     })
