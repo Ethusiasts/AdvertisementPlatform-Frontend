@@ -146,35 +146,80 @@ export default function Home() {
                   aria-orientation="vertical"
                   aria-labelledby="options-menu"
                 >
-                  <button
-                    className={classNames(
-                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                      { "bg-gray-100": sortBy === "name" }
-                    )}
-                    onClick={() => handleChildSort("place")}
-                  >
-                    Name
-                  </button>
-                  <button
-                    className={classNames(
-                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                      { "bg-gray-100": sortBy === "location" }
-                    )}
-                    role="menuitem"
-                    onClick={() => handleChildSort("location")}
-                  >
-                    Location
-                  </button>
-                  <button
-                    className={classNames(
-                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                      { "bg-gray-100": sortBy === "name" }
-                    )}
-                    role="menuitem"
-                    onClick={() => handleChildSort("size")}
-                  >
-                    Size
-                  </button>
+                  {!isBillboard && (
+                    <>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("channel_name")}
+                      >
+                        Channel Name
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("normal")}
+                      >
+                        Normal Hour
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("peak_hour")}
+                      >
+                        Peak Hour
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("production")}
+                      >
+                        Production
+                      </button>
+                    </>
+                  )}
+                  {isBillboard && (
+                    <>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("monthly_rate_per_sq")}
+                      >
+                        Price
+                      </button>
+
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "location" }
+                        )}
+                        role="menuitem"
+                        onClick={() => handleChildSort("location")}
+                      >
+                        Location
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        role="menuitem"
+                        onClick={() => handleChildSort("size")}
+                      >
+                        Size
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -196,12 +241,13 @@ export default function Home() {
           query={query}
           filterOn={filterOn}
           filterResults={filterResults}
+          isBillboard={isBillboard}
           onChildStateChange={handlePaginationDataStateChange}
           onChildCurrentPageChange={handlePaginationCurrentPageStateChange}
         />
       </div>
 
-      <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
+      <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommendations</div>
 
       <div className="mx-7">
         <RecommendedCarousel />

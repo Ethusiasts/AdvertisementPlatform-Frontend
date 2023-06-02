@@ -17,6 +17,11 @@ import Image1 from "../../styles/assets/billboard1.jpg";
 import Image2 from "../../styles/assets/billboard2.jpg";
 import Image3 from "../../styles/assets/billboard3.jpg";
 import Card from "./BillboardCard";
+import AgencyCard from "./AgencyCard";
+import {
+  getAgencies,
+  searchAgenciesWithQueryOnly,
+} from "../../services/agency_api";
 const Pagination = forwardRef(
   (
     {
@@ -25,6 +30,7 @@ const Pagination = forwardRef(
       filterResults,
       onChildCurrentPageChange,
       filterOn,
+      isBillboard,
     },
     ref
   ) => {
@@ -33,25 +39,34 @@ const Pagination = forwardRef(
     const [cardData, setCardData] = useState(null);
 
     const { data, isLoading } = useQuery(
-      ["billboards", currentPage],
+      ["data", currentPage, isBillboard],
       () => {
-        return getBillboards({ currentPage })
-          .then((res) => {
-            setTotalPages(Math.ceil(res.count / 6));
-            onChildStateChange(res.count);
-            return res.results;
-          })
-          .catch((error) => {
-            console.log(error);
-            return error;
-          });
+        if (isBillboard) {
+          return getBillboards({ currentPage })
+            .then((res) => {
+              setTotalPages(Math.ceil(res.count / 6));
+              onChildStateChange(res.count);
+              return res.results;
+            })
+            .catch((error) => {
+              console.log(error);
+              return error;
+            });
+        } else {
+          return getAgencies({ currentPage })
+            .then((res) => {
+              setTotalPages(Math.ceil(res.count / 6));
+              onChildStateChange(res.count);
+              return res.results;
+            })
+            .catch((error) => {
+              console.log(error);
+              return error;
+            });
+        }
       },
       { query }
     );
-
-    // console.log("data");
-    // console.log(cardData);
-    // console.log(query);
 
     useEffect(() => {
       setCurrentPage(1); // Set currentPage to 1 on query change
@@ -68,14 +83,24 @@ const Pagination = forwardRef(
       }
 
       if (query) {
-        searchBillboardsWithQueryOnly({ query, currentPage })
-          .then((res) => setCardData(res.results))
-          .catch((error) => {
-            return error;
-          });
+        if (isBillboard) {
+          searchBillboardsWithQueryOnly({ query, currentPage })
+            .then((res) => setCardData(res.results))
+            .catch((error) => {
+              return error;
+            });
+        } else {
+          searchAgenciesWithQueryOnly({ query, currentPage })
+            .then((res) => {
+              setCardData(res.results);
+              return res.results;
+            })
+            .catch((error) => {
+              return error;
+            });
+        }
       }
     }, [data, query, filterOn, filterResults]);
-    console.log(filterOn);
 
     const handlePageChange = (pageNumber) => {
       setCurrentPage(pageNumber);
@@ -85,6 +110,20 @@ const Pagination = forwardRef(
     useImperativeHandle(ref, () => ({
       handleSort(property) {
         const sortedData = [...cardData].sort((a, b) => {
+          let item1 = a[property];
+          let item2 = b[property];
+          if (
+            property === "monthly_rate_per_sq" ||
+            property === "normal" ||
+            property === "peak_hour" ||
+            property === "production"
+          ) {
+            item1 = parseFloat(a[property]);
+            item2 = parseFloat(b[property]);
+          }
+
+          console.log(item1, item2);
+
           if (property === "size") {
             let a_val = a["width"] * a["height"];
             let b_val = b["width"] * b["height"];
@@ -96,10 +135,11 @@ const Pagination = forwardRef(
             }
             return 0;
           }
-          if (a[property] < b[property]) {
+
+          if (item1 < item2) {
             return -1;
           }
-          if (a[property] > b[property]) {
+          if (item1 > item2) {
             return 1;
           }
           return 0;
@@ -118,19 +158,36 @@ const Pagination = forwardRef(
     return (
       <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pl-11 ">
-          {cardData.map((card) => (
-            <Card
-              status={card.status}
-              rate={card.rate}
-              price={card.monthly_rate_per_sq}
-              production={card.production}
-              width={card.width}
-              height={card.height}
-              location={card.location}
-              imageSrc={card.image}
-              alt="Card Image"
-            />
-          ))}
+          {isBillboard && (
+            <>
+              {cardData.map((card) => (
+                <Card
+                  status={card.status}
+                  rate={card.rate}
+                  price={card.monthly_rate_per_sq}
+                  production={card.production}
+                  width={card.width}
+                  height={card.height}
+                  location={card.location}
+                  imageSrc={card.image}
+                  alt="Card Image"
+                />
+              ))}
+            </>
+          )}
+
+          {!isBillboard && (
+            <>
+              {cardData.map((card) => (
+                <AgencyCard
+                  channel_name={card.channel_name}
+                  peak_hour={card.peak_hour}
+                  production={card.production}
+                  normal_hour={card.normal}
+                />
+              ))}
+            </>
+          )}
         </div>
 
         <div className="flex justify-center mt-4">

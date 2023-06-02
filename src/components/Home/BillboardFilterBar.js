@@ -1,10 +1,16 @@
 import { MdEditLocationAlt } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAmericanSignLanguageInterpreting,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 import PriceFilter from "./PriceFilter";
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { searchBillboards } from "../../services/billboard_api";
+import { searchAgencies } from "../../services/agency_api";
+import Geocode from "react-geocode";
+import axios from "axios";
 export default function BillboardFilterBar({
   onClose,
   query,
@@ -15,12 +21,13 @@ export default function BillboardFilterBar({
 }) {
   const [size, setSize] = useState(0);
   const [location, setLocation] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [type, setType] = useState("");
-  const [showTime, setShowTime] = useState("");
+  const [promotionTime, setpromotionTime] = useState("");
   const [resetPriceFilter, setResetPriceFilter] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [priceValue, setPriceValue] = useState([0, 2000]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [channelType, setchannelType] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const options = ["TV", "RADIO", "MAGAZINE"];
 
@@ -33,6 +40,39 @@ export default function BillboardFilterBar({
   const handleLocation = (event) => {
     setLocation(event.target.value);
   };
+  // const handleLocationChange = (event) => {
+  //   const inputValue = event.target.value;
+  //   setLocation(inputValue);
+
+  //   // Fetch location suggestions from Nominatim API
+  //   const apiUrl = `https://nominatim.openstreetmap.org/search?q=${inputValue}&format=json`;
+
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response) => {
+  //       const { data } = response;
+  //       console.log(data);
+  //       setSuggestions(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+
+  // const handleLocationSelect = (selectedLocation) => {
+  //   // Get the latitude and longitude of the selected location
+  //   // const { lat, lon } = selectedLocation.geometry;
+
+  //   console.log("Selected Location:", selectedLocation);
+  //   // console.log("Latitude:", lat);
+  //   // console.log("Longitude:", lon);
+
+  //   // Further processing or actions with the selected location
+
+  //   setLocation(selectedLocation.display_name);
+  //   setSuggestions([]); // Clear suggestions
+  // };
+
   const handleType = (event) => {
     setType(event.target.value);
   };
@@ -40,7 +80,7 @@ export default function BillboardFilterBar({
     setPriceValue(value);
   };
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    setchannelType(option);
     setIsDropdownOpen(false);
   };
 
@@ -50,30 +90,49 @@ export default function BillboardFilterBar({
     setType("");
     setResetPriceFilter(true); // Set the resetPriceFilter state to trigger PriceFilter reset
     onFilterStateChange(false);
-    setShowTime("");
-    setSelectedOption(null);
+    setpromotionTime("");
+    setchannelType(null);
   };
 
-  const { mutate, data, isLoading, isError, error } = useMutation(() =>
-    searchBillboards({
-      currentPage,
-      query,
-      location,
-      type,
-      size,
-      min_price,
-      max_price,
-    })
-      .then((res) => {
-        setFilterResults(res.results);
-        return res.results;
+  const { mutate, data, isLoading, isError, error } = useMutation(() => {
+    if (isBillboard) {
+      searchBillboards({
+        currentPage,
+        query,
+        location,
+        type,
+        size,
+        min_price,
+        max_price,
       })
-      .catch((error) => {
-        console.log(error);
-        return error;
+        .then((res) => {
+          setFilterResults(res.results);
+          return res.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          return error;
+        });
+    } else {
+      searchAgencies({
+        currentPage,
+        query,
+        channelType,
+        type,
+        promotionTime,
+        min_price,
+        max_price,
       })
-  );
-
+        .then((res) => {
+          setFilterResults(res.results);
+          return res.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          return error;
+        });
+    }
+  });
   useEffect(() => {
     mutate();
   }, [currentPage, mutate]);
@@ -84,6 +143,7 @@ export default function BillboardFilterBar({
     onFilterStateChange(true);
   };
 
+  console.log(suggestions);
   return (
     <div className=" bg-white p-4 rounded-md shadow-lg md:float-left md:w-1/4 mt-8">
       <div className="">
@@ -102,7 +162,7 @@ export default function BillboardFilterBar({
             Close
           </button>
         </div>
-        <ul>
+        <ul className="relative">
           {isBillboard === true && (
             <>
               <li className=" text-[#2E4541] font-bold text-l py-4 ">
@@ -122,6 +182,25 @@ export default function BillboardFilterBar({
                   onChange={handleLocation}
                 />
               </div>
+              {/* <ul
+                style={
+                  {
+                    // position: "absolute",
+                    // bottom: "100%",
+                    // left: 0,
+                    // zIndex: 1,
+                  }
+                }
+              >
+                {suggestions.map((suggest) => (
+                  <li
+                    key={suggest.place_id}
+                    onClick={() => handleLocationSelect(suggest)}
+                  >
+                    {suggest.display_name}
+                  </li>
+                ))}
+              </ul> */}
             </>
           )}
 
@@ -161,8 +240,8 @@ export default function BillboardFilterBar({
                   id="checkbox3"
                   type="checkbox"
                   className="form-checkbox h-4 w-4 accent-[#3f51b5]  bg-white-500"
-                  checked={showTime === "Peak Hour"}
-                  onChange={() => setShowTime("Peak Hour")}
+                  checked={promotionTime === "Peak Hour"}
+                  onChange={() => setpromotionTime("Peak Hour")}
                 />
                 <label htmlFor="checkbox3" className="ml-6 block text-gray-500">
                   Peak Hour
@@ -173,8 +252,8 @@ export default function BillboardFilterBar({
                   id="checkbox4"
                   type="checkbox"
                   className="form-checkbox h-4 w-4 text-blue-600"
-                  checked={showTime === "Normal Hour"}
-                  onChange={() => setShowTime("Normal Hour")}
+                  checked={promotionTime === "Normal Hour"}
+                  onChange={() => setpromotionTime("Normal Hour")}
                 />
                 <label htmlFor="checkbox4" className="ml-6 block text-gray-500">
                   Normal Hour
@@ -217,7 +296,7 @@ export default function BillboardFilterBar({
                 className="dropdown-btn text-l"
                 onClick={() => setIsActive(!isActive)}
               >
-                {selectedOption ? selectedOption : "Channel Type"}
+                {channelType ? channelType : "Channel Type"}
 
                 <span className="pl-8 pr-2">
                   <FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon>
@@ -229,7 +308,7 @@ export default function BillboardFilterBar({
                   {options.map((option) => (
                     <div
                       onClick={() => {
-                        setSelectedOption(option);
+                        setchannelType(option);
                         setIsActive(false);
                       }}
                       className="dropdown-item"
