@@ -1,14 +1,14 @@
 import axiosInstance from "../../utils/axiosInstance";
 
-export const signUp = ({ email, role, is_verified, password }) => {
+export const signInwithGoogle = ({ email }) => {
+  const d = Date.now();
+  const passwordDefault = process.env.REACT_APP_GOOGLE_API_TOKEN + d;
   const body = {
     email: email,
-    role: role,
-    is_verified: is_verified,
-    password: password,
+    password: passwordDefault,
   };
   return axiosInstance
-    .post("/auth/signup", body)
+    .post("/auth/login", body)
     .then((res) => {
       return res.data;
     })

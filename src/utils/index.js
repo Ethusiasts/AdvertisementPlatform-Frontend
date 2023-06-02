@@ -5,6 +5,11 @@ export const navMenus = [
   ["Pricing", "pricing"],
   ["Contact", "contact"],
 ];
+
+export const selectOptionsSignUp = [
+  { value: "customer", label: "Customer" },
+  { value: "landowner", label: " Landowner" },
+];
 export const heroSectionTitle = "Advertising your brands";
 export const trustSectionTitle = "Trusted by content creators across the world";
 export const advertisementTitle = "For Advertisers";
@@ -52,3 +57,4 @@ export const random = (min, max) =>
   Math.floor(Math.random() * (max - min)) + min;
 export const shuffle = (arr) => [...arr].sort(() => 0.5 - Math.random());
 export const animationDuration = 20000;
+export const defaultErrorMsg = "Some Error Occurred";
