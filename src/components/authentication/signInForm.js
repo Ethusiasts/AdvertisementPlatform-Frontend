@@ -9,54 +9,60 @@ import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
 import Select from "react-tailwindcss-select";
 import { selectOptionsSignUp } from "../../utils";
+import AlertService from "../alertService";
 
 export default function SignInForm() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState();
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
   const [role, setRole] = useState(selectOptionsSignUp[0]);
 
   const { mutate, isLoading } = useMutation(signIn, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.status === 200) {
         console.log(data);
-
-        navigate("/search");
+        setNotification(data.message);
+        setType("success");
+        // setTimeout(() => {
+        //   navigate("/search");
+        // }, 3000);
       } else {
-        console.log(data);
-
-        console.log(data.response.data.status);
-        setError(data.response.data.message);
+        setType("error");
+        setNotification(data.response.data.message);
       }
     },
     onError: () => {
-      setError("Some error occured...");
+      setNotification("Some error occurred...");
     },
   });
+
   const { mutate: mutateGoogle, isLoading: isLoadingGoogle } = useMutation(
     signInwithGoogle,
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         if (data.status === 200) {
-          console.log(data);
-          // navigate("/search");
-        } else {
-          console.log(data);
+          setNotification(data.message);
 
-          console.log(data.response.data.status);
-          setError(data.response.data.message);
+          setType("success");
+          setTimeout(() => {
+            navigate("/search");
+          }, 3000);
+        } else {
+          setType("error");
+          setNotification(data.response.data.message);
         }
       },
       onError: () => {
-        setError("Some error occured...");
+        setNotification("Some error occurred...");
       },
     }
   );
   const onSubmit = (data) => {
     data.preventDefault();
-    setError();
+    setNotification();
     const user = {
       email: email,
       role: "customer",
@@ -68,9 +74,8 @@ export default function SignInForm() {
 
   const responseGoogle = (response) => {
     const decoded = jwt_decode(response.credential);
-    console.log(decoded);
 
-    const { name, sub, picture, email } = decoded;
+    const { name, picture, email } = decoded;
     const user = {
       userName: name,
       image: picture,
@@ -83,7 +88,7 @@ export default function SignInForm() {
 
   return (
     <div className="w-full dark:border-strokedark xl:w-1/2  h-screen">
-      {error ? <ErrorAlert message={error} /> : ""}
+      {notification ? <AlertService message={notification} type={type} /> : ""}
 
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">

@@ -53,7 +53,7 @@ export default function ProfilePictureForm({}) {
 
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        // console.log(url)
+        console.log(url);
         handleSubmit(url);
         alert("Image Uploaded");
       });
