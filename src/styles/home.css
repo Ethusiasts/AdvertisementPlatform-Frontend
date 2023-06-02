@@ -20,6 +20,10 @@ input::placeholder {
 .card-image{
     height: 8rem;
 }
+.card-image2{
+    height: 12rem;
+    border-radius: 10%;
+}
 .sortBy{
     /* margin-left: 4rem; */
     top: 2.2rem;
