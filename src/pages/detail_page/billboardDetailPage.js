@@ -37,6 +37,8 @@ export default function BillboardDetail() {
     { enabled: !!billboardId }
   );
 
+  console.log(billboardDetail);
+
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
@@ -76,19 +78,17 @@ export default function BillboardDetail() {
         status={billboardDetail.status}
       />
       {/* Description */}
-      <Description
-        description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi,
-    consectetur."
-      />
+      <Description description={billboardDetail.description} />
       {/* Media Info */}
       <MediaInfo
         billboardId={billboardDetail.id}
         width={billboardDetail.width}
         height={billboardDetail.height}
         status={billboardDetail.status}
-        price={billboardDetail.monthly_rate_per_sq}
+        price={billboardDetail.daily_rate_per_sq}
         size={billboardDetail.height * billboardDetail.width}
-        location={billboardDetail.location}
+        latitude={billboardDetail.latitude}
+        longitude={billboardDetail.longitude}
       />
       {/* Reviews */}
       <Rating />

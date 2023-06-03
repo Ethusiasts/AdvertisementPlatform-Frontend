@@ -46,7 +46,7 @@ import BillboardProfilePage from "./pages/profile/billboardProfilePage";
 
 // HOC for checking authentication and authorization
 const withAuthentication = (Component) => {
-  const isAuthenticated = !!localStorage.getItem("token"); // Replace with your authentication logic
+  const isAuthenticated = !!localStorage.getItem("user"); // Replace with your authentication logic
   // Check if the user is authorized
   const isAuthorized = (role) => {
     // Implement your authorization logic here
