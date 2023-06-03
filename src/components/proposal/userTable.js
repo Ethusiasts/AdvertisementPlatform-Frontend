@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserProposals } from "../../services/proposal";
 import ButtonWithModal from "./buttonWithModal";
 import ProposalPopup from "./proposalDetail";
+import UserProposalPopup from "./userProposalDetail";
 export default function UserTable() {
   const user_id = 5;
   const { data: proposals, isLoading } = useQuery(
@@ -117,7 +118,7 @@ export default function UserTable() {
                     <div className="flex justify-center items-center space-x-3">
                       <ButtonWithModal
                         modalContent={
-                          <ProposalPopup
+                          <UserProposalPopup
                             name={proposal.name}
                             description={proposal.description}
                             approved={proposal.approved}
