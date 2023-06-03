@@ -11,7 +11,7 @@ export const signIn = ({ email, password }) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
+      console.log("error", error);
       return error;
     });
 };

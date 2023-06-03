@@ -24,14 +24,12 @@ export default function ProfileForm({}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     // handle form submission here
   };
   return (
     <div className="col-span-5 xl:col-span-3">
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
-          <h3 className="font-medium text-black">Personal Information</h3>
-        </div>
         <div className="p-7">
           <form action={handleSubmit}>
             <div className="mb-5 flex flex-col gap-5 sm:flex-row">
@@ -89,7 +87,7 @@ export default function ProfileForm({}) {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-primary"
-                  type="text"
+                  type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
                   placeholder="+990 3343 7865"
@@ -192,16 +190,10 @@ export default function ProfileForm({}) {
             </div>
 
             <div className="flex justify-end gap-4">
-              <button
-                className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark"
-                type="submit"
-              >
+              <button className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark">
                 Cancel
               </button>
-              <button
-                className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1"
-                type="submit"
-              >
+              <button className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1">
                 Save
               </button>
             </div>

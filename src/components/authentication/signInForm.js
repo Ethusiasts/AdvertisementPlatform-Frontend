@@ -3,22 +3,18 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../services/auth/signin_api";
 import { PropagateLoaderSpinner } from "../spinners";
-import ErrorAlert from "../errorAlert";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
-import Select from "react-tailwindcss-select";
-import { selectOptionsSignUp } from "../../utils";
+import { getCookie, selectOptionsSignUp, setCookie } from "../../utils";
 import AlertService from "../alertService";
 
 export default function SignInForm() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [notification, setNotification] = useState();
   const [type, setType] = useState();
-  const [role, setRole] = useState(selectOptionsSignUp[0]);
 
   const { mutate, isLoading } = useMutation(signIn, {
     onSuccess: async (data) => {
@@ -26,9 +22,12 @@ export default function SignInForm() {
         console.log(data);
         setNotification(data.message);
         setType("success");
-        // setTimeout(() => {
-        //   navigate("/search");
-        // }, 3000);
+        const cred = jwt_decode(data.token);
+        setCookie("user", cred.id, cred.exp);
+
+        setTimeout(() => {
+          navigate("/search");
+        }, 3000);
       } else {
         setType("error");
         setNotification(data.response.data.message);
@@ -65,11 +64,9 @@ export default function SignInForm() {
     setNotification();
     const user = {
       email: email,
-      role: "customer",
-      is_verified: true,
       password: password,
     };
-    mutate(user.email);
+    mutate(user);
   };
 
   const responseGoogle = (response) => {
@@ -165,17 +162,6 @@ export default function SignInForm() {
                   </g>
                 </svg>
               </span>
-            </div>
-          </div>
-          <div className="mb-4">
-            <label className="mb-2.5 block font-medium text-black">Role</label>
-            <div className="relative">
-              <Select
-                value={role}
-                onChange={(val) => setRole(val)}
-                options={selectOptionsSignUp}
-                required
-              />
             </div>
           </div>
 
