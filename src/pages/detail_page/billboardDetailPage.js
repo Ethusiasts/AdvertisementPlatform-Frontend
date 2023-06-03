@@ -17,7 +17,7 @@ export default function BillboardDetail() {
   let props = useParams();
   const { billboardId } = props;
   const { data: billboardDetail, isLoading } = useQuery(
-    ["billboardDetail"],
+    ["billboardDetail", billboardId],
     () => {
       return getBillboardDetail({ billboardId })
         .then((res) => {
@@ -30,6 +30,7 @@ export default function BillboardDetail() {
     { billboardId }
   );
 
+  console.log(billboardId);
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
@@ -63,6 +64,7 @@ export default function BillboardDetail() {
         <ImageCard
           image={billboardDetail?.image}
           status={billboardDetail.status}
+          billboard={billboardDetail}
         />
         {/* Description */}
         <Description
