@@ -128,7 +128,7 @@ export default function Table() {
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       <Link
-                        to={`/billboards/${billboard.id}`}
+                        to={`/user/1/billboards/${billboard.id}`}
                         className="text-blue"
                       >
                         <button className="text-blue-500">

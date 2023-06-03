@@ -6,17 +6,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
-import ImageCard from "../../components/billboardDetails/imageCard";
+import AgenciesImageCard from "../../components/billboardDetails/agenciesImageCard";
 import Description from "../../components/billboardDetails/description";
 import MediaInfo from "../../components/billboardDetails/mediaInfo";
 import Rating from "../../components/billboardDetails/rating";
-import Comments from "../../components/billboardDetails/comments";
 import Messages from "../../components/billboardDetails/messages";
 import Nearby from "../../components/billboardDetails/nearby";
 import Footer from "../../components/Landing/Footer";
 import ErrorPage from "../../components/error";
 
-export default function BillboardDetail() {
+export default function LandlordsBillboardDetail() {
   let props = useParams();
   const { billboardId } = props;
   const {
@@ -73,7 +72,7 @@ export default function BillboardDetail() {
 
       <Navigation />
       {/* Images */}
-      <ImageCard
+      <AgenciesImageCard
         image={billboardDetail?.image}
         status={billboardDetail.status}
       />
@@ -92,8 +91,6 @@ export default function BillboardDetail() {
       />
       {/* Reviews */}
       <Rating />
-      {/* Comments */}
-      <Comments billboardId={billboardDetail.id} />
       {/* Message */}
       <Messages billboardId={billboardDetail.id} />
       {/* Nearby Places */}
