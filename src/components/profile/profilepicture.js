@@ -3,26 +3,29 @@ import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createBillboard } from "../../services/billboard_api";
+import { FadeLoaderSpinner } from "../spinners";
+import { PropagateLoaderSpinner } from "../spinners";
+import AlertService from "../alertService";
 
-export default function ProfilePictureForm({}) {
+export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
+  const [image, setImage] = useState(null);
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
+
   const mutation = useMutation({
     mutationFn: (billboard) => {
       return createBillboard(billboard);
     },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
+    onSuccess: () => {},
   });
 
   if (mutation.isLoading) {
-    alert("is loading");
   }
 
   if (mutation.isSuccess) {
-    alert("is successfull");
+    //  setNotification("Image uploaded ...");
+    //  setType("Success");
   }
-
-  const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -30,12 +33,16 @@ export default function ProfilePictureForm({}) {
   };
 
   const handleSubmit = (url) => {
-    mutation.mutate({
-      image: url,
-    });
+    // mutation.mutate({
+    //   image: url,
+    // });
+    setImgUrl(url);
   };
 
   const uploadImage = () => {
+    setNotification("Uploading ...");
+    setType("Success");
+
     // event.preventDefault();
     const date = new Date();
     const year = date.getFullYear();
@@ -55,14 +62,15 @@ export default function ProfilePictureForm({}) {
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         console.log(url);
+        setImgUrl(url);
         handleSubmit(url);
-        alert("Image Uploaded");
       });
     });
   };
 
   return (
     <div className="col-span-5 xl:col-span-2">
+      {notification ? <AlertService message={notification} type={type} /> : ""}
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
           <h3 className="font-medium text-black">Upload Profile Picture</h3>
@@ -77,6 +85,7 @@ export default function ProfilePictureForm({}) {
               accept="image/*"
               className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
               onChange={handleImageChange}
+              required
             />
             <div className="flex flex-col items-center justify-center text-xs space-y-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -116,7 +125,7 @@ export default function ProfilePictureForm({}) {
             </div>
           </div>
 
-          <div className="flex justify-end gap-4">
+          {/* <div className="flex justify-end gap-4">
             <button
               className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark"
               type="submit"
@@ -129,7 +138,7 @@ export default function ProfilePictureForm({}) {
             >
               Save
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

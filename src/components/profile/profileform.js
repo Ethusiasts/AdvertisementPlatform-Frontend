@@ -1,10 +1,46 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import AlertService from "../alertService";
+import { userStepper } from "../../services/user_stepper_api";
+import { getCookie } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
-export default function ProfileForm({}) {
+export default function ProfileForm({ imgUrl }) {
   const [userName, setUserName] = useState("Devid27");
   const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
   const [firstName, setFirstName] = useState("Devid");
   const [lastName, setLastName] = useState("Jhon");
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
+  const navigate = useNavigate();
+
+  const { mutate, isLoading } = useMutation(userStepper, {
+    onSuccess: async (data) => {
+      console.log(data);
+      if (data.status === 200) {
+        console.log(data);
+        setNotification(data.message);
+        setType("success");
+
+        setTimeout(() => {
+          navigate("/search");
+        }, 3000);
+      } else {
+        Object.keys(data.response.data.message).forEach((key) => {
+          console.log(data.response.data.message[key][0]);
+          setNotification(data.response.data.message[key][0]);
+          setType("error");
+        });
+        // setNotification(data.response.data.message);
+        // console.log(data.response.data.message);
+
+        // setType("error");
+      }
+    },
+    onError: () => {
+      setNotification("Some error occurred...");
+    },
+  });
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -24,14 +60,24 @@ export default function ProfileForm({}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    const userInfo = {
+      username: userName,
+      profile_picture: imgUrl,
+      phone_number: phoneNumber,
+      first_name: firstName,
+      last_name: lastName,
+      user: getCookie("user"),
+    };
+    mutate(userInfo);
     // handle form submission here
   };
   return (
     <div className="col-span-5 xl:col-span-3">
+      {notification ? <AlertService message={notification} type={type} /> : ""}
+
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="p-7">
-          <form action={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-5 flex flex-col gap-5 sm:flex-row">
               <div className="w-full sm:w-1/2">
                 <label

@@ -1,9 +1,8 @@
 import axiosInstance from "../utils/axiosInstance";
 
 export const userStepper = (user) => {
-  console.log(advertisement);
   return axiosInstance
-    .post(`/advertisements/`, advertisement)
+    .post(`/auth/profiles`, user)
     .then((res) => {
       return res.data;
     })
