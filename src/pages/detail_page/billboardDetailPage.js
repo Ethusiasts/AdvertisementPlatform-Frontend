@@ -37,6 +37,7 @@ export default function BillboardDetail() {
     { enabled: !!billboardId }
   );
 
+  console.log(billboardId);
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
