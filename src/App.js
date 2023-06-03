@@ -4,6 +4,8 @@ import SignIn from "./pages/authentication/signIn";
 import SignUp from "./pages/authentication/signUp";
 import BillboardDetail from "./pages/detail_page/billboardDetailPage";
 import MediaDetail from "./pages/detail_page/mediaDetailPage";
+import LandlordsBillboardDetail from "./pages/agencies_detail_page/landlordsBillboardDetailPage";
+import AgenciesMediaDetail from "./pages/agencies_detail_page/agenciesMediaDetailPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
@@ -187,7 +189,10 @@ const router = createBrowserRouter([
     path: "/CreateContract",
     element: <CreateContract />,
   },
-
+  {
+    path: "/user/:userId/billboards/:billboardId",
+    element: <LandlordsBillboardDetail />,
+  },
   // Media Agency
   {
     path: "/MediaDashboard",
@@ -204,6 +209,10 @@ const router = createBrowserRouter([
   {
     path: "/Media",
     element: <Media />,
+  },
+  {
+    path: "/user/:userId/medias/:mediaId",
+    element: <AgenciesMediaDetail />,
   },
 
   // Admin
