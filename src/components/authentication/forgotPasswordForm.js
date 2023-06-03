@@ -1,6 +1,39 @@
-import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { forgetPassword } from "../../services/auth/forget_password_api";
+import { useState } from "react";
+import { PropagateLoaderSpinner } from "../spinners";
 
 export default function ForgotPasswordForm() {
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState();
+
+  const { mutate, isLoading } = useMutation(forgetPassword, {
+    onSuccess: (data) => {
+      if (data.status === 200) {
+        setTimeout(setError(data.response.data.message), 3000);
+
+        navigate("/signin");
+      } else {
+        console.log(data.response.data.status);
+        setError(data.response.data.message);
+      }
+    },
+    onError: () => {
+      setError("Some error occured...");
+    },
+  });
+  const onSubmit = (data) => {
+    data.preventDefault();
+    setError();
+    const user = {
+      email: email,
+    };
+    mutate(user.email);
+  };
   return (
     <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
@@ -8,13 +41,15 @@ export default function ForgotPasswordForm() {
           Forgot Password? Enter Your Email...
         </h2>
 
-        <form>
+        <form onSubmit={onSubmit} method="POST">
           <div className="mb-4">
             <label className="mb-2.5 block font-medium text-black">Email</label>
             <div className="relative">
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onClick={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
 
@@ -39,11 +74,18 @@ export default function ForgotPasswordForm() {
           </div>
 
           <div className="mb-5">
-            <input
-              type="submit"
-              value="Send"
-              className="w-full cursor-pointer rounded-lg border border-blue bg-blue-700 p-4 text-white hover:bg-opacity-90"
-            />
+            {isLoading ? (
+              <div className="flex w-full justify-center align-center items-center p-4">
+                {"  "}
+                <PropagateLoaderSpinner />
+              </div>
+            ) : (
+              <input
+                type="submit"
+                value="Send"
+                className="w-full cursor-pointer rounded-lg border border-blue bg-blue-700 p-4 text-white hover:bg-opacity-90"
+              />
+            )}
           </div>
         </form>
       </div>
