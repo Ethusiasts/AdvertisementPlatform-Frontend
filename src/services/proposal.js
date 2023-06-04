@@ -12,6 +12,18 @@ export const createProposal = (proposal) => {
     });
 };
 
+export const getProposal = (proposal_id) => {
+  return axiosInstance
+    .get(`/proposals/${proposal_id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+
 export const getMediaAgencyProposals = (media_agency_id) => {
   return axiosInstance
     .get(`/media_agencies/${media_agency_id}/proposals/`)

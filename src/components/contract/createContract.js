@@ -1,69 +1,183 @@
-import DownloadButton from "./downloadButton"
-import html2pdf from 'html2pdf.js';
+import SignatureCanvas from "react-signature-canvas";
+import { useState } from "react";
+import { getProposal } from "../../services/proposal";
+import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { createContract } from "../../services/contract";
 
-export default function CreateContractForm({ photo, title, description}) {
-    function downloadPdf() {
-        const element = document.getElementById('contract');
-        const opt = {
-          margin: 1,
-          filename: 'billboard_contract.pdf',
-          img: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-    
-        html2pdf().set(opt).from(element).save();
-      }
-    
-      function printPdf() {
-        const element = document.getElementById('contract');
-        const opt = {
-          margin: 1,
-          img: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-    
-        html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-          pdf.autoPrint();
-          window.open(pdf.output('bloburl'), '_blank');
+export default function CreateContractForm({ photo, title, description }) {
+  const proposal_id = 2;
+  const user_id = 1;
+  const { data: proposal, isLoading } = useQuery(
+    ["proposals"],
+    () => {
+      return getProposal(proposal_id)
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return error;
         });
-      }
+    },
+    { proposal_id }
+  );
 
+  const mutation = useMutation({
+    mutationFn: (contract) => {
+      return createContract(contract);
+    },
+    onSuccess: () => {
+      alert("successfully posted");
+    },
+  });
 
-    return (
-        <div className="container mx-auto py-10 px-8">
-                      <div className="mt-8 mb-5 flex justify-end gap-4">
-            <DownloadButton onClick={downloadPdf} label="Download PDF" />
-            <DownloadButton onClick={printPdf} label="Print" />
-          </div>
-          <div className="bg-white shadow-md rounded p-8" id="contract">
-            <h1 className="text-3xl font-semibold mb-4">Billboard Advertising Contract</h1>
-            <p>This contract is between <span className="font-semibold">Customer</span> (hereinafter referred to as the "Client") and <span className="font-semibold">Billboard Owner</span> (hereinafter referred to as the "Owner").</p>
-    
-            <p className="mt-4">The Client agrees to advertise their product or service on the Owner's billboard for the agreed-upon period. The Owner shall provide the location, maintenance, and advertisement display for the agreed-upon period.</p>
-    
-            <p className="mt-4">The agreed-upon terms are as follows:</p>
-            <ul className="list-disc ml-6 mt-2">
-              <li>Advertisement Period: <span className="font-semibold">30 days</span></li>
-              <li>Net Fee: <span className="font-semibold">$1,000.00</span></li>
-              <li>Tax: <span className="font-semibold">$100.00</span></li>
-            </ul>
-    
-            <p className="mt-4">By signing this contract, both parties agree to the terms and conditions set forth above.</p>
-    
-            <div className="mt-8 flex justify-between">
-              <div className="w-1/2">
-                <p className="font-semibold">Client:</p>
-                <p>________________________________</p>
-              </div>
-              <div className="w-1/2">
-                <p className="font-semibold">Owner:</p>
+  const [signatureRef, setSignatureRef] = useState("");
+  const [mediaAgencySignature, setmediaAgencySignature] = useState(null);
+
+  function handleSave(event) {
+    event.preventDefault();
+    const sign = signatureRef.getTrimmedCanvas().toDataURL();
+    setmediaAgencySignature(sign);
+  }
+
+  function handleClear(event) {
+    event.preventDefault();
+    signatureRef.clear();
+    setmediaAgencySignature(null);
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    mutation.mutate({
+      total_tax: String((proposal?.total_price * 0.15)?.toFixed(2)),
+      gross_total_fee: String((proposal?.total_price * 1)?.toFixed(2)),
+      net_free: String((proposal?.total_price * 0.85)?.toFixed(2)),
+      proposal_id: proposal_id,
+      agency_signature: mediaAgencySignature,
+      customer_signature: "1",
+      media_agency_id: proposal.billboard_id.media_agency_id,
+      user_id: user_id,
+    });
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="container mx-auto py-5 px-8">
+        <div className="bg-white shadow-md rounded p-8" id="contract">
+          <h1 className="text-3xl font-semibold mb-4">
+            Billboard Advertising Contract
+          </h1>
+          <p>
+            This contract is between{" "}
+            <span className="font-semibold">Customer</span> (hereinafter
+            referred to as the "Client") and{" "}
+            <span className="font-semibold">Billboard Owner</span> (hereinafter
+            referred to as the "Owner").
+          </p>
+
+          <p className="mt-4">
+            The Client agrees to advertise their product or service on the
+            Owner's billboard for the agreed-upon period. The Owner shall
+            provide the location, maintenance, and advertisement display for the
+            agreed-upon period.
+          </p>
+
+          <p className="mt-4">The agreed-upon terms are as follows:</p>
+          <ul className="list-disc ml-6 mt-2">
+            <li>
+              Advertisement Period:{" "}
+              <span className="font-semibold">30 days</span>
+            </li>
+            <li>
+              Net Fee:{" "}
+              <span className="font-semibold">
+                ${(proposal?.total_price * 0.85)?.toFixed(2)}
+              </span>
+            </li>
+            <li>
+              Tax:{" "}
+              <span className="font-semibold">
+                ${(proposal?.total_price * 0.15)?.toFixed(2)}
+              </span>
+            </li>
+            <li>
+              Gross Fee:{" "}
+              <span className="font-semibold">
+                ${(proposal?.total_price * 1)?.toFixed(2)}
+              </span>
+            </li>
+          </ul>
+
+          <p className="mt-4">
+            By signing this contract, both parties agree to the terms and
+            conditions set forth above.
+          </p>
+
+          <div className="mt-8 flex justify-between">
+            <div className="flex justify-start items-center w-1/2 gap-5">
+              <p className="font-semibold">Client:</p>
+              <p>________________________________</p>
+            </div>
+            <div className="flex justify-start items-center w-1/2 gap-5">
+              <p className="font-semibold">Owner:</p>
+
+              {mediaAgencySignature ? (
+                <img
+                  class="w-auto h-16"
+                  src={mediaAgencySignature}
+                  alt=""
+                  loading="lazy"
+                />
+              ) : (
                 <p>______________________________</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-start gap-4 mt-5">
+          <div class="flex justify-center items-center gap-4">
+            <div class="font-bold text-xl text-black p-5 mb-10">
+              <p> Sign here =&gt; </p>
+            </div>
+            <div class="flex flex-col justify-center gap-4">
+              <div class="bg-gray-200 w-72 h-32 rounded-md -px-2 -py-2">
+                <SignatureCanvas
+                  penColor="green"
+                  canvasProps={{
+                    height: "auto",
+                    width: "auto",
+                    className: "sigCanvas",
+                  }}
+                  ref={(data) => setSignatureRef(data)}
+                />
+              </div>
+              <div class="flex justify-between gap-4">
+                <button
+                  onClick={handleClear}
+                  class="flex cursor-pointer items-center justify-center gap-2 rounded bg-gray-100 py-1 px-10 text-sm font-medium text-gray-900 hover:bg-opacity-80 xsm:px-4"
+                >
+                  Clear
+                </button>
+
+                <button
+                  onClick={handleSave}
+                  class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-1 px-10 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>
-
+          <div>
+            <button
+              type="submit"
+              class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-2 px-20 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+            >
+              Send Contract
+            </button>
+          </div>
         </div>
-      )
-    }
+      </div>
+    </form>
+  );
+}

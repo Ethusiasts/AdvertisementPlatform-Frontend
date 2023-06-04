@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { getMediaAgencyProposals } from "../../services/proposal";
+import ButtonWithModal from "./buttonWithModal";
+import BillboardProposalPopup from "./billboardProposalDetail";
 export default function BillboardTable() {
   const media_agency_id = 1;
   const { data: proposals, isLoading } = useQuery(
@@ -114,37 +116,22 @@ export default function BillboardTable() {
                   <td class="px-4 py-3 text-sm">15-01-2021</td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
-                      <Link
-                        to={`/proposals/${proposal.id}`}
-                        className="text-blue"
-                      >
-                        <button className="text-blue-500">
-                          <svg
-                            className="fill-current"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 18 18"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M8.99981 14.8219C3.43106 14.8219 0.674805 9.50624 0.562305 9.28124C0.47793 9.11249 0.47793 8.88749 0.562305 8.71874C0.674805 8.49374 3.43106 3.20624 8.99981 3.20624C14.5686 3.20624 17.3248 8.49374 17.4373 8.71874C17.5217 8.88749 17.5217 9.11249 17.4373 9.28124C17.3248 9.50624 14.5686 14.8219 8.99981 14.8219ZM1.85605 8.99999C2.4748 10.0406 4.89356 13.5562 8.99981 13.5562C13.1061 13.5562 15.5248 10.0406 16.1436 8.99999C15.5248 7.95936 13.1061 4.44374 8.99981 4.44374C4.89356 4.44374 2.4748 7.95936 1.85605 8.99999Z"
-                              fill=""
-                            />
-                            <path
-                              d="M9 11.3906C7.67812 11.3906 6.60938 10.3219 6.60938 9C6.60938 7.67813 7.67812 6.60938 9 6.60938C10.3219 6.60938 11.3906 7.67813 11.3906 9C11.3906 10.3219 10.3219 11.3906 9 11.3906ZM9 7.875C8.38125 7.875 7.875 8.38125 7.875 9C7.875 9.61875 8.38125 10.125 9 10.125C9.61875 10.125 10.125 9.61875 10.125 9C10.125 8.38125 9.61875 7.875 9 7.875Z"
-                              fill=""
-                            />
-                          </svg>
-                        </button>
-                      </Link>
-
+                      <ButtonWithModal
+                        modalContent={
+                          <BillboardProposalPopup
+                            name={proposal.name}
+                            description={proposal.description}
+                            approved={proposal.approved}
+                            total_price={proposal.total_price}
+                          />
+                        }
+                      />
                       <Link to={`/CreateContract`} className="text-blue">
-                        <button className="text-green-500">
+                        <button className="text-red-500">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
+                            width="20"
+                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
@@ -152,28 +139,12 @@ export default function BillboardTable() {
                             stroke-linecap="round"
                             stroke-linejoin="round"
                           >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
                           </svg>
                         </button>
                       </Link>
-                      <button className="text-red-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <line x1="15" y1="9" x2="9" y2="15"></line>
-                          <line x1="9" y1="9" x2="15" y2="15"></line>
-                        </svg>
-                      </button>
                     </div>
                   </td>
                 </tr>

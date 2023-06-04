@@ -45,6 +45,8 @@ import UserProfilePage from "./pages/profile/userProfilePage";
 import MediaProfilePage from "./pages/profile/mediaProfilePage";
 import BillboardEditProfilePage from "./pages/profile/billboardEditProfilePage";
 import BillboardProfilePage from "./pages/profile/billboardProfilePage";
+import ContractDetail from "./pages/contract/contractDetail";
+import UserContractDetail from "./pages/contract/userContractDetail";
 
 // HOC for checking authentication and authorization
 const withAuthentication = (Component) => {
@@ -188,6 +190,10 @@ const router = createBrowserRouter([
   {
     path: "/CreateContract",
     element: <CreateContract />,
+  },
+  {
+    path: "/ContractDetail/:contractId",
+    element: <UserContractDetail />,
   },
   {
     path: "/user/:userId/billboards/:billboardId",
