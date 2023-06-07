@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { navMenus } from "../../utils/index";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import CartIcon from "../cartIcon";
+
 function Navigation() {
   const [mobile, setMobile] = useState(false);
+  const location = useLocation();
+  // Check if the current route is localhost:3000
+  const isLanding = location.pathname === "/";
   const handleMobile = () => {
     setMobile(!mobile);
   };
@@ -75,6 +80,11 @@ function Navigation() {
         >
           Sign up
         </Link>
+        {!isLanding && (
+          <Link to="/cart">
+            <CartIcon />
+          </Link>
+        )}
       </nav>
       <div
         className={
@@ -131,7 +141,7 @@ function Navigation() {
             <div className="pt-6">
               <Link
                 className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                href="#"
+                href="/signIn"
               >
                 Sign in
               </Link>
