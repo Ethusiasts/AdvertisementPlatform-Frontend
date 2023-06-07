@@ -2,6 +2,8 @@ import "../../styles/detail.css";
 import { getBillboardDetail } from "../../services/billboard_api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
 import ImageCard from "../../components/billboardDetails/imageCard";
@@ -12,11 +14,16 @@ import Comments from "../../components/billboardDetails/comments";
 import Messages from "../../components/billboardDetails/messages";
 import Nearby from "../../components/billboardDetails/nearby";
 import Footer from "../../components/Landing/Footer";
+import ErrorPage from "../../components/error";
 
 export default function BillboardDetail() {
   let props = useParams();
   const { billboardId } = props;
-  const { data: billboardDetail, isLoading } = useQuery(
+  const {
+    data: billboardDetail,
+    isLoading,
+    error,
+  } = useQuery(
     ["billboardDetail"],
     () => {
       return getBillboardDetail({ billboardId })
@@ -24,11 +31,13 @@ export default function BillboardDetail() {
           return res.data;
         })
         .catch((error) => {
-          return error;
+          throw new Error(error);
         });
     },
-    { billboardId }
+    { enabled: !!billboardId }
   );
+
+  console.log(billboardDetail);
 
   if (isLoading) {
     return (
@@ -55,41 +64,42 @@ export default function BillboardDetail() {
       </div>
     );
   }
-  if (billboardDetail) {
-    return (
-      <>
-        <Navigation />
-        {/* Images */}
-        <ImageCard
-          image={billboardDetail?.image}
-          status={billboardDetail.status}
-        />
-        {/* Description */}
-        <Description
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi,
-    consectetur."
-        />
-        {/* Media Info */}
-        <MediaInfo
-          billboardId={billboardDetail.id}
-          width={billboardDetail.width}
-          height={billboardDetail.height}
-          status={billboardDetail.status}
-          price={billboardDetail.monthly_rate_per_sq}
-          size={billboardDetail.height * billboardDetail.width}
-          location={billboardDetail.location}
-        />
-        {/* Reviews */}
-        <Rating />
-        {/* Comments */}
-        <Comments />
-        {/* Message */}
-        <Messages />
-        {/* Nearby Places */}
-        <Nearby />
-        {/* Footer */}
-        <Footer />
-      </>
-    );
+  if (error) {
+    return <ErrorPage />;
   }
+  return (
+    <>
+      <ToastContainer />
+
+      <Navigation />
+      {/* Images */}
+      <ImageCard
+        image={billboardDetail?.image}
+        status={billboardDetail.status}
+      />
+      {/* Description */}
+      <Description description={billboardDetail.description} />
+      {/* Media Info */}
+      <MediaInfo
+        billboardId={billboardDetail.id}
+        width={billboardDetail.width}
+        height={billboardDetail.height}
+        status={billboardDetail.status}
+        price={billboardDetail.daily_rate_per_sq}
+        size={billboardDetail.height * billboardDetail.width}
+        latitude={billboardDetail.latitude}
+        longitude={billboardDetail.longitude}
+      />
+      {/* Reviews */}
+      <Rating />
+      {/* Comments */}
+      <Comments billboardId={billboardDetail.id} />
+      {/* Message */}
+      <Messages billboardId={billboardDetail.id} />
+      {/* Nearby Places */}
+      <Nearby />
+      {/* Footer */}
+      <Footer />
+    </>
+  );
 }

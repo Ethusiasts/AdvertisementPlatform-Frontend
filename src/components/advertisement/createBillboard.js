@@ -64,7 +64,7 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
       height: height,
       approved: false,
       quantity: quantity,
-      customer: 2,
+      user_id: 5,
     });
   };
 

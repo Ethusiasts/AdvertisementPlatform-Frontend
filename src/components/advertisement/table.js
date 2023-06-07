@@ -11,7 +11,7 @@ export default function Table() {
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
-  const user_id = 2;
+  const user_id = 5;
   const { data: advertisements, isLoading } = useQuery(
     ["advertisements"],
     () => {
@@ -67,7 +67,7 @@ export default function Table() {
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-300 dark:bg-gray-100">
-              {advertisements.map((advertisement) => (
+              {advertisements?.map((advertisement) => (
                 <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
                   <td class="px-4 py-3">
                     <div class="flex items-center text-sm">

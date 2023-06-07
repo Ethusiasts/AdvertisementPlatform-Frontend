@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import ButtonWithModal from "./buttonWithModal";
+import CreateProposalForm from "./createProposal";
 
-export default function ImageCard({ image, status }) {
+export default function ImageCard({ image, status, billboard }) {
   const [images, setImages] = useState({
     img1: "https://bookmybillboards.com/wp-content/uploads/2017/08/OUtdoor-advertising-in-United-Kingdom.jpg",
     img2: "https://bookmybillboards.com/wp-content/uploads/2017/08/glamour.jpg",
@@ -51,12 +53,13 @@ export default function ImageCard({ image, status }) {
                 ETB
               </span>
             </p>
-            <a
-              href="/"
-              class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Book
-            </a>
+            <ButtonWithModal
+              modalContent={
+                <div>
+                  <CreateProposalForm billboard={billboard} />
+                </div>
+              }
+            />
             <p class="mt-6 text-xs leading-5 text-gray-600">
               Invoices and receipts available for easy company reimbursement
             </p>

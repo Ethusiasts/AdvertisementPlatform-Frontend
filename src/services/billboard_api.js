@@ -91,4 +91,26 @@ export const searchBillboards = ({
     });
 };
 
-//
+export const addBillboard = () => {};
+export const updateBillboard = ({ billboardId }) => {};
+export const addReview = (reviewData) => {
+  return axiosInstance
+    .post(`/ratings/`, reviewData)
+    .then((res) => {
+      return { success: true, data: res.data };
+    })
+    .catch((error) => {
+      return { success: false, data: error };
+    });
+};
+
+export const getBillboardReviews = ({ billboardId }) => {
+  return axiosInstance
+    .get(`/billboards/${billboardId}/ratings/`)
+    .then((res) => {
+      return { success: true, data: res.data };
+    })
+    .catch((error) => {
+      return { success: false, data: error };
+    });
+};

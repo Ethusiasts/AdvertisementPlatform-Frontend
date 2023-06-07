@@ -4,6 +4,8 @@ import SignIn from "./pages/authentication/signIn";
 import SignUp from "./pages/authentication/signUp";
 import BillboardDetail from "./pages/detail_page/billboardDetailPage";
 import MediaDetail from "./pages/detail_page/mediaDetailPage";
+import LandlordsBillboardDetail from "./pages/agencies_detail_page/landlordsBillboardDetailPage";
+import AgenciesMediaDetail from "./pages/agencies_detail_page/agenciesMediaDetailPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
@@ -43,6 +45,39 @@ import UserProfilePage from "./pages/profile/userProfilePage";
 import MediaProfilePage from "./pages/profile/mediaProfilePage";
 import BillboardEditProfilePage from "./pages/profile/billboardEditProfilePage";
 import BillboardProfilePage from "./pages/profile/billboardProfilePage";
+import ContractDetail from "./pages/contract/contractDetail";
+import UserContractDetail from "./pages/contract/userContractDetail";
+
+// HOC for checking authentication and authorization
+const withAuthentication = (Component) => {
+  const isAuthenticated = !!localStorage.getItem("user"); // Replace with your authentication logic
+  // Check if the user is authorized
+  const isAuthorized = (role) => {
+    // Implement your authorization logic here
+    // Example: Check if the user has a specific role
+    return role === "Admin";
+  };
+
+  // Usage example:
+  if (isAuthenticated && isAuthorized("admin")) {
+    // User is authenticated and has the 'admin' role
+    // Render authorized content
+  } else {
+    // User is not authenticated or not authorized
+    // Redirect to a login page or display an error message
+  }
+  return function AuthenticatedComponent(props) {
+    if (isAuthenticated) {
+      return <Component {...props} />;
+    } else {
+      // return <Redirect to="/SignIn" />; // Redirect to the sign-in page if not authenticated
+    }
+  };
+};
+
+// Apply the withAuthentication HOC to secure the routes
+const SecuredProfilePage = withAuthentication(UserProfilePage);
+
 const router = createBrowserRouter([
   // Onboarding
   {
@@ -156,7 +191,14 @@ const router = createBrowserRouter([
     path: "/CreateContract",
     element: <CreateContract />,
   },
-
+  {
+    path: "/ContractDetail/:contractId",
+    element: <UserContractDetail />,
+  },
+  {
+    path: "/user/:userId/billboards/:billboardId",
+    element: <LandlordsBillboardDetail />,
+  },
   // Media Agency
   {
     path: "/MediaDashboard",
@@ -173,6 +215,10 @@ const router = createBrowserRouter([
   {
     path: "/Media",
     element: <Media />,
+  },
+  {
+    path: "/user/:userId/medias/:mediaId",
+    element: <AgenciesMediaDetail />,
   },
 
   // Admin
