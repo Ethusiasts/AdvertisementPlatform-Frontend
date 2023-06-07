@@ -2,6 +2,7 @@ import Home from "./pages/Home";
 import Landing from "./pages/Landing/Landing";
 import SignIn from "./pages/authentication/signIn";
 import SignUp from "./pages/authentication/signUp";
+import Cart from "./components/cart";
 import BillboardDetail from "./pages/detail_page/billboardDetailPage";
 import MediaDetail from "./pages/detail_page/mediaDetailPage";
 import LandlordsBillboardDetail from "./pages/agencies_detail_page/landlordsBillboardDetailPage";
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
   {
     path: "/MediaAgencyStepper",
     element: <MediaAgencyStepper />,
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
 
   // User
