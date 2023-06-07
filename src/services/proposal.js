@@ -1,4 +1,4 @@
-import axiosInstance from "../utils/axiosInstance";
+import { axiosInstance } from "../utils/axiosInstance";
 export const createProposal = (proposal) => {
   console.log(proposal);
   return axiosInstance
