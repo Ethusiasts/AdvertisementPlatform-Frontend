@@ -15,6 +15,8 @@ import classNames from "classnames";
 import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
 import RecommendedCarousel from "../components/Home/RecommendedCarousel";
+import Cart from "../components/Home/Cart";
+import { getCart, itemsCount } from "../utils/cart";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -23,6 +25,7 @@ export default function Home() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [dataSize, setDataSize] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemCount, setItemCount] = useState(0);
   const [mouseOverDropdown, setMouseOverDropdown] = useState(false);
   const [filterOn, setFilterOn] = useState(false);
   const [filterResults, setFilterResults] = useState(null);
@@ -79,6 +82,11 @@ export default function Home() {
   const handleDropdownItemClick = () => {
     clearTimeout(timeoutRef.current);
     setShowDropdown(false);
+  };
+  const handleonAddOrRemoveClick = () => {
+    console.log("carttttttt");
+    console.log(itemsCount());
+    setItemCount(itemsCount());
   };
 
   return (
@@ -225,7 +233,7 @@ export default function Home() {
             )}
           </div>
 
-          <div className="">
+          {/* <div className="">
             <div className="flex">
               <div className="pr-6">
                 <FontAwesomeIcon icon={faThList} className="text-[#2785AE]" />
@@ -234,7 +242,9 @@ export default function Home() {
                 <FontAwesomeIcon icon={faList} className="text-[#2785AE]" />
               </div>
             </div>
-          </div>
+          </div> */}
+
+          <Cart cartItems={getCart()} itemCount={itemCount} />
         </div>
         <Pagination
           ref={childRef}
@@ -244,6 +254,7 @@ export default function Home() {
           isBillboard={isBillboard}
           onChildStateChange={handlePaginationDataStateChange}
           onChildCurrentPageChange={handlePaginationCurrentPageStateChange}
+          onAddOrRemoveClick={handleonAddOrRemoveClick}
         />
       </div>
 

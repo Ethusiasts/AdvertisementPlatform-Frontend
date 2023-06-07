@@ -1,4 +1,4 @@
-import axiosInstance from "../utils/axiosInstance";
+import { axiosInstance } from "../utils/axiosInstance";
 export const getBillboardDetail = ({ billboardId }) => {
   return axiosInstance
     .get(`/billboards/${billboardId}`)
@@ -24,11 +24,11 @@ export const getBillboards = ({ currentPage }) => {
 };
 
 export const createBillboard = (billboard) => {
-  console.log(billboard)
+  console.log(billboard);
   return axiosInstance
-  .post(`/billboards/`, billboard)
-  .then((res) => {
-    return res.data;
+    .post(`/billboards/`, billboard)
+    .then((res) => {
+      return res.data;
     })
     .catch((error) => {
       console.error(error);
@@ -92,5 +92,3 @@ export const searchBillboards = ({
 };
 
 //
-
-

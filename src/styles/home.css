@@ -33,23 +33,20 @@ input::placeholder {
     background: rgb(255, 255, 255);
         background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(231, 230, 230, 1) 100%);
 }
-.rating {
-  display: inline-block;
+
+
+/* .star {
+  font-size: 100px;
+} */
+
+
+.star-golden {
+    color: gold; /* Set the color for full and half stars */
+  }
+.star-gray {
+    color: gray; /* Set the color for empty stars */
 }
 
-.star {
-  font-size: 24px;
-}
-
-.filled:before {
-  content: '\2605'; /* Unicode character for a filled star */
-  color: gold;
-}
-
-.empty:before {
-  content: '\2606'; /* Unicode character for an empty star */
-  color: gray;
-}
 .dropdown{
     position: relative;
     width: fit-content;
@@ -83,3 +80,25 @@ input::placeholder {
 .dropdown .dropdown-content .dropdown-item:hover{
     background: #869EA0;
 } 
+
+.cart-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .cart-icon {
+    position: relative;
+  }
+  
+  .item-count {
+    position: absolute;
+    top: -26px;
+    right: 15px;
+    /* background-color: red; */
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 4px;
+    /* border-radius: 50%; */
+  }
+  
