@@ -1,4 +1,4 @@
-import axiosInstance from "../utils/axiosInstance";
+import { axiosInstance } from "../utils/axiosInstance";
 export const getMediaAgencyBillbaords = (media_agency_id) => {
   return axiosInstance
     .get(`/media_agencies/${media_agency_id}/billboards/`)

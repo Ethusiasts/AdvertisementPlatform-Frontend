@@ -1,5 +1,6 @@
 import React from "react";
 import HomeNavBar from "./HomeNavbar";
+import Navigation from "../Landing/Navigation";
 import { Link } from "react-router-dom";
 import HeroImg from "../../images/hero.jpg";
 
@@ -92,7 +93,7 @@ export default function Hero() {
 
       <div className="absolute  w-full ">
         {" "}
-        <HomeNavBar />
+        <Navigation />
       </div>
 
       {/* :BOTTOM OPTIONS */}

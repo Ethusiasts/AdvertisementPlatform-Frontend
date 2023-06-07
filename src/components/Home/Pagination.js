@@ -16,8 +16,10 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Image1 from "../../styles/assets/billboard1.jpg";
 import Image2 from "../../styles/assets/billboard2.jpg";
 import Image3 from "../../styles/assets/billboard3.jpg";
+import { itemsCount } from "../../utils/cart";
 import Card from "./BillboardCard";
 import AgencyCard from "./AgencyCard";
+import { Link } from "react-router-dom";
 import {
   getAgencies,
   searchAgenciesWithQueryOnly,
@@ -31,12 +33,14 @@ const Pagination = forwardRef(
       onChildCurrentPageChange,
       filterOn,
       isBillboard,
+      onAddOrRemoveClick,
     },
     ref
   ) => {
     const [totalPages, setTotalPages] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [cardData, setCardData] = useState(null);
+    // const [cartItems, setCartItems] = useState([]);
 
     const { data, isLoading } = useQuery(
       ["data", currentPage, isBillboard],
@@ -107,6 +111,20 @@ const Pagination = forwardRef(
       onChildCurrentPageChange(pageNumber);
     };
 
+    const handleOnAddClick = () => {
+      onAddOrRemoveClick();
+    };
+
+    // const handleAddToCart = (billboardId) => {
+    //   setCartItems((prevCartItems) => [...prevCartItems, billboardId]);
+    // };
+    // const handleRemoveFromCart = (billboardId) => {
+    //   // setCartItems((prevCartItems) => [...prevCartItems, billboardId]);
+    //   setCartItems((prevCartItems) =>
+    //     prevCartItems.filter((item) => item !== billboardId)
+    //   );
+    // };
+
     useImperativeHandle(ref, () => ({
       handleSort(property) {
         const sortedData = [...cardData].sort((a, b) => {
@@ -162,15 +180,18 @@ const Pagination = forwardRef(
             <>
               {cardData.map((card) => (
                 <Card
+                  id={card.id}
+                  item={card}
                   status={card.status}
-                  rate={card.rate}
-                  price={card.monthly_rate_per_sq}
+                  rate={card.average_rating}
+                  price={card.daily_rate_per_sq}
                   production={card.production}
                   width={card.width}
                   height={card.height}
                   location={card.location}
                   imageSrc={card.image}
                   alt="Card Image"
+                  onAddClick={handleOnAddClick}
                 />
               ))}
             </>

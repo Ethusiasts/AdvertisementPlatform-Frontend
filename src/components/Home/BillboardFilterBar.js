@@ -11,6 +11,7 @@ import { searchBillboards } from "../../services/billboard_api";
 import { searchAgencies } from "../../services/agency_api";
 import Geocode from "react-geocode";
 import axios from "axios";
+import { getLocations } from "../../services/location_api";
 export default function BillboardFilterBar({
   onClose,
   query,
@@ -40,38 +41,54 @@ export default function BillboardFilterBar({
   const handleLocation = (event) => {
     setLocation(event.target.value);
   };
-  // const handleLocationChange = (event) => {
-  //   const inputValue = event.target.value;
-  //   setLocation(inputValue);
 
-  //   // Fetch location suggestions from Nominatim API
-  //   const apiUrl = `https://nominatim.openstreetmap.org/search?q=${inputValue}&format=json`;
+  useEffect(() => {
+    getLocations({ location })
+      .then((res) => {
+        // console.log(location);
+        // console.log("dataaaaa");
+        // console.log(res.data);
+        setSuggestions(res.data);
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
 
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       const { data } = response;
-  //       console.log(data);
-  //       setSuggestions(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
+    // const fetchSuggestions = async () => {
+    //   try {
+    //     const response = await getLocations({ location });
+    //     setSuggestions(response.data);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
 
-  // const handleLocationSelect = (selectedLocation) => {
-  //   // Get the latitude and longitude of the selected location
-  //   // const { lat, lon } = selectedLocation.geometry;
+    if (!location) {
+      setSuggestions([]);
+    }
+  }, [location]);
 
-  //   console.log("Selected Location:", selectedLocation);
-  //   // console.log("Latitude:", lat);
-  //   // console.log("Longitude:", lon);
+  const handleLocationChange = (event) => {
+    const inputValue = event.target.value;
+    setLocation(inputValue);
+  };
 
-  //   // Further processing or actions with the selected location
+  const handleLocationSelect = (selectedLocation) => {
+    // Get the latitude and longitude of the selected location
+    const { lat, lon } = selectedLocation.lat;
 
-  //   setLocation(selectedLocation.display_name);
-  //   setSuggestions([]); // Clear suggestions
-  // };
+    console.log(`Selected Location:, ${selectedLocation}`);
+    console.log(`Latitude:, ${selectedLocation.lat}`);
+    console.log(`Latitude:, ${selectedLocation.lon}`);
+
+    // console.log("Longitude:", selectedLocation.lon);
+
+    // Further processing or actions with the selected location
+
+    setLocation(selectedLocation.display_name);
+    setSuggestions([]); // Clear suggestions
+  };
 
   const handleType = (event) => {
     setType(event.target.value);
@@ -179,28 +196,32 @@ export default function BillboardFilterBar({
                   type="text"
                   value={location}
                   placeholder="Addis Ababa, Ethiopia"
-                  onChange={handleLocation}
+                  onChange={handleLocationChange}
                 />
               </div>
-              {/* <ul
-                style={
-                  {
-                    // position: "absolute",
-                    // bottom: "100%",
-                    // left: 0,
-                    // zIndex: 1,
-                  }
-                }
-              >
-                {suggestions.map((suggest) => (
-                  <li
-                    key={suggest.place_id}
-                    onClick={() => handleLocationSelect(suggest)}
+              {location && suggestions && (
+                <>
+                  <ul
+                    style={
+                      {
+                        // position: "absolute",
+                        // bottom: "60%",
+                        // left: 0,
+                        // zIndex: 1,
+                      }
+                    }
                   >
-                    {suggest.display_name}
-                  </li>
-                ))}
-              </ul> */}
+                    {suggestions.map((suggest) => (
+                      <li
+                        key={suggest.place_id}
+                        onClick={() => handleLocationSelect(suggest)}
+                      >
+                        {suggest.display_name}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </>
           )}
 
