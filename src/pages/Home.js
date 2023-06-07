@@ -2,8 +2,6 @@ import "../styles/home.css";
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import { faThList } from "@fortawesome/free-solid-svg-icons";
-import { faList } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Home/Pagination";
 import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
@@ -16,16 +14,17 @@ import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
 import RecommendedCarousel from "../components/Home/RecommendedCarousel";
 import Cart from "../components/Home/Cart";
-import { getCart, itemsCount } from "../utils/cart";
+import { Link } from "react-router-dom";
+
+import { itemsCount } from "../utils/cart";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
-  const [activeLink, setActiveLink] = useState("billboard");
   const [isBillboard, setIsBillboard] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [dataSize, setDataSize] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemCount, setItemCount] = useState(0);
+  const [itemCount, setItemCount] = useState(itemsCount());
   const [mouseOverDropdown, setMouseOverDropdown] = useState(false);
   const [filterOn, setFilterOn] = useState(false);
   const [filterResults, setFilterResults] = useState(null);
@@ -84,8 +83,6 @@ export default function Home() {
     setShowDropdown(false);
   };
   const handleonAddOrRemoveClick = () => {
-    console.log("carttttttt");
-    console.log(itemsCount());
     setItemCount(itemsCount());
   };
 
@@ -243,8 +240,9 @@ export default function Home() {
               </div>
             </div>
           </div> */}
-
-          <Cart cartItems={getCart()} itemCount={itemCount} />
+          <Link to="/cart">
+            <Cart itemCount={itemCount} />
+          </Link>
         </div>
         <Pagination
           ref={childRef}

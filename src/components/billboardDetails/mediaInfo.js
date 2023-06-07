@@ -48,7 +48,17 @@ export default function MediaInfo({
         <h2 class="text-2xl font-bold pb-3">Address</h2>
         {/* <p class="text-gray-500 pb-4">{location}</p> */}
         <iframe
-          src={`https://maps.google.com/maps?q=${latitude},${longitude}&hl=es;z=14&amp;output=embed`}
+          width="100%"
+          height="400"
+          frameborder="0"
+          scrolling="no"
+          marginheight="0"
+          marginwidth="0"
+          src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+            longitude - 0.1
+          },${latitude - 0.1},${longitude + 0.1},${
+            latitude + 0.1
+          }&amp;layer=mapnik`}
         ></iframe>
       </div>
     </div>

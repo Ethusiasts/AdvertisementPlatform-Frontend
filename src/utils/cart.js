@@ -18,7 +18,6 @@ export const addItem = (item) => {
 };
 
 export const itemsCount = () => {
-  console.log("count");
   if (typeof window !== "undefined") {
     if (localStorage.getItem("item")) {
       return JSON.parse(localStorage.getItem("item")).length;
