@@ -48,6 +48,7 @@ import BillboardEditProfilePage from "./pages/profile/billboardEditProfilePage";
 import BillboardProfilePage from "./pages/profile/billboardProfilePage";
 import ContractDetail from "./pages/contract/contractDetail";
 import UserContractDetail from "./pages/contract/userContractDetail";
+import ApproveContract from "./pages/contract/approveContract";
 
 // HOC for checking authentication and authorization
 const withAuthentication = (Component) => {
@@ -165,6 +166,10 @@ const router = createBrowserRouter([
   {
     path: "/UserContract",
     element: <UserContract />,
+  },
+  {
+    path: "/ApproveContract/:contractId",
+    element: <ApproveContract />,
   },
   {
     path: "/ContactUs",

@@ -116,7 +116,32 @@ export default function UserTable() {
                   <td class="px-4 py-3 text-sm">15-01-2021</td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
-                      <Link
+                      {contract.approved ? (
+                        <Link
+                          to={`/contractDetail/${contract.id}`}
+                          className="text-blue"
+                        >
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            // onClick={}
+                          >
+                            View Contract
+                          </button>
+                        </Link>
+                      ) : (
+                        <Link
+                          to={`/ApproveContract/${contract.id}`}
+                          className="text-blue"
+                        >
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            // onClick={}
+                          >
+                            Sign Contract
+                          </button>
+                        </Link>
+                      )}
+                      {/* <Link
                         to={`/contractDetail/${contract.id}`}
                         className="text-blue"
                       >
@@ -142,7 +167,7 @@ export default function UserTable() {
                             />
                           </svg>
                         </button>
-                      </Link>
+                      </Link> */}
                     </div>
                   </td>
                 </tr>

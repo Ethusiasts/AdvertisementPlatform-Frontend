@@ -18,6 +18,7 @@ export default function UserTable() {
     },
     { user_id }
   );
+  console.log(proposals);
 
   if (isLoading) {
     return (
