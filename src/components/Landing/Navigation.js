@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { navMenus } from "../../utils/index";
 import { Link, useLocation } from "react-router-dom";
-import CartIcon from "../cartIcon";
 
 function Navigation() {
   const [mobile, setMobile] = useState(false);
   const location = useLocation();
   // Check if the current route is localhost:3000
-  const isLanding = location.pathname === "/";
   const handleMobile = () => {
     setMobile(!mobile);
   };
@@ -80,11 +78,6 @@ function Navigation() {
         >
           Sign up
         </Link>
-        {!isLanding && (
-          <Link to="/cart">
-            <CartIcon />
-          </Link>
-        )}
       </nav>
       <div
         className={
