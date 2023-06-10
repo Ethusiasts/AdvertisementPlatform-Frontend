@@ -33,23 +33,6 @@ export default function ApproveContractForm({ photo, title, description }) {
     },
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    mutation.mutate([
-      contract?.id,
-      {
-        total_tax: contract?.total_tax,
-        gross_total_fee: contract?.gross_total_fee,
-        net_free: contract?.net_free,
-        proposal_id: contract?.proposal_id.id,
-        agency_signature: contract?.agency_signature,
-        customer_signature: customerSignature,
-        media_agency_id: contract?.media_agency_id.id,
-        user_id: contract?.user_id.id,
-      },
-    ]);
-  };
-
   const [signatureRef, setSignatureRef] = useState("");
   const [customerSignature, setcustomerSignature] = useState(null);
 
@@ -64,6 +47,33 @@ export default function ApproveContractForm({ photo, title, description }) {
     signatureRef.clear();
     setcustomerSignature(null);
   }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log({
+      total_tax: contract?.total_tax,
+      gross_total_fee: contract?.gross_total_fee,
+      net_free: contract?.net_free,
+      proposal_id: contract?.proposal_id.id,
+      agency_signature: contract?.agency_signature,
+      customer_signature: customerSignature,
+      media_agency_id: contract?.media_agency_id.id,
+      user_id: contract?.user_id.id,
+    });
+
+    //   mutation.mutate([
+    //     contract?.id,
+    //     {
+    //       total_tax: contract?.total_tax,
+    //       gross_total_fee: contract?.gross_total_fee,
+    //       net_free: contract?.net_free,
+    //       proposal_id: contract?.proposal_id.id,
+    //       agency_signature: contract?.agency_signature,
+    //       customer_signature: customerSignature,
+    //       media_agency_id: contract?.media_agency_id.id,
+    //       user_id: contract?.user_id.id,
+    //     },
+    //   ]);
+  };
 
   return (
     <form onSubmit={handleSubmit}>

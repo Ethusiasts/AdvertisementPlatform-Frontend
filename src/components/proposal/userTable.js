@@ -124,6 +124,8 @@ export default function UserTable() {
                             description={proposal.description}
                             approved={proposal.approved}
                             total_price={proposal.total_price}
+                            advertisement={proposal.advertisement_id}
+                            billboard={proposal.billboard_id}
                           />
                         }
                       />

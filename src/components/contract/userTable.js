@@ -116,7 +116,8 @@ export default function UserTable() {
                   <td class="px-4 py-3 text-sm">15-01-2021</td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
-                      {contract.approved ? (
+                      {contract.agency_signature &&
+                      contract.customer_signature != "1" ? (
                         <Link
                           to={`/contractDetail/${contract.id}`}
                           className="text-blue"
@@ -134,7 +135,7 @@ export default function UserTable() {
                           className="text-blue"
                         >
                           <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                             // onClick={}
                           >
                             Sign Contract
