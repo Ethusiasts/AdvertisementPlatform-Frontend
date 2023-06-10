@@ -4,6 +4,7 @@ import AlertService from "../alertService";
 import { userStepper } from "../../services/user_stepper_api";
 import { getCookie } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { PropagateLoaderSpinner } from "../spinners";
 
 export default function ProfileForm({ imgUrl }) {
   const [userName, setUserName] = useState("Devid27");
@@ -12,6 +13,7 @@ export default function ProfileForm({ imgUrl }) {
   const [lastName, setLastName] = useState("Jhon");
   const [notification, setNotification] = useState();
   const [type, setType] = useState();
+
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(userStepper, {
@@ -26,11 +28,14 @@ export default function ProfileForm({ imgUrl }) {
           navigate("/search");
         }, 3000);
       } else {
+        var errors = "";
         Object.keys(data.response.data.message).forEach((key) => {
-          console.log(data.response.data.message[key][0]);
-          setNotification(data.response.data.message[key][0]);
-          setType("error");
+          // console.log(data.response.data.message[key][0]);
+          errors += data.response.data.message[key][0] + "\n";
         });
+        console.log(errors);
+        setNotification(errors);
+        setType("error");
         // setNotification(data.response.data.message);
         // console.log(data.response.data.message);
 
@@ -73,9 +78,12 @@ export default function ProfileForm({ imgUrl }) {
   };
   return (
     <div className="col-span-5 xl:col-span-3">
-      {notification ? <AlertService message={notification} type={type} /> : ""}
-
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        {notification ? (
+          <AlertService message={notification} type={type} />
+        ) : (
+          ""
+        )}
         <div className="p-7">
           <form onSubmit={handleSubmit}>
             <div className="mb-5 flex flex-col gap-5 sm:flex-row">
@@ -120,6 +128,7 @@ export default function ProfileForm({ imgUrl }) {
                     placeholder="Devid27"
                     value={userName}
                     onChange={handleUserNameChange}
+                    required
                   />
                 </div>
               </div>
@@ -138,6 +147,7 @@ export default function ProfileForm({ imgUrl }) {
                   id="phoneNumber"
                   placeholder="+990 3343 7865"
                   value={phoneNumber}
+                  required
                   onChange={handlePhoneNumberChange}
                 />
               </div>
@@ -185,6 +195,7 @@ export default function ProfileForm({ imgUrl }) {
                     placeholder="Devid"
                     value={firstName}
                     onChange={handleFirstNameChange}
+                    required
                   />
                 </div>
               </div>
@@ -230,19 +241,26 @@ export default function ProfileForm({ imgUrl }) {
                     placeholder="Jhon"
                     value={lastName}
                     onChange={handleLastNameChange}
+                    required
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-4">
-              <button className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark">
-                Cancel
-              </button>
-              <button className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1">
-                Save
-              </button>
-            </div>
+            {isLoading ? (
+              <div className="flex justify-end gap-4">
+                <PropagateLoaderSpinner />
+              </div>
+            ) : (
+              <div className="flex justify-end gap-4">
+                <button className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark">
+                  Cancel
+                </button>{" "}
+                <button className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1">
+                  Save
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>

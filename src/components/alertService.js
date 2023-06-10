@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const AlertService = ({ message, type }) => {
+const AlertService = ({ message, type, reff }) => {
   const [showAlert, setShowAlert] = useState(true);
 
   useEffect(() => {
+    setShowAlert(true); // Set showAlert to true whenever message or type changes
+
     const timeout = setTimeout(() => {
       setShowAlert(false);
     }, 5000);
@@ -11,7 +13,8 @@ const AlertService = ({ message, type }) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [message, type, reff]); // Add message and type as dependencies
+
   return (
     <div>
       {showAlert ? (

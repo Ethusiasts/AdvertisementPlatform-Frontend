@@ -33,16 +33,12 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
   };
 
   const handleSubmit = (url) => {
-    // mutation.mutate({
-    //   image: url,
-    // });
     setImgUrl(url);
   };
 
   const uploadImage = () => {
     setNotification("Uploading ...");
     setType("Success");
-
     // event.preventDefault();
     const date = new Date();
     const year = date.getFullYear();
@@ -61,7 +57,8 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
 
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        console.log(url);
+        setNotification("Uploaded Successfully!");
+        setType("Success");
         setImgUrl(url);
         handleSubmit(url);
       });
@@ -124,21 +121,6 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
               <p>(max, 800 X 800px)</p>
             </div>
           </div>
-
-          {/* <div className="flex justify-end gap-4">
-            <button
-              className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark"
-              type="submit"
-            >
-              Cancel
-            </button>
-            <button
-              className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:bg-opacity-70"
-              type="submit"
-            >
-              Save
-            </button>
-          </div> */}
         </div>
       </div>
     </div>

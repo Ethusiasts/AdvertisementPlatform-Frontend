@@ -6,16 +6,14 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { PropagateLoaderSpinner } from "../spinners";
-import ErrorAlert from "../errorAlert";
 import { signUpwithGoogle } from "../../services/auth/signup_google";
 import Select from "react-tailwindcss-select";
-import { defaultErrorMsg, selectOptionsSignUp } from "../../utils";
+import { selectOptionsSignUp } from "../../utils";
 import AlertService from "../alertService";
 
 export default function SignUpForm() {
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRepassword] = useState("");

@@ -6,7 +6,7 @@ import { PropagateLoaderSpinner } from "../spinners";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
-import { getCookie, selectOptionsSignUp, setCookie } from "../../utils";
+import { setCookie } from "../../utils";
 import AlertService from "../alertService";
 
 export default function SignInForm() {

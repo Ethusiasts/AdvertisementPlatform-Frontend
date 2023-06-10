@@ -27,3 +27,9 @@ export function FadeLoaderSpinner() {
     </div>
   );
 }
+
+export function ScaleLoader() {
+  <div className="sweet-loading ">
+    <ScaleLoader color="#36d7b7" size={10} />
+  </div>;
+}
