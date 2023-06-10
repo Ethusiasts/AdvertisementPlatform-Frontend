@@ -1,10 +1,51 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import AlertService from "../alertService";
+import { userStepper } from "../../services/user_stepper_api";
+import { getCookie } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import { PropagateLoaderSpinner } from "../spinners";
 
-export default function ProfileForm({}) {
+export default function ProfileForm({ imgUrl }) {
   const [userName, setUserName] = useState("Devid27");
   const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
   const [firstName, setFirstName] = useState("Devid");
   const [lastName, setLastName] = useState("Jhon");
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
+
+  const navigate = useNavigate();
+
+  const { mutate, isLoading } = useMutation(userStepper, {
+    onSuccess: async (data) => {
+      console.log(data);
+      if (data.status === 200) {
+        console.log(data);
+        setNotification(data.message);
+        setType("success");
+
+        setTimeout(() => {
+          navigate("/search");
+        }, 3000);
+      } else {
+        var errors = "";
+        Object.keys(data.response.data.message).forEach((key) => {
+          // console.log(data.response.data.message[key][0]);
+          errors += data.response.data.message[key][0] + "\n";
+        });
+        console.log(errors);
+        setNotification(errors);
+        setType("error");
+        // setNotification(data.response.data.message);
+        // console.log(data.response.data.message);
+
+        // setType("error");
+      }
+    },
+    onError: () => {
+      setNotification("Some error occurred...");
+    },
+  });
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -24,16 +65,27 @@ export default function ProfileForm({}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const userInfo = {
+      username: userName,
+      profile_picture: imgUrl,
+      phone_number: phoneNumber,
+      first_name: firstName,
+      last_name: lastName,
+      user: getCookie("user"),
+    };
+    mutate(userInfo);
     // handle form submission here
   };
   return (
     <div className="col-span-5 xl:col-span-3">
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
-          <h3 className="font-medium text-black">Personal Information</h3>
-        </div>
+        {notification ? (
+          <AlertService message={notification} type={type} />
+        ) : (
+          ""
+        )}
         <div className="p-7">
-          <form action={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-5 flex flex-col gap-5 sm:flex-row">
               <div className="w-full sm:w-1/2">
                 <label
@@ -76,6 +128,7 @@ export default function ProfileForm({}) {
                     placeholder="Devid27"
                     value={userName}
                     onChange={handleUserNameChange}
+                    required
                   />
                 </div>
               </div>
@@ -89,11 +142,12 @@ export default function ProfileForm({}) {
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-primary"
-                  type="text"
+                  type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
                   placeholder="+990 3343 7865"
                   value={phoneNumber}
+                  required
                   onChange={handlePhoneNumberChange}
                 />
               </div>
@@ -141,6 +195,7 @@ export default function ProfileForm({}) {
                     placeholder="Devid"
                     value={firstName}
                     onChange={handleFirstNameChange}
+                    required
                   />
                 </div>
               </div>
@@ -186,25 +241,26 @@ export default function ProfileForm({}) {
                     placeholder="Jhon"
                     value={lastName}
                     onChange={handleLastNameChange}
+                    required
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-4">
-              <button
-                className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark"
-                type="submit"
-              >
-                Cancel
-              </button>
-              <button
-                className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1"
-                type="submit"
-              >
-                Save
-              </button>
-            </div>
+            {isLoading ? (
+              <div className="flex justify-end gap-4">
+                <PropagateLoaderSpinner />
+              </div>
+            ) : (
+              <div className="flex justify-end gap-4">
+                <button className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark">
+                  Cancel
+                </button>{" "}
+                <button className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1">
+                  Save
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>

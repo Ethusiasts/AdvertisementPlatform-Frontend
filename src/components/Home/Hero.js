@@ -93,7 +93,7 @@ export default function Hero() {
 
       <div className="absolute  w-full ">
         {" "}
-        <Navigation />
+        <HomeNavBar />
       </div>
 
       {/* :BOTTOM OPTIONS */}

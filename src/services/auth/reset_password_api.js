@@ -1,17 +1,16 @@
 import { axiosInstance } from "../../utils/axiosInstance";
 
-export const signIn = ({ email, password }) => {
+export const resetPassword = ({ password }) => {
   const body = {
-    email: email,
     password: password,
   };
   return axiosInstance
-    .post("/auth/login", body)
+    .post("/auth/reset_password", body)
     .then((res) => {
       return res.data;
     })
     .catch((error) => {
-      console.log("error", error);
+      console.error(error);
       return error;
     });
 };
