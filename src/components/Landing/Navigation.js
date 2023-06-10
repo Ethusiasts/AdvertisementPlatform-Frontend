@@ -133,13 +133,8 @@ function Navigation() {
           <div className="mt-auto">
             <div className="pt-6">
               <Link
-<<<<<<< HEAD
-                className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold  bg-gray-50 hover:bg-gray-100 rounded-xl"
-                to={"/signin"}
-=======
                 className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
                 href="/signIn"
->>>>>>> 2aa554d4d1686342e096a25fc0dec0a6117e89d9
               >
                 Sign in
               </Link>

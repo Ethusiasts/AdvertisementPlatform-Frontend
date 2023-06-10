@@ -2,7 +2,6 @@ import { useState } from "react";
 import ProfileForm from "../../components/profile/profileform";
 import ProfilePictureForm from "../../components/profile/profilepicture";
 
-<<<<<<< HEAD
 export default function UserStepper({
   status,
   place,
@@ -15,9 +14,6 @@ export default function UserStepper({
 }) {
   const [imgUrl, setImgUrl] = useState();
 
-=======
-export default function UserStepper() {
->>>>>>> 2aa554d4d1686342e096a25fc0dec0a6117e89d9
   return (
     <div className="flex justify-center items-center p-10 shadow-sm">
       <div className="rounded-sm border border-stroke bg-white shadow-default">
