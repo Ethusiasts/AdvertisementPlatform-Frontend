@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { getUserAdvertisements } from "../../services/advertisement";
 export default function Table() {
-  const user_id = 2;
+  const user_id = 5;
   const { data: advertisements, isLoading } = useQuery(
     ["advertisements"],
     () => {

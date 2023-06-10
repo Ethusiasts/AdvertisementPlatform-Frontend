@@ -1,6 +1,6 @@
 export default function Rating() {
   return (
-    <div class="grid grid-rows-3 grid-flow-col  gap-4 m-16">
+    <div class="grid grid-rows-3 grid-flow-col  gap-4 mx-16 mt-16">
       <div class="row-span-3 col-span-12 bg-white p-2">
         <h1 class="text-3xl font-medium">Ratings & Reviews</h1>
         <p class="text-gray-500 py-2"> Review About Bole Billboard Places</p>

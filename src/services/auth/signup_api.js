@@ -1,4 +1,4 @@
-import axiosInstance from "../../utils/axiosInstance";
+import { axiosInstance } from "../../utils/axiosInstance";
 
 export const signUp = ({ email, role, is_verified, password }) => {
   const body = {

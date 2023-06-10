@@ -64,7 +64,7 @@ export default function CreateTvAdForm({ photo, title, description }) {
       height: null,
       approved: false,
       quantity: quantity,
-      customer: 2,
+      user_id: 5,
     });
   };
 

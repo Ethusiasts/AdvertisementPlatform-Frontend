@@ -2,8 +2,6 @@ import "../styles/home.css";
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import { faThList } from "@fortawesome/free-solid-svg-icons";
-import { faList } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Home/Pagination";
 import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
@@ -15,14 +13,18 @@ import classNames from "classnames";
 import Help from "../components/Home/Help";
 import Hero from "../components/Home/Hero";
 import RecommendedCarousel from "../components/Home/RecommendedCarousel";
+import Cart from "../components/Home/Cart";
+import { Link } from "react-router-dom";
+
+import { itemsCount } from "../utils/cart";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
-  const [activeLink, setActiveLink] = useState("billboard");
   const [isBillboard, setIsBillboard] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [dataSize, setDataSize] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemCount, setItemCount] = useState(itemsCount());
   const [mouseOverDropdown, setMouseOverDropdown] = useState(false);
   const [filterOn, setFilterOn] = useState(false);
   const [filterResults, setFilterResults] = useState(null);
@@ -79,6 +81,9 @@ export default function Home() {
   const handleDropdownItemClick = () => {
     clearTimeout(timeoutRef.current);
     setShowDropdown(false);
+  };
+  const handleonAddOrRemoveClick = () => {
+    setItemCount(itemsCount());
   };
 
   return (
@@ -146,41 +151,86 @@ export default function Home() {
                   aria-orientation="vertical"
                   aria-labelledby="options-menu"
                 >
-                  <button
-                    className={classNames(
-                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                      { "bg-gray-100": sortBy === "name" }
-                    )}
-                    onClick={() => handleChildSort("place")}
-                  >
-                    Name
-                  </button>
-                  <button
-                    className={classNames(
-                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                      { "bg-gray-100": sortBy === "location" }
-                    )}
-                    role="menuitem"
-                    onClick={() => handleChildSort("location")}
-                  >
-                    Location
-                  </button>
-                  <button
-                    className={classNames(
-                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                      { "bg-gray-100": sortBy === "name" }
-                    )}
-                    role="menuitem"
-                    onClick={() => handleChildSort("size")}
-                  >
-                    Size
-                  </button>
+                  {!isBillboard && (
+                    <>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("channel_name")}
+                      >
+                        Channel Name
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("normal")}
+                      >
+                        Normal Hour
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("peak_hour")}
+                      >
+                        Peak Hour
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("production")}
+                      >
+                        Production
+                      </button>
+                    </>
+                  )}
+                  {isBillboard && (
+                    <>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        onClick={() => handleChildSort("monthly_rate_per_sq")}
+                      >
+                        Price
+                      </button>
+
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "location" }
+                        )}
+                        role="menuitem"
+                        onClick={() => handleChildSort("location")}
+                      >
+                        Location
+                      </button>
+                      <button
+                        className={classNames(
+                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                          { "bg-gray-100": sortBy === "name" }
+                        )}
+                        role="menuitem"
+                        onClick={() => handleChildSort("size")}
+                      >
+                        Size
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )}
           </div>
 
-          <div className="">
+          {/* <div className="">
             <div className="flex">
               <div className="pr-6">
                 <FontAwesomeIcon icon={faThList} className="text-[#2785AE]" />
@@ -189,19 +239,24 @@ export default function Home() {
                 <FontAwesomeIcon icon={faList} className="text-[#2785AE]" />
               </div>
             </div>
-          </div>
+          </div> */}
+          <Link to="/cart">
+            <Cart itemCount={itemCount} />
+          </Link>
         </div>
         <Pagination
           ref={childRef}
           query={query}
           filterOn={filterOn}
           filterResults={filterResults}
+          isBillboard={isBillboard}
           onChildStateChange={handlePaginationDataStateChange}
           onChildCurrentPageChange={handlePaginationCurrentPageStateChange}
+          onAddOrRemoveClick={handleonAddOrRemoveClick}
         />
       </div>
 
-      <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommended</div>
+      <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommendations</div>
 
       <div className="mx-7">
         <RecommendedCarousel />
