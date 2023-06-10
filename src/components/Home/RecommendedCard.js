@@ -1,9 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpandArrowsAlt } from "@fortawesome/free-solid-svg-icons";
-import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
-import { faDollar } from "@fortawesome/free-solid-svg-icons";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExpandArrowsAlt,
+  faMapMarkerAlt,
+  faDollarSign,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import RatingStars from "./RatingStars";
+
 export default function Card({
   status,
   rate,
@@ -16,55 +19,51 @@ export default function Card({
   alt,
 }) {
   return (
-    <div className=" w-[220px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
+    <div className="w-[220px] bg-white rounded-lg shadow-lg p-4 cursor-pointer transform hover:scale-105 transition-transform duration-300">
       <img
         src={imageSrc}
         alt={alt}
-        className="card-image2 w-full px-2 object-cover "
+        className="card-image2 w-full h-40 object-cover rounded-t-lg"
       />
-      <div className=" px-6 mr-6 mt-2">
-        <span className="text-[#0FA958] font-bold text-xs">Status</span>
-        <span className="text-[#0FA958] font-bold text-xs float-right">
-          {status}
-        </span>
-      </div>
-      <div className="p-4">
-        {/* <p className="text-sm font-bold  text-[#7D7D7D] pt-2">Features</p> */}
-        <div className="flex pt-3">
+      <div className="px-4 mt-4">
+        <div className="flex justify-between items-center">
+          <span className="text-[#0FA958] font-bold text-xs">{status}</span>
+        </div>
+        <div className="flex justify-between items-center mt-2">
           <FontAwesomeIcon
-            icon={faDollar}
-            className=" text-[#7D7D7D] pr-3 text-xs"
+            icon={faDollarSign}
+            className="text-[#7D7D7D] text-xs"
           />
           <span className="text-xs">{price} birr</span>
         </div>
-        <div className="flex pt-3">
+        <div className="flex justify-between items-center mt-2">
           <FontAwesomeIcon
             icon={faCheckCircle}
-            className="production-icon text-[#7D7D7D] pr-3 text-xs"
+            className="text-[#7D7D7D] text-xs"
           />
-          <span className="production-text text-xs">
+          <span className="text-xs">
             {production ? "With Production" : "Without Production"}
           </span>
         </div>
-        <div className="flex pt-3">
+        <div className="flex justify-between items-center mt-2">
           <FontAwesomeIcon
             icon={faExpandArrowsAlt}
-            className="text-[#7D7D7D] pr-3 text-xs"
+            className="text-[#7D7D7D] text-xs"
           />
           <span className="text-xs">
             W{width} : H{height}
           </span>
         </div>
-        <div className="flex pt-3">
+        <div className="flex justify-between items-center mt-2">
           <FontAwesomeIcon
-            icon={faLocationCrosshairs}
-            className=" text-[#7D7D7D] pr-3 text-xs"
+            icon={faMapMarkerAlt}
+            className="text-[#7D7D7D] text-xs"
           />
           <span className="text-xs">{location}</span>
         </div>
-        <p className="">
+        <div className="mt-4">
           <RatingStars rating={rate} />
-        </p>
+        </div>
       </div>
     </div>
   );
