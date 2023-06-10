@@ -6,59 +6,55 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { PropagateLoaderSpinner } from "../spinners";
-import ErrorAlert from "../errorAlert";
 import { signUpwithGoogle } from "../../services/auth/signup_google";
 import Select from "react-tailwindcss-select";
-import { defaultErrorMsg, selectOptionsSignUp } from "../../utils";
+import { selectOptionsSignUp } from "../../utils";
+import AlertService from "../alertService";
 
 export default function SignUpForm() {
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRepassword] = useState("");
-  const [error, setError] = useState();
   const [role, setRole] = useState(selectOptionsSignUp[0]);
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
 
   const { mutate, isLoading } = useMutation(signUp, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.status === 200) {
-        setTimeout(setError(data.response.data.message), 3000);
-
-        navigate("/signin");
+        setNotification(data.message);
+        setType("success");
+        setTimeout(() => {
+          navigate("/signin");
+        }, 3000);
       } else {
-        setError(
-          data.response.data.message
-            ? data.response.data.message
-            : defaultErrorMsg
-        );
+        setType("error");
+        setNotification(data.response.data.message);
       }
     },
     onError: () => {
-      setError("Some error occured...");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("create");
+      setNotification("Some error occurred...");
     },
   });
   const { mutate: mutateGoogle, isLoading: isLoadingGoogle } = useMutation(
     signUpwithGoogle,
     {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         if (data.status === 200) {
-          console.log(data);
-          navigate("/search");
+          setNotification(data.message);
+          setType("success");
+          setTimeout(() => {
+            navigate("/signin");
+          }, 3000);
         } else {
-          console.log(data);
-
-          console.log(data.response.data.status);
-          setError(data.response.data.message);
+          setType("error");
+          setNotification(data.response.data.message);
         }
       },
       onError: () => {
-        console.log("Error");
-        setError("Some error occured...");
+        setNotification("Some error occurred...");
       },
     }
   );
@@ -76,10 +72,11 @@ export default function SignUpForm() {
 
   const onSubmit = (data) => {
     data.preventDefault();
-    setError();
+    setNotification();
 
     if (password !== rePassword) {
-      setError("Password should match");
+      setNotification("Password should match");
+      setType("error");
     } else {
       const user = {
         email: email,
@@ -93,7 +90,7 @@ export default function SignUpForm() {
 
   return (
     <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 h-screen ">
-      {error ? <ErrorAlert message={error} /> : ""}
+      {notification ? <AlertService message={notification} type={type} /> : ""}
 
       <div className="w-full p-4 mt-7 sm:p-12.5 xl:p-17.5 ">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
@@ -224,7 +221,7 @@ export default function SignUpForm() {
             </div>
           </div>
           <div className="mb-5 ">
-            {isLoading ? (
+            {isLoading || isLoadingGoogle ? (
               <div className="flex w-full justify-center align-center items-center p-4">
                 {"  "}
                 <PropagateLoaderSpinner />

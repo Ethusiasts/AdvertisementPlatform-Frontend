@@ -3,32 +3,37 @@ import { Link, useNavigate } from "react-router-dom";
 import { forgetPassword } from "../../services/auth/forget_password_api";
 import { useState } from "react";
 import { PropagateLoaderSpinner } from "../spinners";
+import AlertService from "../alertService";
+import { defaultErrorMsg } from "../../utils";
 
 export default function ForgotPasswordForm() {
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
-  const [error, setError] = useState();
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
 
   const { mutate, isLoading } = useMutation(forgetPassword, {
     onSuccess: (data) => {
       if (data.status === 200) {
-        setTimeout(setError(data.response.data.message), 3000);
-
-        navigate("/signin");
+        setNotification(data.message);
+        setType("success");
+        setTimeout(() => {
+          navigate("/signup");
+        }, 3000);
       } else {
-        console.log(data.response.data.status);
-        setError(data.response.data.message);
+        setType("error");
+        setNotification(data.response.data.message);
       }
     },
     onError: () => {
-      setError("Some error occured...");
+      setType("error");
+      setNotification(defaultErrorMsg);
     },
   });
   const onSubmit = (data) => {
     data.preventDefault();
-    setError();
+    setNotification();
     const user = {
       email: email,
     };
@@ -36,6 +41,8 @@ export default function ForgotPasswordForm() {
   };
   return (
     <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+      {notification ? <AlertService message={notification} type={type} /> : ""}
+
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
         <h2 className="mb-9 text-base font-bold text-black sm:text-title-xl2">
           Forgot Password? Enter Your Email...

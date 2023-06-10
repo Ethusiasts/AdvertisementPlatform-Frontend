@@ -1,16 +1,62 @@
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { resetPassword } from "../../services/auth/reset_password_api";
+import { useMutation } from "@tanstack/react-query";
+import AlertService from "../alertService";
 
 export default function ResetPasswordForm() {
-    return (
-  
-      <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+  const [password, setPassword] = useState("");
+  const [rePassword, setRepassword] = useState("");
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
+
+  const { mutate, isLoading } = useMutation(resetPassword, {
+    onSuccess: async (data) => {
+      if (data.status === 200) {
+        console.log(data);
+        setNotification(data.message);
+        setType("success");
+
+        // setTimeout(() => {
+        //   navigate("/search");
+        // }, 3000);
+      } else {
+        setType("error");
+        setNotification(data.response.data.message);
+        console.log(data.response);
+      }
+    },
+    onError: () => {
+      setNotification("Some error occurred...");
+    },
+  });
+
+  const onSubmit = (data) => {
+    data.preventDefault();
+    setNotification();
+
+    if (password !== rePassword) {
+      setNotification("Password should match");
+      setType("error");
+    } else {
+      const user = {
+        password: password,
+      };
+      mutate(user);
+    }
+  };
+
+  return (
+    <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+      {notification ? <AlertService message={notification} type={type} /> : ""}
+
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
           Reset Password
         </h2>
 
-        <form>
-        <div className="mb-6">
+        <form onSubmit={onSubmit} method="POST">
+          <div className="mb-6">
             <label className="mb-2.5 block font-medium text-black">
               New Password
             </label>
@@ -18,6 +64,9 @@ export default function ResetPasswordForm() {
               <input
                 type="password"
                 placeholder="6+ Characters, 1 Capital letter"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
 
@@ -52,6 +101,9 @@ export default function ResetPasswordForm() {
               <input
                 type="password"
                 placeholder="6+ Characters, 1 Capital letter"
+                value={rePassword}
+                onChange={(e) => setRepassword(e.target.value)}
+                required
                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
               />
 
@@ -83,10 +135,12 @@ export default function ResetPasswordForm() {
             <input
               type="submit"
               value="Reset"
+              disabled={isLoading}
               className="w-full cursor-pointer rounded-lg border border-blue bg-blue-700 p-4 text-white hover:bg-opacity-90"
             />
           </div>
         </form>
       </div>
     </div>
-        )}
+  );
+}
