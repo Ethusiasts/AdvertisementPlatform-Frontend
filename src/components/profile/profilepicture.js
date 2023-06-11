@@ -3,14 +3,10 @@ import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createBillboard } from "../../services/billboard_api";
-import { FadeLoaderSpinner } from "../spinners";
-import { PropagateLoaderSpinner } from "../spinners";
-import AlertService from "../alertService";
+import { toast } from "react-hot-toast";
 
 export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
   const [image, setImage] = useState(null);
-  const [notification, setNotification] = useState();
-  const [type, setType] = useState();
 
   const mutation = useMutation({
     mutationFn: (billboard) => {
@@ -37,8 +33,8 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
   };
 
   const uploadImage = () => {
-    setNotification("Uploading ...");
-    setType("Success");
+    toast.success("Uploading ..");
+
     // event.preventDefault();
     const date = new Date();
     const year = date.getFullYear();
@@ -57,8 +53,8 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
 
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        setNotification("Uploaded Successfully!");
-        setType("Success");
+        toast.success("Uploaded Successfully!");
+
         setImgUrl(url);
         handleSubmit(url);
       });
@@ -67,7 +63,6 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
 
   return (
     <div className="col-span-5 xl:col-span-2">
-      {notification ? <AlertService message={notification} type={type} /> : ""}
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
           <h3 className="font-medium text-black">Upload Profile Picture</h3>

@@ -8,7 +8,13 @@ import MediaDetail from "./pages/detail_page/mediaDetailPage";
 import LandlordsBillboardDetail from "./pages/agencies_detail_page/landlordsBillboardDetailPage";
 import AgenciesMediaDetail from "./pages/agencies_detail_page/agenciesMediaDetailPage";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Route,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";
 import Proposal from "./pages/proposal/userProposal";
@@ -49,36 +55,39 @@ import BillboardProfilePage from "./pages/profile/billboardProfilePage";
 import ContractDetail from "./pages/contract/contractDetail";
 import UserContractDetail from "./pages/contract/userContractDetail";
 import { Toaster } from "react-hot-toast";
+import { getCookie } from "./utils";
+import jwtDecode from "jwt-decode";
+import ErrorPage from "./components/error";
+import { Redirect } from "react-router-dom";
 
 // HOC for checking authentication and authorization
-const withAuthentication = (Component) => {
-  const isAuthenticated = !!localStorage.getItem("user"); // Replace with your authentication logic
-  // Check if the user is authorized
-  const isAuthorized = (role) => {
-    // Implement your authorization logic here
-    // Example: Check if the user has a specific role
-    return role === "Admin";
-  };
-
-  // Usage example:
-  if (isAuthenticated && isAuthorized("admin")) {
-    // User is authenticated and has the 'admin' role
-    // Render authorized content
-  } else {
-    // User is not authenticated or not authorized
-    // Redirect to a login page or display an error message
+const ProtectedRoute = ({ Component, roles, ...rest }) => {
+  const token = getCookie("user");
+  const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
+  const navigate = useNavigate();
+  if (!token) {
+    // Redirect to the login page if not authenticated
+    return <Navigate to="/SignIn" replace />;
   }
-  return function AuthenticatedComponent(props) {
-    if (isAuthenticated) {
-      return <Component {...props} />;
-    } else {
-      // return <Redirect to="/SignIn" />; // Redirect to the sign-in page if not authenticated
-    }
-  };
+
+  if (roles && !roles.includes(role)) {
+    // Redirect to a forbidden page if the user's role is not allowed
+
+    const err = {
+      status: "401",
+      message: "User not authorised",
+      header: "Unauthorized",
+    };
+    return <Navigate to="/error" state={err} replace={true} />;
+  }
+
+  // Render the component if authenticated and authorized
+  return <Component {...rest} />;
+
+  // return <Route {...rest} element={<Component />} />;
 };
 
 // Apply the withAuthentication HOC to secure the routes
-const SecuredProfilePage = withAuthentication(UserProfilePage);
 
 const router = createBrowserRouter([
   // Onboarding
@@ -89,6 +98,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+  },
+  {
+    path: "/billboards/:billboardId",
+    element: <BillboardDetail />,
+  },
+  {
+    path: "/medias/:mediaId",
+    element: <MediaDetail />,
   },
   // Authentication
   {
@@ -109,12 +126,13 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/UserStepper",
-    element: <UserStepper />,
-  },
-  {
     path: "/MediaAgencyStepper",
-    element: <MediaAgencyStepper />,
+    element: (
+      <ProtectedRoute
+        Component={MediaAgencyStepper}
+        roles={["tv", "radio", "customer"]}
+      />
+    ),
   },
   {
     path: "/cart",
@@ -122,42 +140,46 @@ const router = createBrowserRouter([
   },
 
   // User
+
   {
-    path: "/billboards/:billboardId",
-    element: <BillboardDetail />,
+    path: "/UserStepper",
+
+    element: (
+      <ProtectedRoute
+        Component={UserStepper}
+        roles={["customer", "landowner"]}
+      />
+    ),
   },
-  {
-    path: "/medias/:mediaId",
-    element: <MediaDetail />,
-  },
-  {
-    path: "/signIn",
-    element: <SignIn />,
-  },
+
   {
     path: "/Myaccount",
-    element: <MyAccount />,
+    element: (
+      <ProtectedRoute Component={MyAccount} roles={["admin", "customer"]} />
+    ),
   },
 
   {
     path: "/Advertisement",
-    element: <Advertisement />,
+    element: <ProtectedRoute Component={Advertisement} roles={["customer"]} />,
   },
   {
     path: "CreateBillboardAd",
-    element: <CreateBillboardAd />,
+    element: (
+      <ProtectedRoute Component={CreateBillboardAd} roles={["landowner"]} />
+    ),
   },
   {
     path: "CreateTvAd",
-    element: <CreateTvAd />,
+    element: <ProtectedRoute Component={CreateTvAd} roles={["tv"]} />,
   },
   {
     path: "CreateMagazineAd",
-    element: <CreateMagazineAd />,
+    element: <ProtectedRoute Component={CreateMagazineAd} roles={["gazeta"]} />,
   },
   {
     path: "CreateRadioAd",
-    element: <CreateRadioAd />,
+    element: <ProtectedRoute Component={CreateRadioAd} roles={["radio"]} />,
   },
   {
     path: "/UserProposal",
@@ -165,7 +187,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/UserContract",
-    element: <UserContract />,
+    element: <ProtectedRoute Component={UserContract} roles={["customer"]} />,
   },
   {
     path: "/ContactUs",
@@ -175,96 +197,145 @@ const router = createBrowserRouter([
   // Billboard User
   {
     path: "/BillboardDashboard",
-    element: <BillboardDashboard />,
+    element: (
+      <ProtectedRoute Component={BillboardDashboard} roles={["landlord"]} />
+    ),
   },
   {
     path: "/BillboardProposal",
-    element: <BillboardProposal />,
+    element: (
+      <ProtectedRoute Component={BillboardProposal} roles={["landlord"]} />
+    ),
   },
   {
     path: "/BillboardContract",
-    element: <BillboardContract />,
+    element: (
+      <ProtectedRoute Component={BillboardContract} roles={["landlord"]} />
+    ),
   },
+
   {
     path: "/Billboard",
-    element: <Billboard />,
+    element: <ProtectedRoute Component={Billboard} roles={["landlord"]} />,
   },
   {
     path: "/CreateBillboard",
-    element: <CreateBillboard />,
+    element: (
+      <ProtectedRoute Component={CreateBillboard} roles={["landlord"]} />
+    ),
   },
   {
     path: "/CreateContract",
-    element: <CreateContract />,
+    element: <ProtectedRoute Component={CreateContract} roles={["landlord"]} />,
   },
   {
     path: "/ContractDetail/:contractId",
-    element: <UserContractDetail />,
+    element: (
+      <ProtectedRoute Component={UserContractDetail} roles={["landlord"]} />
+    ),
   },
   {
     path: "/user/:userId/billboards/:billboardId",
-    element: <LandlordsBillboardDetail />,
+    element: (
+      <ProtectedRoute
+        Component={LandlordsBillboardDetail}
+        roles={["landlord"]}
+      />
+    ),
   },
   // Media Agency
   {
     path: "/MediaDashboard",
-    element: <MediaDashboard />,
+    element: (
+      <ProtectedRoute Component={MediaDashboard} roles={["tv", "radio"]} />
+    ),
   },
   {
     path: "/MediaProposal",
-    element: <MediaProposal />,
+    element: (
+      <ProtectedRoute Component={MediaProposal} roles={["tv", "radio"]} />
+    ),
   },
   {
     path: "/MediaContract",
-    element: <MediaContract />,
+    element: (
+      <ProtectedRoute Component={MediaContract} roles={["tv", "radio"]} />
+    ),
   },
   {
     path: "/Media",
-    element: <Media />,
+    element: <ProtectedRoute Component={Media} roles={["tv", "radio"]} />,
   },
   {
     path: "/user/:userId/medias/:mediaId",
-    element: <AgenciesMediaDetail />,
+    element: (
+      <ProtectedRoute Component={AgenciesMediaDetail} roles={["tv", "radio"]} />
+    ),
   },
 
   // Admin
   {
     path: "/AdminDashboard",
-    element: <AdminDashboard />,
+    element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
   },
   {
     path: "/UserControl",
-    element: <UserControl />,
+    element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
   },
   {
     path: "/HelpAndSupport",
-    element: <HelpAndSupport />,
+    element: <ProtectedRoute Component={HelpAndSupport} roles={["admin"]} />,
   },
 
   // Profile
   {
     path: "/UserProfile",
-    element: <UserProfilePage />,
+    element: (
+      <ProtectedRoute Component={UserProfilePage} roles={["customer"]} />
+    ),
   },
   {
     path: "/MediaProfile",
-    element: <MediaProfilePage />,
+    element: (
+      <ProtectedRoute Component={MediaProfilePage} roles={["tv", "radio"]} />
+    ),
   },
   {
     path: "/BillboardProfile",
-    element: <BillboardProfilePage />,
+    element: (
+      <ProtectedRoute Component={BillboardProfilePage} roles={["landlord"]} />
+    ),
   },
   {
     path: "/UserEditProfile",
-    element: <UserEditProfilePage />,
+    element: (
+      <ProtectedRoute Component={UserEditProfilePage} roles={["customer"]} />
+    ),
   },
   {
     path: "/MediaEditProfile",
-    element: <MediaEditProfilePage />,
+    element: (
+      <ProtectedRoute
+        Component={MediaEditProfilePage}
+        roles={["tv", "radio", "gazeta"]}
+      />
+    ),
   },
   {
     path: "/BillboardEditProfile",
-    element: <BillboardEditProfilePage />,
+    element: (
+      <ProtectedRoute
+        Component={BillboardEditProfilePage}
+        roles={["landlord"]}
+      />
+    ),
+  },
+
+  //error
+
+  {
+    path: "/error",
+    element: <ErrorPage />,
   },
 ]);
 

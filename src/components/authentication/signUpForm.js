@@ -9,7 +9,6 @@ import { PropagateLoaderSpinner } from "../spinners";
 import { signUpwithGoogle } from "../../services/auth/signup_google";
 import Select from "react-tailwindcss-select";
 import { selectOptionsSignUp } from "../../utils";
-import AlertService from "../alertService";
 import { toast } from "react-hot-toast";
 
 export default function SignUpForm() {
@@ -28,7 +27,7 @@ export default function SignUpForm() {
         toast.success(data.message);
         setTimeout(() => {
           navigate("/signin");
-        }, 3000);
+        }, 2000);
       } else {
         toast.error(data.response.data.message);
       }
