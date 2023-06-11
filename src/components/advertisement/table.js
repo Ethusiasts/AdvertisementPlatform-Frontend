@@ -11,7 +11,7 @@ export default function Table() {
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
-  const user_id = 5;
+  const user_id = 1;
   const { data: advertisements, isLoading } = useQuery(
     ["advertisements"],
     () => {

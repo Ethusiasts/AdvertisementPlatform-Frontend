@@ -4,7 +4,7 @@ import ButtonWithModal from "./buttonWithModal";
 import ProposalPopup from "./proposalDetail";
 import UserProposalPopup from "./userProposalDetail";
 export default function UserTable() {
-  const user_id = 5;
+  const user_id = 1;
   const { data: proposals, isLoading } = useQuery(
     ["proposals"],
     () => {

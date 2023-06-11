@@ -64,26 +64,14 @@ export default function CreateRadioAdForm({ photo, title, description }) {
       height: null,
       approved: false,
       quantity: quantity,
-      user_id: 5,
+      user_id: 1,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (audio == null) return;
-    const audioRef = ref(
-      storage,
-      `Advertisement/audios/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${audio.name}`
-    );
+    const audioRef = ref(storage, `Advertisement/audios/` + `${Date.now()}`);
 
     uploadBytes(audioRef, audio).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {

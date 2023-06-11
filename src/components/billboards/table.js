@@ -1,6 +1,8 @@
 import { getMediaAgencyBillbaords } from "../../services/media_agency";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import ButtonWithModal from "./buttonWithModal";
+import PaymentForm from "./paymentForm";
 
 export default function Table() {
   const media_agency_id = 1;
@@ -55,6 +57,7 @@ export default function Table() {
                 <th class="px-4 py-3">Daily Fee per square feet</th>
                 <th class="px-4 py-3">Status</th>
                 <th class="px-4 py-3">Approved</th>
+                <th class="px-4 py-3">Paid</th>
                 <th class="px-4 py-3">Created Date</th>
                 <th class="px-4 py-3"></th>
               </tr>
@@ -123,6 +126,17 @@ export default function Table() {
     Rejected
   </p>  
   } */}
+                  </td>
+                  <td class="px-4 py-3 text-xs">
+                    {billboard.paid ? (
+                      <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
+                        Paid
+                      </p>
+                    ) : (
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
+                      </p>
+                    )}
                   </td>
                   <td class="px-4 py-3 text-sm">15-01-2021</td>
                   <td class="px-4 py-3 text-sm">
@@ -200,6 +214,8 @@ export default function Table() {
                           />
                         </svg>
                       </button>
+
+                      <ButtonWithModal modalContent={<PaymentForm />} />
                     </div>
                   </td>
                 </tr>

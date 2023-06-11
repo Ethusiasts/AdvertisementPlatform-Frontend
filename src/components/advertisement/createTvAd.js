@@ -64,26 +64,14 @@ export default function CreateTvAdForm({ photo, title, description }) {
       height: null,
       approved: false,
       quantity: quantity,
-      user_id: 5,
+      user_id: 1,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (video == null) return;
-    const videoRef = ref(
-      storage,
-      `Advertisement/videos/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${video.name}`
-    );
+    const videoRef = ref(storage, `Advertisement/videos/` + `${Date.now()}`);
 
     uploadBytes(videoRef, video).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {

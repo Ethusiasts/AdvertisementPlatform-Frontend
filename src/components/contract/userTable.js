@@ -116,8 +116,7 @@ export default function UserTable() {
                   <td class="px-4 py-3 text-sm">15-01-2021</td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
-                      {contract.agency_signature &&
-                      contract.customer_signature != "1" ? (
+                      {contract.customer_signature ? (
                         <Link
                           to={`/contractDetail/${contract.id}`}
                           className="text-blue"

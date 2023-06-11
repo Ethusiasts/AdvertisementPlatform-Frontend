@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { approveContract, getContract } from "../../services/contract";
 import { useState } from "react";
+import { storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function ApproveContractForm({ photo, title, description }) {
   let { contractId } = useParams();
@@ -25,7 +27,6 @@ export default function ApproveContractForm({ photo, title, description }) {
 
   const mutation = useMutation({
     mutationFn: ([contract_id, contract]) => {
-      console.log(contract_id, contract);
       return approveContract(contract_id, contract);
     },
     onSuccess: () => {
@@ -35,11 +36,21 @@ export default function ApproveContractForm({ photo, title, description }) {
 
   const [signatureRef, setSignatureRef] = useState("");
   const [customerSignature, setcustomerSignature] = useState(null);
+  const [customerSignatureImage, setcustomerSignatureImage] = useState(null);
 
   function handleSave(event) {
     event.preventDefault();
     const sign = signatureRef.getTrimmedCanvas().toDataURL();
+    const signToBe = signatureRef.toDataURL();
+    // Convert the data URL to a Blob object
+    const blobBin = atob(signToBe.split(",")[1]);
+    const array = [];
+    for (let i = 0; i < blobBin.length; i++) {
+      array.push(blobBin.charCodeAt(i));
+    }
+    const file = new Blob([new Uint8Array(array)], { type: "image/png" });
     setcustomerSignature(sign);
+    setcustomerSignatureImage(file);
   }
 
   function handleClear(event) {
@@ -47,36 +58,53 @@ export default function ApproveContractForm({ photo, title, description }) {
     signatureRef.clear();
     setcustomerSignature(null);
   }
-  const handleSubmit = (event) => {
+
+  const uploadImage = (event) => {
     event.preventDefault();
+
+    if (customerSignatureImage == null) return;
+    const imageRef = ref(
+      storage,
+      `Advertisement/signatures/` + `${Date.now()}`
+    );
+
+    uploadBytes(imageRef, customerSignatureImage).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        handleSubmit(url);
+        alert("Image Uploaded");
+      });
+    });
+  };
+
+  const handleSubmit = (url) => {
     console.log({
       total_tax: contract?.total_tax,
       gross_total_fee: contract?.gross_total_fee,
       net_free: contract?.net_free,
       proposal_id: contract?.proposal_id.id,
       agency_signature: contract?.agency_signature,
-      customer_signature: customerSignature,
+      customer_signature: url,
       media_agency_id: contract?.media_agency_id.id,
       user_id: contract?.user_id.id,
     });
 
-    //   mutation.mutate([
-    //     contract?.id,
-    //     {
-    //       total_tax: contract?.total_tax,
-    //       gross_total_fee: contract?.gross_total_fee,
-    //       net_free: contract?.net_free,
-    //       proposal_id: contract?.proposal_id.id,
-    //       agency_signature: contract?.agency_signature,
-    //       customer_signature: customerSignature,
-    //       media_agency_id: contract?.media_agency_id.id,
-    //       user_id: contract?.user_id.id,
-    //     },
-    //   ]);
+    mutation.mutate([
+      contract?.id,
+      {
+        total_tax: contract?.total_tax,
+        gross_total_fee: contract?.gross_total_fee,
+        net_free: contract?.net_free,
+        proposal_id: contract?.proposal_id.id,
+        agency_signature: contract?.agency_signature,
+        customer_signature: customerSignature,
+        media_agency_id: contract?.media_agency_id.id,
+        user_id: contract?.user_id.id,
+      },
+    ]);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={uploadImage}>
       <div className="container mx-auto py-10 px-8">
         <div className="bg-white shadow-md rounded p-8" id="contract">
           <h1 className="text-3xl font-semibold mb-4">

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { getUserAdvertisements } from "../../services/advertisement";
 export default function Table() {
-  const user_id = 5;
+  const user_id = 1;
   const { data: advertisements, isLoading } = useQuery(
     ["advertisements"],
     () => {
@@ -58,7 +58,7 @@ export default function Table() {
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-300 dark:bg-gray-100">
-              {advertisements.map((advertisement) => (
+              {advertisements?.map((advertisement) => (
                 <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
                   <td class="px-4 py-3">
                     <div class="flex items-center text-sm">

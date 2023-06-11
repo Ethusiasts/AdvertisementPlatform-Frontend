@@ -29,7 +29,6 @@ export default function UserProposalPopup({
                 />
               }
             />
-            // <AdvertisementCard advertisement={advertisement} />
           </div>
           <div class="w-1/2">
             <BillboardCard billboard={billboard} />
