@@ -48,6 +48,7 @@ import BillboardEditProfilePage from "./pages/profile/billboardEditProfilePage";
 import BillboardProfilePage from "./pages/profile/billboardProfilePage";
 import ContractDetail from "./pages/contract/contractDetail";
 import UserContractDetail from "./pages/contract/userContractDetail";
+import { Toaster } from "react-hot-toast";
 
 // HOC for checking authentication and authorization
 const withAuthentication = (Component) => {
@@ -272,6 +273,7 @@ export default function App() {
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
       <QueryClientProvider client={client}>
+        <Toaster position="top-center" reverseOrder={false} />
         {<RouterProvider router={router} />}
       </QueryClientProvider>
     </GoogleOAuthProvider>

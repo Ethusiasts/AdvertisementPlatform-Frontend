@@ -7,34 +7,35 @@ import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
 import { setCookie } from "../../utils";
-import AlertService from "../alertService";
+import { toast } from "react-hot-toast";
 
 export default function SignInForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notification, setNotification] = useState();
-  const [type, setType] = useState();
 
   const { mutate, isLoading } = useMutation(signIn, {
     onSuccess: async (data) => {
       if (data.status === 200) {
         console.log(data);
-        setNotification(data.message);
-        setType("success");
+        toast.success(data.message);
+
         const cred = jwt_decode(data.token);
         setCookie("user", cred.id, cred.exp);
 
-        setTimeout(() => {
-          navigate("/search");
-        }, 3000);
+        data.firstTimeLogin
+          ? setTimeout(() => {
+              navigate("/userstepper");
+            }, 3000)
+          : setTimeout(() => {
+              navigate("/search");
+            }, 3000);
       } else {
-        setType("error");
-        setNotification(data.response.data.message);
+        toast.error(data.response.data.message);
       }
     },
     onError: () => {
-      setNotification("Some error occurred...");
+      toast.error("Some error occurred...");
     },
   });
 
@@ -43,25 +44,22 @@ export default function SignInForm() {
     {
       onSuccess: async (data) => {
         if (data.status === 200) {
-          setNotification(data.message);
+          toast.success("Success");
 
-          setType("success");
           setTimeout(() => {
             navigate("/search");
           }, 3000);
         } else {
-          setType("error");
-          setNotification(data.response.data.message);
+          toast.error(data.response.data.message);
         }
       },
       onError: () => {
-        setNotification("Some error occurred...");
+        toast.error("Some error occured...");
       },
     }
   );
   const onSubmit = (data) => {
     data.preventDefault();
-    setNotification();
     const user = {
       email: email,
       password: password,
@@ -85,8 +83,6 @@ export default function SignInForm() {
 
   return (
     <div className="w-full dark:border-strokedark xl:w-1/2  h-screen">
-      {notification ? <AlertService message={notification} type={type} /> : ""}
-
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
           Sign In to Advert
