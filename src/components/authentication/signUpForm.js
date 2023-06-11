@@ -10,6 +10,7 @@ import { signUpwithGoogle } from "../../services/auth/signup_google";
 import Select from "react-tailwindcss-select";
 import { selectOptionsSignUp } from "../../utils";
 import AlertService from "../alertService";
+import { toast } from "react-hot-toast";
 
 export default function SignUpForm() {
   const navigate = useNavigate();
@@ -24,18 +25,16 @@ export default function SignUpForm() {
   const { mutate, isLoading } = useMutation(signUp, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        setNotification(data.message);
-        setType("success");
+        toast.success(data.message);
         setTimeout(() => {
           navigate("/signin");
         }, 3000);
       } else {
-        setType("error");
-        setNotification(data.response.data.message);
+        toast.error(data.response.data.message);
       }
     },
     onError: () => {
-      setNotification("Some error occurred...");
+      toast.error("Some error occurred...");
     },
   });
   const { mutate: mutateGoogle, isLoading: isLoadingGoogle } = useMutation(
@@ -43,18 +42,17 @@ export default function SignUpForm() {
     {
       onSuccess: async (data) => {
         if (data.status === 200) {
-          setNotification(data.message);
-          setType("success");
+          toast.success(data.message);
+
           setTimeout(() => {
             navigate("/signin");
           }, 3000);
         } else {
-          setType("error");
-          setNotification(data.response.data.message);
+          toast.error(data.response.data.message);
         }
       },
       onError: () => {
-        setNotification("Some error occurred...");
+        toast.error("Some error occurred...");
       },
     }
   );
@@ -72,11 +70,9 @@ export default function SignUpForm() {
 
   const onSubmit = (data) => {
     data.preventDefault();
-    setNotification();
 
     if (password !== rePassword) {
-      setNotification("Password should match");
-      setType("error");
+      toast.error("Password should match");
     } else {
       const user = {
         email: email,
@@ -90,8 +86,6 @@ export default function SignUpForm() {
 
   return (
     <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 h-screen ">
-      {notification ? <AlertService message={notification} type={type} /> : ""}
-
       <div className="w-full p-4 mt-7 sm:p-12.5 xl:p-17.5 ">
         <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
           Sign Up to Advert
