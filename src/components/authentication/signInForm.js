@@ -21,7 +21,7 @@ export default function SignInForm() {
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
-        setCookie("user", cred.id, cred.exp);
+        setCookie("user", data.token, cred.exp);
 
         data.firstTimeLogin
           ? setTimeout(() => {
