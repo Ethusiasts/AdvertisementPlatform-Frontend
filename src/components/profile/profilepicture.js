@@ -19,8 +19,6 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
   }
 
   if (mutation.isSuccess) {
-    //  setNotification("Image uploaded ...");
-    //  setType("Success");
   }
 
   const handleImageChange = (event) => {

@@ -58,8 +58,6 @@ import { Toaster } from "react-hot-toast";
 import { getCookie } from "./utils";
 import jwtDecode from "jwt-decode";
 import ErrorPage from "./components/error";
-import { Redirect } from "react-router-dom";
-
 // HOC for checking authentication and authorization
 const ProtectedRoute = ({ Component, roles, ...rest }) => {
   const token = getCookie("user");
@@ -130,7 +128,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaAgencyStepper}
-        roles={["tv", "radio", "customer"]}
+        roles={["tv", "radio", "landowner", "customer"]}
       />
     ),
   },
@@ -144,12 +142,7 @@ const router = createBrowserRouter([
   {
     path: "/UserStepper",
 
-    element: (
-      <ProtectedRoute
-        Component={UserStepper}
-        roles={["customer", "landowner"]}
-      />
-    ),
+    element: <ProtectedRoute Component={UserStepper} roles={["customer"]} />,
   },
 
   {
