@@ -1,3 +1,4 @@
+import Image1 from "../styles/assets/billboard1.jpg";
 export const navMenus = [
   ["Home", "home"],
   ["About us", "about"],
@@ -80,3 +81,72 @@ export const getCookie = (cname) => {
   }
   return "";
 };
+
+export const Carousel = [
+  {
+    status: "Occupied",
+    rate: "2",
+    price: "100",
+    production: "production",
+    width: "123",
+    height: "124",
+    location: "sheger",
+    imageSrc: { Image1 },
+    alt: "Card Image",
+  },
+  {
+    status: "Occupied",
+    rate: "5",
+    price: "110",
+    production: "production",
+    width: "123",
+    height: "124",
+    location: "sheger",
+    imageSrc: { Image1 },
+    alt: "Card Image",
+  },
+  {
+    status: "Occupied",
+    rate: "4.5",
+    price: "200",
+    production: "production",
+    width: "123",
+    height: "124",
+    location: "sheger",
+    imageSrc: { Image1 },
+    alt: "Card Image",
+  },
+  {
+    status: "Occupied",
+    rate: "1.5",
+    price: "3000",
+    production: "production",
+    width: "123",
+    height: "124",
+    location: "sheger",
+    imageSrc: { Image1 },
+    alt: "Card Image",
+  },
+  {
+    status: "Free",
+    rate: "5",
+    price: "1",
+    production: "production",
+    width: "123",
+    height: "124",
+    location: "sheger",
+    imageSrc: { Image1 },
+    alt: "Card Image",
+  },
+  {
+    status: "Free",
+    rate: "5",
+    price: "100",
+    production: "production",
+    width: "123",
+    height: "124",
+    location: "sheger",
+    imageSrc: { Image1 },
+    alt: "Card Image",
+  },
+];

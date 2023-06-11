@@ -1,5 +1,4 @@
 import React from "react";
-import { Carousel } from "flowbite-react";
 import RecommendedCard from "./RecommendedCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +9,12 @@ import Image3 from "../../styles/assets/billboard3.jpg";
 import Image4 from "../../styles/assets/billboard2.jpg";
 import Image5 from "../../styles/assets/billboard2.jpg";
 import Card from "./RecommendedCard";
+import {
+  Carousel,
+  InfiniteLoopSlider,
+  animationDuration,
+  random,
+} from "../../utils";
 
 export default function RecommendedCarousel() {
   const slideLeft = () => {
@@ -33,94 +38,24 @@ export default function RecommendedCarousel() {
         id="slider"
         className="w-ful h-ful overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide"
       >
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
-        <Card
-          status="Free"
-          rate="2"
-          price="100"
-          production="production"
-          width="123"
-          height="124"
-          location="sheger"
-          imageSrc={Image1}
-          alt="Card Image"
-        />
+        <InfiniteLoopSlider
+          duration={(animationDuration - 50000, animationDuration + 50000)}
+        >
+          {Carousel.map((item, index) => (
+            <Card
+              key={index}
+              status={item.status}
+              rate={item.rate}
+              price={item.price}
+              production={item}
+              width={item.width}
+              height={item.height}
+              location={item.location}
+              imageSrc={Image1}
+              alt={item.alt}
+            />
+          ))}
+        </InfiniteLoopSlider>
       </div>
       <FontAwesomeIcon
         icon={faChevronRight}
