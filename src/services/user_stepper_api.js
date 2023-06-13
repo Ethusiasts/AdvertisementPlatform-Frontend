@@ -14,3 +14,19 @@ export const userStepper = (user) => {
       return error;
     });
 };
+
+export const editUserStepper = (user) => {
+  console.log(user);
+
+  return axiosInstance
+    .put(`/auth/profiles/${user.user}`, user)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log(error);
+
+      return error;
+    });
+};
