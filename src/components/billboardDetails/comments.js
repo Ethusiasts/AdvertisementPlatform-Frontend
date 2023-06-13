@@ -45,8 +45,6 @@ export default function Comments({ billboardId }) {
     mutation.mutate(review);
   };
 
-  console.log(mutation.isLoading, mutation.status);
-
   return (
     <div class="grid md:grid-cols-5 mx-16">
       <div class="col-span-2">

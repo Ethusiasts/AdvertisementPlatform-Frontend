@@ -2,6 +2,7 @@ import Card from "../components/billboards/card";
 import Table from "../components/billboards/table";
 import SideBar from "../components/billboards/sidebar";
 import Header from "../components/billboards/header";
+import VisitCard from "../components/billboards/visitCard";
 export default function BillboardDashboard() {
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
@@ -15,7 +16,7 @@ export default function BillboardDashboard() {
             <Card />
           </div>
           <div class="p-12 col-span-2">
-            <Card />
+            <VisitCard />
           </div>
         </div>
         <Table />

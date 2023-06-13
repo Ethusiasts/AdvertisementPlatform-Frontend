@@ -1,4 +1,7 @@
 import { axiosInstance } from "../utils/axiosInstance";
+import { user } from "../utils/utils";
+
+const { id } = user;
 export const createContract = (contract) => {
   console.log(contract);
   return axiosInstance
@@ -25,9 +28,20 @@ export const approveContract = (contract_id, contract) => {
     });
 };
 
-export const getUserContracts = (user_id) => {
+export const getUserContracts = () => {
   return axiosInstance
-    .get(`/auth/${user_id}/contracts/`)
+    .get(`/auth/${id}/contracts/`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+export const getBillboardContracts = () => {
+  return axiosInstance
+    .get(`/media_agencies/${id}/contracts/`)
     .then((res) => {
       return res.data;
     })

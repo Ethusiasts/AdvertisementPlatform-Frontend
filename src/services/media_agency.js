@@ -1,7 +1,10 @@
 import { axiosInstance } from "../utils/axiosInstance";
-export const getMediaAgencyBillbaords = (media_agency_id) => {
+import { user } from "../utils/utils";
+
+const { id } = user;
+export const getMediaAgencyBillbaords = () => {
   return axiosInstance
-    .get(`/media_agencies/${media_agency_id}/billboards/`)
+    .get(`/media_agencies/${id}/billboards/`)
     .then((res) => {
       return res.data;
     })

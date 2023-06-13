@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function InfoCard() {
   return (
     <div className="w-96 bg-gray-100 rounded-lg overflow-hidden shadow-md mb-8">
@@ -63,9 +65,12 @@ export default function InfoCard() {
         </div>
 
         <div class="flex items-center col-start-2 col-span-3">
-          <button class="border border-green-600 text-green-600 rounded-md w-full py-1.5 px-3 text-base hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition duration-500 ease select-none">
+          <a
+            href="/UserEditProfile"
+            class="text-center border border-green-600 text-green-600 rounded-md w-full py-1.5 px-3 text-base hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition duration-500 ease select-none"
+          >
             Edit Profile
-          </button>
+          </a>
         </div>
       </div>
     </div>

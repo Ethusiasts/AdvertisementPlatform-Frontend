@@ -3,20 +3,15 @@ import { getUserContracts } from "../../services/contract";
 import { Link } from "react-router-dom";
 
 export default function UserTable() {
-  const user_id = 1;
-  const { data: contracts, isLoading } = useQuery(
-    ["Contracts"],
-    () => {
-      return getUserContracts(user_id)
-        .then((res) => {
-          return res;
-        })
-        .catch((error) => {
-          return error;
-        });
-    },
-    { user_id }
-  );
+  const { data: contracts, isLoading } = useQuery(["Contracts"], () => {
+    return getUserContracts()
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
   console.log(contracts);
 
   if (isLoading) {

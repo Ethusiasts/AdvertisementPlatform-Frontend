@@ -23,9 +23,7 @@ export default function CreateTvAdForm({ photo, title, description }) {
   }
 
   const [advertisementName, setAdvertisementName] = useState("");
-  const [height, setHeight] = useState("");
   const [durationInHour, setDurationInHour] = useState("");
-  const [width, setWidth] = useState("");
   const [quantity, setQuantity] = useState("");
   const [video, setVideo] = useState(null);
 
@@ -33,16 +31,8 @@ export default function CreateTvAdForm({ photo, title, description }) {
     setAdvertisementName(event.target.value);
   };
 
-  const handleHeightChange = (event) => {
-    setHeight(event.target.value);
-  };
-
   const handleDurationInHourChange = (event) => {
     setDurationInHour(event.target.value);
-  };
-
-  const handleWidthChange = (event) => {
-    setWidth(event.target.value);
   };
 
   const handleQuantityChange = (event) => {
@@ -60,9 +50,6 @@ export default function CreateTvAdForm({ photo, title, description }) {
       advertisement_type: "tv",
       duration_in_hour: durationInHour,
       advertisement_file: url,
-      width: null,
-      height: null,
-      approved: false,
       quantity: quantity,
       user_id: 1,
     });
@@ -111,17 +98,6 @@ export default function CreateTvAdForm({ photo, title, description }) {
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
             type="text"
-            name="height"
-            id="height"
-            placeholder="height"
-            value={height}
-            onChange={handleHeightChange}
-          />
-        </div>
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
             name="Duration in hour"
             id="Duration in hour"
             placeholder="Duration in hour"
@@ -129,21 +105,6 @@ export default function CreateTvAdForm({ photo, title, description }) {
             onChange={handleDurationInHourChange}
           />
         </div>
-      </div>
-
-      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
-            name="width"
-            id="width"
-            placeholder="width"
-            value={width}
-            onChange={handleWidthChange}
-          />
-        </div>
-        {/* <CheckboxFour /> */}
         <div className="w-full sm:w-1/2">
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"

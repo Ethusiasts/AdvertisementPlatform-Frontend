@@ -58,11 +58,9 @@ export default function CreateMagazineAdForm({ photo, title, description }) {
     mutation.mutate({
       advertisement_name: advertisementName,
       advertisement_type: "magazine",
-      duration_in_hour: null,
       advertisement_file: url,
       width: width,
       height: height,
-      approved: false,
       quantity: quantity,
       user_id: 1,
     });

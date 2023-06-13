@@ -30,7 +30,7 @@ export default function Card() {
           <div class="mt-2 grid grid-cols-2 gap-5">
             <div>
               <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">
-                Orders
+                Advertisements
               </div>
               <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
                 100
@@ -38,15 +38,7 @@ export default function Card() {
             </div>
             <div>
               <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">
-                Revenue
-              </div>
-              <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
-                $50k
-              </div>
-            </div>
-            <div>
-              <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">
-                Customers
+                Contracts
               </div>
               <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
                 50
@@ -54,10 +46,10 @@ export default function Card() {
             </div>
             <div>
               <div class="text-xs font-semibold text-gray-700 dark:text-gray-400">
-                Average Order
+                Proposals
               </div>
               <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
-                $500
+                50
               </div>
             </div>
           </div>

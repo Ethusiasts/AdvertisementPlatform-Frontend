@@ -5,20 +5,15 @@ import ButtonWithModal from "./buttonWithModal";
 import PaymentForm from "./paymentForm";
 
 export default function Table() {
-  const media_agency_id = 1;
-  const { data: billboards, isLoading } = useQuery(
-    ["billboards"],
-    () => {
-      return getMediaAgencyBillbaords(media_agency_id)
-        .then((res) => {
-          return res;
-        })
-        .catch((error) => {
-          return error;
-        });
-    },
-    { media_agency_id }
-  );
+  const { data: billboards, isLoading } = useQuery(["billboards"], () => {
+    return getMediaAgencyBillbaords()
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
 
   if (isLoading) {
     return (

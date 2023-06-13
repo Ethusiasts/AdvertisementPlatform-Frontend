@@ -88,7 +88,12 @@ function Navigation() {
             </Link>
           </>
         ) : (
-          "User"
+          <img
+            className="h-12 w-12 rounded-full object-cover mx-2"
+            src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+            alt=""
+            loading="lazy"
+          />
         )}
       </nav>
       <div

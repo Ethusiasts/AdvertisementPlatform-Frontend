@@ -4,20 +4,15 @@ import { getMediaAgencyProposals } from "../../services/proposal";
 import ButtonWithModal from "./buttonWithModal";
 import BillboardProposalPopup from "./billboardProposalDetail";
 export default function BillboardTable() {
-  const media_agency_id = 1;
-  const { data: proposals, isLoading } = useQuery(
-    ["proposals"],
-    () => {
-      return getMediaAgencyProposals(media_agency_id)
-        .then((res) => {
-          return res;
-        })
-        .catch((error) => {
-          return error;
-        });
-    },
-    { media_agency_id }
-  );
+  const { data: proposals, isLoading } = useQuery(["proposals"], () => {
+    return getMediaAgencyProposals()
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
   console.log(proposals?.results);
   if (isLoading) {
     return (
