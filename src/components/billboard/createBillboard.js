@@ -13,7 +13,7 @@ import { CircularProgress } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateBillboardForm() {
-  const { id } = user;
+  const id = user?.id;
   // const history = useHistory();
   const mutation = useMutation({
     mutationFn: (billboard) => {

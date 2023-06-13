@@ -65,12 +65,10 @@ export const ImgContext = React.createContext();
 
 const ProtectedRoute = ({ Component, roles, ...rest }) => {
   const token = getCookie("user");
-
   if (!token) {
     // Redirect to the login page if not authenticated
     return <Navigate to="/SignIn" replace={true} />;
   }
-
   const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
   if (roles && !roles.includes(role)) {
     // Redirect to a forbidden page if the user's role is not allowed
@@ -213,46 +211,48 @@ const router = createBrowserRouter([
     path: "/BillboardDashboard",
     element: <BillboardDashboard />,
     // element: (
-    //   <ProtectedRoute Component={BillboardDashboard} roles={["landlord"]} />
+    //   <ProtectedRoute Component={BillboardDashboard} roles={["landowner"]} />
     // ),
   },
   {
     path: "/BillboardProposal",
     element: <BillboardProposal />,
     // element: (
-    //   <ProtectedRoute Component={BillboardProposal} roles={["landlord"]} />
+    //   <ProtectedRoute Component={BillboardProposal} roles={["landowner"]} />
     // ),
   },
   {
     path: "/BillboardContract",
     element: <BillboardContract />,
     // element: (
-    //   <ProtectedRoute Component={BillboardContract} roles={["landlord"]} />
+    //   <ProtectedRoute Component={BillboardContract} roles={["landowner"]} />
     // ),
   },
 
   {
     path: "/Billboard",
     element: <Billboard />,
-    // element: <ProtectedRoute Component={Billboard} roles={["landlord"]} />,
+    // element: <ProtectedRoute Component={Billboard} roles={["landowner"]} />,
   },
   {
     path: "/CreateBillboard",
     element: <CreateBillboard />,
     // element: (
-    //   <ProtectedRoute Component={CreateBillboard} roles={["landlord"]} />
+    //   <ProtectedRoute Component={CreateBillboard} roles={["landowner"]} />
     // ),
   },
   {
     path: "/CreateContract",
-    element: <ProtectedRoute Component={CreateContract} roles={["landlord"]} />,
+    element: (
+      <ProtectedRoute Component={CreateContract} roles={["landowner"]} />
+    ),
   },
   {
     path: "/ContractDetail/:contractId",
     element: (
       <ProtectedRoute
         Component={UserContractDetail}
-        roles={["customer", "landlord"]}
+        roles={["customer", "landowner"]}
       />
     ),
   },
@@ -261,7 +261,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={LandlordsBillboardDetail}
-        roles={["landlord"]}
+        roles={["landowner"]}
       />
     ),
   },
@@ -325,7 +325,7 @@ const router = createBrowserRouter([
   {
     path: "/BillboardProfile",
     element: (
-      <ProtectedRoute Component={BillboardProfilePage} roles={["landlord"]} />
+      <ProtectedRoute Component={BillboardProfilePage} roles={["landowner"]} />
     ),
   },
   {
@@ -348,7 +348,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={BillboardEditProfilePage}
-        roles={["landlord"]}
+        roles={["landowner"]}
       />
     ),
   },
