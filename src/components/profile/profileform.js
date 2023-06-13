@@ -65,8 +65,7 @@ export default function ProfileForm() {
     event.preventDefault();
     const userInfo = {
       username: userName,
-      profile_picture:
-        "https://firebasestorage.googleapis.com/v0/b/billboard-images.appspot.com/o/profile%2Fimages%2F2023-06-13Screenshot%20from%202023-06-12%2022-57-51.png?alt=media&token=a20ec14f-16d5-436d-8a0d-283cc8cfa64",
+      profile_picture: profileImg.ImgUrl,
       phone_number: phoneNumber,
       first_name: firstName,
       last_name: lastName,

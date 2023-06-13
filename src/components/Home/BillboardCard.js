@@ -1,20 +1,13 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpandArrowsAlt } from "@fortawesome/free-solid-svg-icons";
-import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
 import { faDollar } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import RatingStars from "./RatingStars";
 import { Link } from "react-router-dom";
-import {
-  addItem,
-  getCart,
-  checkBillboard,
-  removeItem,
-  itemsCount,
-} from "../../utils/cart";
+import { addItem, checkBillboard, removeItem } from "../../utils/cart";
 export default function Card({
   id,
   item,
