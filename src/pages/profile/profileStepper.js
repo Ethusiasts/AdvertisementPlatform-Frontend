@@ -31,7 +31,6 @@ export const PlaceOrder = () => {
   const [lastName, setLastName] = useState("Jhon");
   const navigate = useNavigate();
   const { id } = jwtDecode(getCookie("user"));
-  const [imgUrl, setImgUrl] = useState();
   const profileImg = useContext(ImgContext);
 
   const { mutate, isLoading: isLoadingUser } = useMutation(userStepper, {
@@ -64,13 +63,7 @@ export const PlaceOrder = () => {
     {
       onSuccess: async (data) => {
         console.log(data);
-        if (data.status === 200) {
-          console.log(data.message);
-          toast.success(data.message);
-
-          // setTimeout(() => {
-          //   navigate("/BillboardDashboard");
-          // }, 3000);
+        if (data.status === 201) {
         } else {
           var errors = "";
           Object.keys(data.response.data.message).forEach((key) => {
@@ -98,14 +91,13 @@ export const PlaceOrder = () => {
       first_name: firstName,
       last_name: lastName,
       username: userName,
-      profile_picture:
-        "https://firebasestorage.googleapis.com/v0/b/billboard-images.appspot.com/o/profile%2Fimages%2F2023-06-13Screenshot%20from%202023-06-12%2022-57-51.png?alt=media&token=a20ec14f-16d5-436d-8a0d-283cc8cfa64",
       phone_number: phoneNumber,
+      profile_picture: profileImg.ImgUrl,
       user: id,
     };
-    mutate(userDetail);
+    mutateMediaAgencyDetail(agencyDetail);
 
-    // mutateMediaAgencyDetail(agencyDetail);
+    mutate(userDetail);
   };
 
   return (
