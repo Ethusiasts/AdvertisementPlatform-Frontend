@@ -64,14 +64,13 @@ export const ImgContext = React.createContext();
 
 const ProtectedRoute = ({ Component, roles, ...rest }) => {
   const token = getCookie("user");
-  const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
-  const navigate = useNavigate();
 
   if (!token) {
     // Redirect to the login page if not authenticated
-    return <Navigate to="/SignIn" replace />;
+    return <Navigate to="/SignIn" replace={true} />;
   }
 
+  const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
   if (roles && !roles.includes(role)) {
     // Redirect to a forbidden page if the user's role is not allowed
 
