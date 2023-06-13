@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createBillboard } from "../../services/billboard_api";
 import { toast } from "react-hot-toast";
+import { ImgContext } from "../../App";
 
-export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
+export default function ProfilePictureForm() {
   const [image, setImage] = useState(null);
-
+  const profileImg = useContext(ImgContext);
   const mutation = useMutation({
     mutationFn: (billboard) => {
       return createBillboard(billboard);
@@ -19,8 +20,6 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
   }
 
   if (mutation.isSuccess) {
-    //  setNotification("Image uploaded ...");
-    //  setType("Success");
   }
 
   const handleImageChange = (event) => {
@@ -29,7 +28,7 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
   };
 
   const handleSubmit = (url) => {
-    setImgUrl(url);
+    profileImg.setImgUrl(url);
   };
 
   const uploadImage = () => {
@@ -55,7 +54,7 @@ export default function ProfilePictureForm({ imgUrl, setImgUrl }) {
       getDownloadURL(snapshot.ref).then((url) => {
         toast.success("Uploaded Successfully!");
 
-        setImgUrl(url);
+        profileImg.setImgUrl(url);
         handleSubmit(url);
       });
     });

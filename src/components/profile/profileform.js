@@ -1,33 +1,35 @@
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AlertService from "../alertService";
 import { userStepper } from "../../services/user_stepper_api";
 import { getCookie } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { PropagateLoaderSpinner } from "../spinners";
+import jwtDecode from "jwt-decode";
+import { toast } from "react-hot-toast";
+import { ImgContext } from "../../App";
 
-export default function ProfileForm({ imgUrl }) {
+export default function ProfileForm() {
   const [userName, setUserName] = useState("Devid27");
   const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
   const [firstName, setFirstName] = useState("Devid");
   const [lastName, setLastName] = useState("Jhon");
   const [notification, setNotification] = useState();
   const [type, setType] = useState();
+  const profileImg = useContext(ImgContext);
 
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(userStepper, {
     onSuccess: async (data) => {
-      console.log(data);
-      if (data.status === 200) {
+      if (data.status === 201) {
         console.log(data);
-        setNotification(data.message);
-        setType("success");
-
+        toast.success("Success");
         setTimeout(() => {
-          navigate("/search");
+          navigate(-1);
         }, 3000);
       } else {
+        console.log("Inside errors", data);
         var errors = "";
         Object.keys(data.response.data.message).forEach((key) => {
           // console.log(data.response.data.message[key][0]);
@@ -36,14 +38,10 @@ export default function ProfileForm({ imgUrl }) {
         console.log(errors);
         setNotification(errors);
         setType("error");
-        // setNotification(data.response.data.message);
-        // console.log(data.response.data.message);
-
-        // setType("error");
       }
     },
     onError: () => {
-      setNotification("Some error occurred...");
+      toast.error("Some error occured ...");
     },
   });
 
@@ -67,11 +65,12 @@ export default function ProfileForm({ imgUrl }) {
     event.preventDefault();
     const userInfo = {
       username: userName,
-      profile_picture: imgUrl,
+      profile_picture:
+        "https://firebasestorage.googleapis.com/v0/b/billboard-images.appspot.com/o/profile%2Fimages%2F2023-06-13Screenshot%20from%202023-06-12%2022-57-51.png?alt=media&token=a20ec14f-16d5-436d-8a0d-283cc8cfa64",
       phone_number: phoneNumber,
       first_name: firstName,
       last_name: lastName,
-      user: getCookie("user"),
+      user: jwtDecode(getCookie("user")).id ?? "",
     };
     mutate(userInfo);
     // handle form submission here
