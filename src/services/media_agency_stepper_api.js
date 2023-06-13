@@ -1,16 +1,13 @@
 import { axiosInstance } from "../utils/axiosInstance";
 
-export const userStepper = (user) => {
-  console.log(user);
+export const mediaAgencyStepper = (agency) => {
   return axiosInstance
-    .post("/auth/profiles", user)
+    .post("/media_agencies/", agency)
     .then((res) => {
       return res.data;
     })
     .catch((error) => {
       console.error(error);
-      console.log(error);
-
       return error;
     });
 };

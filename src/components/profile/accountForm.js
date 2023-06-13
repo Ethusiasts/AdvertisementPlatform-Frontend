@@ -20,9 +20,6 @@ export default function AccountForm({}) {
   return (
     <div className="col-span-5 xl:col-span-5">
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
-          <h3 className="font-medium text-black">Account Information</h3>
-        </div>
         <div className="p-7">
           <form action="#">
             <div className="mb-5 flex flex-col gap-5 sm:flex-row">
