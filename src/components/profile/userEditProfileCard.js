@@ -30,7 +30,6 @@ export default function UserEditProfileCard() {
         }, 3000);
       } else {
         console.log("Inside errors", data);
-
         setNotification(data.response.data.message);
         setType("error");
       }
@@ -60,7 +59,7 @@ export default function UserEditProfileCard() {
     event.preventDefault();
     const userInfo = {
       username: userName,
-      // profile_picture: profileImg.ImgUrl,
+      profile_picture: profileImg.ImgUrl,
       phone_number: phoneNumber,
       first_name: firstName,
       last_name: lastName,

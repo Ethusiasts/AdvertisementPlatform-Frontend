@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../services/auth/signin_api";
@@ -8,6 +8,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
 import { setCookie } from "../../utils";
 import { toast } from "react-hot-toast";
+import { getUserStepper } from "../../services/user_stepper_api";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -23,18 +24,20 @@ export default function SignInForm() {
         const cred = jwt_decode(data.token);
         setCookie("user", data.token, cred.exp);
 
+        console.log(data.firstTimeLogin);
         data.firstTimeLogin
           ? setTimeout(() => {
-              if (data.role === "customer") {
+              if (cred.role === "customer") {
                 navigate("/userstepper");
-              } else if (data.role === "landowner") {
+              } else if (cred.role === "landowner") {
                 navigate("/mediaagencystepper");
               }
             }, 3000)
           : setTimeout(() => {
-              if (data.role === "customer") {
+              getUserStepper(cred.user_id);
+              if (cred.role === "customer") {
                 navigate("/search");
-              } else if (data.role === "landowner") {
+              } else if (cred.role === "landowner") {
                 navigate("/billboarddashboard");
               }
             }, 3000);

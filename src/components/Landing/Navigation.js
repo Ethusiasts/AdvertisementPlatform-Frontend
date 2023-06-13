@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getCookie, navMenus } from "../../utils/index";
 import { Link, useLocation } from "react-router-dom";
-
+import { FaUserCircle } from "react-icons/fa";
 function Navigation() {
   const [mobile, setMobile] = useState(false);
   const location = useLocation();
@@ -88,7 +88,7 @@ function Navigation() {
             </Link>
           </>
         ) : (
-          "User"
+          <FaUserCircle />
         )}
       </nav>
       <div
@@ -166,7 +166,7 @@ function Navigation() {
                   </Link>
                 </>
               ) : (
-                "User"
+                <FaUserCircle />
               )}
             </div>
             <p className="my-4 text-xs text-center text-gray-400">
