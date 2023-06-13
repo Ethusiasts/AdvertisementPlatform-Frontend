@@ -22,14 +22,14 @@ export default function ProfileForm() {
 
   const { mutate, isLoading } = useMutation(userStepper, {
     onSuccess: async (data) => {
+      console.log(data);
       if (data.status === 201) {
         console.log(data);
         toast.success("Success");
         setTimeout(() => {
-          navigate(-1);
+          navigate("/signin");
         }, 3000);
       } else {
-        console.log("Inside errors", data);
         var errors = "";
         Object.keys(data.response.data.message).forEach((key) => {
           // console.log(data.response.data.message[key][0]);

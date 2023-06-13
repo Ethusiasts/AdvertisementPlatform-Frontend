@@ -42,7 +42,7 @@ export default function ResetPasswordForm() {
       const user = {
         password: password,
       };
-      // console.log(jwtDecode("c167779c31deeedcba4fc9ceb9682375e6c78319"));
+      console.log(jwtDecode("c167779c31deeedcba4fc9ceb9682375e6c78319"));
       // mutate(user);
     }
   };
