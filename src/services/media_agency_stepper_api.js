@@ -1,8 +1,15 @@
 import { axiosInstance } from "../utils/axiosInstance";
 
 export const mediaAgencyStepper = (agency) => {
+  // console.log(agency);
+  agency = {
+    company_name: "fadsf",
+    tin_number: "421221",
+    user: 3,
+  };
+
   return axiosInstance
-    .post("/auth/media_agencies", agency)
+    .post("/media_agencies", agency)
     .then((res) => {
       return res.data;
     })

@@ -58,11 +58,15 @@ import { Toaster } from "react-hot-toast";
 import { getCookie } from "./utils";
 import jwtDecode from "jwt-decode";
 import ErrorPage from "./components/error";
+import React, { useState } from "react";
 // HOC for checking authentication and authorization
+export const ImgContext = React.createContext();
+
 const ProtectedRoute = ({ Component, roles, ...rest }) => {
   const token = getCookie("user");
   const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
   const navigate = useNavigate();
+
   if (!token) {
     // Redirect to the login page if not authenticated
     return <Navigate to="/SignIn" replace />;
@@ -334,12 +338,17 @@ const router = createBrowserRouter([
 
 export default function App() {
   const client = new QueryClient();
+  const [ImgUrl, setImgUrl] = useState();
+
   return (
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
-      <QueryClientProvider client={client}>
-        <Toaster position="top-center" reverseOrder={false} />
-        {<RouterProvider router={router} />}
-      </QueryClientProvider>
-    </GoogleOAuthProvider>
+    <ImgContext.Provider value={{ ImgUrl, setImgUrl }}>
+      {" "}
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
+        <QueryClientProvider client={client}>
+          <Toaster position="top-center" reverseOrder={false} />
+          {<RouterProvider router={router} />}
+        </QueryClientProvider>
+      </GoogleOAuthProvider>
+    </ImgContext.Provider>
   );
 }

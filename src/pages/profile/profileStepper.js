@@ -1,5 +1,5 @@
 import { Stepper, Step } from "react-form-stepper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProfilePictureForm from "../../components/profile/profilepicture";
 import AccountForm from "../../components/profile/accountForm";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +7,11 @@ import { toast } from "react-hot-toast";
 import { PropagateLoaderSpinner } from "../../components/spinners";
 import { useMutation } from "@tanstack/react-query";
 import MediaAgencyStepper from "./mediaAgencyStepper";
-import { getCookie } from "./../../utils";
+import { getCookie, setCookie } from "./../../utils";
 import jwtDecode from "jwt-decode";
 import { userStepper } from "../../services/user_stepper_api";
+import { mediaAgencyStepper } from "../../services/media_agency_stepper_api";
+import { ImgContext } from "../../App";
 
 export default function ProfileStepper() {
   return (
@@ -29,17 +31,21 @@ export const PlaceOrder = () => {
   const [lastName, setLastName] = useState("Jhon");
   const navigate = useNavigate();
   const { id } = jwtDecode(getCookie("user"));
+  const [imgUrl, setImgUrl] = useState();
+  const profileImg = useContext(ImgContext);
 
   const { mutate, isLoading: isLoadingUser } = useMutation(userStepper, {
     onSuccess: async (data) => {
       console.log(data);
-      if (data.status === 200) {
-        console.log(data);
+      if (data.status === 201) {
+        console.log(data.data);
         toast.success(data.message);
 
-        // setTimeout(() => {
-        //   navigate("/BillboardDashboard");
-        // }, 3000);
+        setCookie("user_profile", JSON.stringify(data.data));
+
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
       } else {
         var errors = "";
         Object.keys(data.response.data.message).forEach((key) => {
@@ -54,7 +60,7 @@ export const PlaceOrder = () => {
     },
   });
   const { mutate: mutateMediaAgencyDetail, isLoading } = useMutation(
-    MediaAgencyStepper,
+    mediaAgencyStepper,
     {
       onSuccess: async (data) => {
         console.log(data);
@@ -84,21 +90,22 @@ export const PlaceOrder = () => {
     event.preventDefault();
 
     const agencyDetail = {
-      company_name: userName,
-      tin_number: phoneNumber,
+      company_name: companyName,
+      tin_number: tinNumber,
       user: id,
     };
     const userDetail = {
-      firstName: firstName,
-      userName: userName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
+      first_name: firstName,
+      last_name: lastName,
+      username: userName,
+      profile_picture:
+        "https://firebasestorage.googleapis.com/v0/b/billboard-images.appspot.com/o/profile%2Fimages%2F2023-06-13Screenshot%20from%202023-06-12%2022-57-51.png?alt=media&token=a20ec14f-16d5-436d-8a0d-283cc8cfa64",
+      phone_number: phoneNumber,
       user: id,
     };
-    console.log("userDetail", userDetail);
     mutate(userDetail);
 
-    mutateMediaAgencyDetail(agencyDetail);
+    // mutateMediaAgencyDetail(agencyDetail);
   };
 
   return (
@@ -455,7 +462,7 @@ export const PlaceOrder = () => {
           </div>
 
           <button
-            className="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="mt-5 text-white bg-blue-700 hover:bg-blue-800  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 "
             onClick={handleSubmit}
           >
             Submit

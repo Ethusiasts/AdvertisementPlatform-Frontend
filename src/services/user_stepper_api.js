@@ -8,6 +8,8 @@ export const userStepper = (user) => {
     })
     .catch((error) => {
       console.error(error);
+      console.log(error);
+
       return error;
     });
 };
