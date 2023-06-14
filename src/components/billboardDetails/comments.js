@@ -3,8 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Rating from "@material-ui/lab/Rating";
+import getUser from "../../utils/utils";
+import { CircularProgress } from "@mui/material";
 
 export default function Comments({ billboardId }) {
+  const user = getUser();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(2.5);
 
@@ -32,6 +35,10 @@ export default function Comments({ billboardId }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!user) {
+      toast.error("Please Login to Post a Review", { autoClose: 5000 });
+      return;
+    }
 
     // Post the comment
     const review = {
@@ -39,7 +46,7 @@ export default function Comments({ billboardId }) {
       entity_type: "Billboard",
       comment: comment,
       billboard_id: billboardId,
-      user_id: 11,
+      user_id: user?.id,
     };
     // Perform the necessary actions with the comment value
     mutation.mutate(review);
@@ -77,7 +84,7 @@ export default function Comments({ billboardId }) {
               class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               disabled={mutation.isLoading}
             >
-              {mutation.isLoading ? "Loading.." : "Review"}
+              {mutation.isLoading ? <CircularProgress /> : "Review"}
             </button>
           </div>
         </form>

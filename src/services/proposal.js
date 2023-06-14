@@ -3,15 +3,13 @@ import getUser from "../utils/utils";
 
 const id = getUser()?.id;
 export const createProposal = (proposal) => {
-  console.log(proposal);
   return axiosInstance
     .post(`/proposals/`, proposal)
     .then((res) => {
-      return res.data;
+      return { success: true, data: res.data };
     })
     .catch((error) => {
-      console.error(error);
-      return error;
+      return { success: false, data: error };
     });
 };
 

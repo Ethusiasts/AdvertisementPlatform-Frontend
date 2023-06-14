@@ -1,13 +1,4 @@
-export default function MediaInfo({
-  billboardId,
-  width,
-  height,
-  status,
-  price,
-  size,
-  latitude,
-  longitude,
-}) {
+export default function Info({ media }) {
   return (
     <div class="grid md:grid-cols-5 gap-4 mx-16 rounded ">
       <div class="col-span-3 bg-white p-2 border-b">
@@ -16,30 +7,32 @@ export default function MediaInfo({
         </div>
         <div class="bg-red-100 border border-red-800 grid md:grid-cols-2 gap-6 py-6 px-3 mb-6">
           <div class="flex justify-between border-b pb-2">
-            <h1 class="font-bold ">Billboard-ID:</h1>
-            <p class="sm:tracking-tight ">{billboardId}</p>
+            <h1 class="font-bold ">Media-ID:</h1>
+            <p class="sm:tracking-tight ">{media?.id}</p>
           </div>
           <div class="flex justify-between border-b pb-2">
-            <h1 class="font-bold">Board Size:</h1>
-            <p class="sm:tracking-tight ">{size}</p>
+            <h1 class="font-bold">Channel Name:</h1>
+            <p class="sm:tracking-tight ">{media?.channel_name}</p>
           </div>
           <div class="flex justify-between border-b">
-            <h1 class="font-bold">Price:</h1>
-            <p class="sm:tracking-tight ">{price} Birr Per Daily</p>
+            <h1 class="font-bold">Normal Price:</h1>
+            <p class="sm:tracking-tight ">{media?.normal} Birr Per Second</p>
           </div>
           <div class="flex justify-between border-b">
-            <h1 class="font-bold">Width:</h1>
-            <p class="sm:tracking-tight ">{width}</p>
+            <h1 class="font-bold">Peak Hour Price:</h1>
+            <p class="sm:tracking-tight ">{media?.peak_hour}</p>
           </div>
           <div class="flex justify-between border-b">
-            <h1 class="font-bold">Board Status:</h1>
-            <p class="sm:tracking-tight ">
-              {status === "Free" ? "Buy Available" : "Occupied"}
+            <h1 class="font-bold">With Production Price:</h1>
+            <p class="sm:tracking-tight text-green-500 ">
+              +${media?.production}
             </p>
           </div>
           <div class="flex justify-between border-b pb-2">
-            <h1 class="font-bold">Height:</h1>
-            <p class="sm:tracking-tight ">{height}</p>
+            <h1 class="font-bold">Posted Date: </h1>
+            <p class="sm:tracking-tight ">
+              {new Date(media?.created_at).toLocaleDateString()}
+            </p>
           </div>
         </div>
       </div>
@@ -49,16 +42,12 @@ export default function MediaInfo({
         {/* <p class="text-gray-500 pb-4">{location}</p> */}
         <iframe
           width="100%"
-          height="400"
+          height="300"
           frameborder="0"
           scrolling="no"
           marginheight="0"
           marginwidth="0"
-          src={`https://www.openstreetmap.org/export/embed.html?bbox=${
-            longitude - 0.1
-          },${latitude - 0.1},${longitude + 0.1},${
-            latitude + 0.1
-          }&amp;layer=mapnik`}
+          src={`https://www.openstreetmap.org/export/embed.html?bbox=38.7005,9.0108,38.9643,9.0289&amp;layer=mapnik`}
         ></iframe>
       </div>
     </div>
