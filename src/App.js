@@ -194,40 +194,42 @@ const router = createBrowserRouter([
   {
     path: "/BillboardDashboard",
     element: (
-      <ProtectedRoute Component={BillboardDashboard} roles={["landlord"]} />
+      <ProtectedRoute Component={BillboardDashboard} roles={["landowner"]} />
     ),
   },
   {
     path: "/BillboardProposal",
     element: (
-      <ProtectedRoute Component={BillboardProposal} roles={["landlord"]} />
+      <ProtectedRoute Component={BillboardProposal} roles={["landowner"]} />
     ),
   },
   {
     path: "/BillboardContract",
     element: (
-      <ProtectedRoute Component={BillboardContract} roles={["landlord"]} />
+      <ProtectedRoute Component={BillboardContract} roles={["landowner"]} />
     ),
   },
 
   {
     path: "/Billboard",
-    element: <ProtectedRoute Component={Billboard} roles={["landlord"]} />,
+    element: <ProtectedRoute Component={Billboard} roles={["landowner"]} />,
   },
   {
     path: "/CreateBillboard",
     element: (
-      <ProtectedRoute Component={CreateBillboard} roles={["landlord"]} />
+      <ProtectedRoute Component={CreateBillboard} roles={["landowner"]} />
     ),
   },
   {
     path: "/CreateContract",
-    element: <ProtectedRoute Component={CreateContract} roles={["landlord"]} />,
+    element: (
+      <ProtectedRoute Component={CreateContract} roles={["landowner"]} />
+    ),
   },
   {
     path: "/ContractDetail/:contractId",
     element: (
-      <ProtectedRoute Component={UserContractDetail} roles={["landlord"]} />
+      <ProtectedRoute Component={UserContractDetail} roles={["landowner"]} />
     ),
   },
   {
@@ -235,7 +237,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={LandlordsBillboardDetail}
-        roles={["landlord"]}
+        roles={["landowner"]}
       />
     ),
   },
@@ -299,7 +301,7 @@ const router = createBrowserRouter([
   {
     path: "/BillboardProfile",
     element: (
-      <ProtectedRoute Component={BillboardProfilePage} roles={["landlord"]} />
+      <ProtectedRoute Component={BillboardProfilePage} roles={["landowner"]} />
     ),
   },
   {
@@ -322,7 +324,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={BillboardEditProfilePage}
-        roles={["landlord"]}
+        roles={["landowner"]}
       />
     ),
   },
