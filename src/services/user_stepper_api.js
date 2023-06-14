@@ -37,8 +37,7 @@ export const getUserStepper = (userId) => {
   return axiosInstance
     .get(`/auth/profiles/${userId}`)
     .then((res) => {
-      const cred = jwt_decode(res.data.token);
-      setCookie("user", res.data.token, cred.exp);
+      setCookie("userProfile", JSON.stringify(res.data.data));
       return res.data;
     })
     .catch((error) => {

@@ -108,12 +108,15 @@ export default function BillboardTable() {
   </p>  
   } */}
                   </td>
-                  <td class="px-4 py-3 text-sm">15-01-2021</td>
+                  <td class="px-4 py-3 text-sm">
+                    {new Date(proposal?.created_at).toLocaleDateString()}
+                  </td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       <ButtonWithModal
                         modalContent={
                           <BillboardProposalPopup
+                            id={proposal.id}
                             name={proposal.name}
                             description={proposal.description}
                             approved={proposal.approved}

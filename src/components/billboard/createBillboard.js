@@ -5,7 +5,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createBillboard } from "../../services/billboard_api";
 import LocationSelector from "./mapLocationPicker";
-import { user } from "../../utils/utils";
+import getUser from "../../utils/utils";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -13,7 +13,7 @@ import { CircularProgress } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateBillboardForm() {
-  const id = user?.id;
+  const id = getUser()?.id;
   // const history = useHistory();
   const mutation = useMutation({
     mutationFn: (billboard) => {

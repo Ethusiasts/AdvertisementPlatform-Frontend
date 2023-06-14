@@ -6,14 +6,16 @@ import { getProposal } from "../../services/proposal";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { createContract } from "../../services/contract";
+import { useParams } from "react-router-dom";
+import getUser from "../../utils/utils";
 
 export default function CreateContractForm({ photo, title, description }) {
-  const proposal_id = 2;
-  const user_id = 1;
+  const { proposalId } = useParams();
+  console.log(proposalId);
   const { data: proposal, isLoading } = useQuery(
     ["proposals"],
     () => {
-      return getProposal(proposal_id)
+      return getProposal(proposalId)
         .then((res) => {
           return res.data;
         })
@@ -21,7 +23,7 @@ export default function CreateContractForm({ photo, title, description }) {
           return error;
         });
     },
-    { proposal_id }
+    { proposalId }
   );
 
   const mutation = useMutation({
@@ -82,10 +84,10 @@ export default function CreateContractForm({ photo, title, description }) {
       total_tax: String((proposal?.total_price * 0.15)?.toFixed(2)),
       gross_total_fee: String((proposal?.total_price * 1)?.toFixed(2)),
       net_free: String((proposal?.total_price * 0.85)?.toFixed(2)),
-      proposal_id: proposal_id,
+      proposal_id: proposalId,
       agency_signature: url,
       media_agency_id: proposal.billboard_id.media_agency_id,
-      user_id: user_id,
+      user_id: getUser()?.id,
     });
   };
   return (

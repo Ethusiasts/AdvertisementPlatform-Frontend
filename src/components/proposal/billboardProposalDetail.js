@@ -3,6 +3,7 @@ import BillboardCard from "./billboardCard";
 import CardWithModal from "./cardWithModal";
 import AdPopup from "../advertisement/advertisementDetail";
 export default function BillboardProposalPopup({
+  id,
   name,
   description,
   total_price,
@@ -70,7 +71,7 @@ export default function BillboardProposalPopup({
           </div>
         </div>
         <div class="flex justify-end">
-          <a href="/CreateContract">
+          <a href={`/Proposal/${id}/CreateContract`}>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
               Sign Contract
             </button>

@@ -1,8 +1,7 @@
 import { axiosInstance } from "../utils/axiosInstance";
-import { user } from "../utils/utils";
+import getUser from "../utils/utils";
 
-const id = user?.id;
-
+const id = getUser()?.id;
 export const createProposal = (proposal) => {
   console.log(proposal);
   return axiosInstance
@@ -29,6 +28,7 @@ export const getProposal = (proposal_id) => {
 };
 
 export const getMediaAgencyProposals = () => {
+  console.log(id);
   return axiosInstance
     .get(`/media_agencies/${id}/proposals/`)
     .then((res) => {

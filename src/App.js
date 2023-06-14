@@ -237,7 +237,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/CreateContract",
+    path: "proposal/:proposalId/CreateContract",
     element: (
       <ProtectedRoute Component={CreateContract} roles={["landowner"]} />
     ),

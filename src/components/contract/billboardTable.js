@@ -109,7 +109,7 @@ export default function BillboardTable() {
                   <td class="px-4 py-3 text-sm">15-01-2021</td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
-                      {contract.customer_signature ? (
+                      {
                         <Link
                           to={`/contractDetail/${contract.id}`}
                           className="text-blue"
@@ -121,19 +121,7 @@ export default function BillboardTable() {
                             View Contract
                           </button>
                         </Link>
-                      ) : (
-                        <Link
-                          to={`/ApproveContract/${contract.id}`}
-                          className="text-blue"
-                        >
-                          <button
-                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                            // onClick={}
-                          >
-                            Sign Contract
-                          </button>
-                        </Link>
-                      )}
+                      }
                       {/* <Link
                         to={`/contractDetail/${contract.id}`}
                         className="text-blue"

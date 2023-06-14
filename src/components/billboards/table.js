@@ -1,11 +1,16 @@
 import { getMediaAgencyBillbaords } from "../../services/media_agency";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import ButtonWithModal from "./buttonWithModal";
 import PaymentForm from "./paymentForm";
+import { deleteBillboard } from "../../services/billboard_api";
 
 export default function Table() {
-  const { data: billboards, isLoading } = useQuery(["billboards"], () => {
+  const {
+    data: billboards,
+    isLoading,
+    refetch,
+  } = useQuery(["billboards"], () => {
     return getMediaAgencyBillbaords()
       .then((res) => {
         return res;
@@ -14,6 +19,26 @@ export default function Table() {
         return error;
       });
   });
+
+  const mutation = useMutation({
+    mutationFn: (billboardId) => {
+      return deleteBillboard({ billboardId })
+        .then((res) => {
+          refetch();
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+  });
+
+  function handleDelete(event) {
+    if (window.confirm("Are you sure you want to delete?")) {
+      const id = event.currentTarget.dataset.id; // Read the id from the data attribute
+      mutation.mutate(id);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -76,17 +101,17 @@ export default function Table() {
                       </div>
                       <div>
                         <p class="font-semibold">{billboard.location}</p>
-                        <p class="text-xs text-gray-600 dark:text-black">
-                          10x Developer
+                        <p class="text-xs font-bold text-gray-600 dark:text-black">
+                          {billboard.height} X {billboard.width}
                         </p>
                       </div>
                     </div>
                   </td>
                   <td class="px-4 py-3 text-sm">
-                    {billboard.monthly_rate_per_sq}
+                    ${billboard.daily_rate_per_sq}
                   </td>
                   <td class="px-4 py-3 text-xs">
-                    {billboard.status == "Free" ? (
+                    {billboard.status === "Free" ? (
                       <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
                         Free
                       </p>
@@ -97,9 +122,13 @@ export default function Table() {
                     )}
                   </td>
                   <td class="px-4 py-3 text-xs">
-                    {billboard.approved ? (
+                    {billboard.approved === 2 ? (
                       <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
                         Approved
+                      </p>
+                    ) : billboard.approved === 1 ? (
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
                       </p>
                     ) : (
                       <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
@@ -133,7 +162,9 @@ export default function Table() {
                       </p>
                     )}
                   </td>
-                  <td class="px-4 py-3 text-sm">15-01-2021</td>
+                  <td class="px-4 py-3 text-sm">
+                    {new Date(billboard.created_at).toLocaleDateString("en-US")}
+                  </td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       <Link
@@ -182,7 +213,11 @@ export default function Table() {
                           </svg>
                         </button>
                       </Link>
-                      <button className="text-red-500">
+                      <button
+                        data-id={billboard.id}
+                        className="text-red-500"
+                        onClick={handleDelete}
+                      >
                         <svg
                           className="fill-current"
                           width="18"
@@ -210,7 +245,9 @@ export default function Table() {
                         </svg>
                       </button>
 
-                      <ButtonWithModal modalContent={<PaymentForm />} />
+                      <ButtonWithModal
+                        modalContent={<PaymentForm billboard={billboard} />}
+                      />
                     </div>
                   </td>
                 </tr>

@@ -12,6 +12,19 @@ export const getBillboardDetail = ({ billboardId }) => {
     });
 };
 
+export const deleteBillboard = ({ billboardId }) => {
+  console.log(billboardId);
+  return axiosInstance
+    .delete(`/billboards/${billboardId}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+
 export const getBillboards = ({ currentPage }) => {
   return axiosInstance
     .get(`/billboards/?page=${currentPage}`)

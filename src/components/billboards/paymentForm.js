@@ -2,23 +2,31 @@ import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { sendPaymentInfo } from "../../services/payment";
+import { getCookie } from "../../utils";
+import getUser from "../../utils/utils";
 
-export default function PaymentForm({ name, type, mediaUrl }) {
+export default function PaymentForm({ billboard }) {
   const mutation = useMutation({
     mutationFn: (paymentInfo) => {
       return sendPaymentInfo(paymentInfo);
     },
     onSuccess: (data) => {
-      window.location.href = data.data;
+      console.log(data.checkout_url);
+      window.open(data.checkout_url, data.checkout_url);
     },
   });
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [taxReference, setTaxReference] = useState("");
-  const [amount, setAmount] = useState(null);
+  const user = getUser();
+  const userProfile = JSON.parse(getCookie("userProfile"));
+
+  const [firstName, setFirstName] = useState(userProfile?.first_name);
+  const [lastName, setLastName] = useState(userProfile?.last_name);
+  const [email, setEmail] = useState(user?.email);
+  const [phoneNumber, setPhoneNumber] = useState(userProfile?.phone_number);
+  const [taxReference, setTaxReference] = useState(
+    `${user?.id}-${billboard.id}-${Date.now()}`
+  );
+  const [amount, setAmount] = useState("");
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -47,16 +55,20 @@ export default function PaymentForm({ name, type, mediaUrl }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     mutation.mutate({
-      firstName: firstName,
-      lastName: lastName,
+      first_name: firstName,
+      last_name: lastName,
       email: email,
-      phoneNumber: phoneNumber,
-      taxReference: taxReference,
+      phone_number: phoneNumber.replace("+251", "0"),
+      tx_ref: taxReference,
       amount: amount,
+      callback_url:
+        "https://advertisementplatform-0xpy.onrender.com/api/v1/payments/",
+      return_url: "/BillboardDashboard",
+      currency: "ETB",
     });
   };
   return (
-    <form action={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div class="bg-gray-100 rounded-lg shadow-lg p-16 w-9/10">
         <h2 class="text-xl text-gray-800 font-bold mb-4">
           Transaction Detail!
@@ -119,9 +131,11 @@ export default function PaymentForm({ name, type, mediaUrl }) {
               type="text"
               name="amount"
               id="amount"
+              p
               placeholder="Amount"
               value={amount}
               onChange={handleAmountChange}
+              required
             />
           </div>
           <div className="w-full sm:w-1/2">
@@ -139,7 +153,7 @@ export default function PaymentForm({ name, type, mediaUrl }) {
         </div>
         <div class="flex justify-end">
           <button
-            // onClick={uploadImage}
+            type="submit"
             class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60"
           >
             Pay

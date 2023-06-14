@@ -1,7 +1,7 @@
 import { axiosInstance } from "../utils/axiosInstance";
-import { user } from "../utils/utils";
+import getUser from "../utils/utils";
 
-const id = user?.id;
+const id = getUser()?.id;
 export const createContract = (contract) => {
   console.log(contract);
   return axiosInstance

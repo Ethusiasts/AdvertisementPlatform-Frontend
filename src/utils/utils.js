@@ -1,15 +1,17 @@
 import jwtDecode from "jwt-decode";
 import { getCookie } from ".";
 
-const token = getCookie("user") ?? "";
-let decodedToken = null;
+export default function getUser() {
+  const token = getCookie("user") ?? "";
 
-if (token) {
-  try {
-    decodedToken = jwtDecode(token);
-  } catch (error) {
-    console.error("Invalid token", error);
+  let decodedToken = null;
+
+  if (token) {
+    try {
+      decodedToken = jwtDecode(token);
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
   }
+  return decodedToken;
 }
-
-export const user = decodedToken;

@@ -1,4 +1,6 @@
+import { getCookie } from "../../utils";
 export default function Table() {
+  const userProfile = JSON.parse(getCookie("userProfile"));
   return (
     <div class="mt-4 mx-4">
       <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -199,7 +201,7 @@ export default function Table() {
                     <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
                       <img
                         class="object-cover w-full h-full rounded-full"
-                        src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                        src={userProfile.profile_picture}
                         alt=""
                         loading="lazy"
                       />
