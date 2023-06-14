@@ -19,6 +19,7 @@ export const sendPaymentInfo = (paymentInfo) => {
   return axiosInstance
     .post("payments/initialize", paymentInfo)
     .then((res) => {
+      console.log(res, res.data, res.data.data, "eakhjsdaf");
       return res.data.data;
     })
     .catch((error) => {

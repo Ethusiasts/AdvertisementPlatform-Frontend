@@ -11,8 +11,7 @@ export default function PaymentForm({ billboard }) {
       return sendPaymentInfo(paymentInfo);
     },
     onSuccess: (data) => {
-      console.log(data.checkout_url);
-      window.open(data.checkout_url, data.checkout_url);
+      window.open(data, "_blank");
     },
   });
 
@@ -63,7 +62,7 @@ export default function PaymentForm({ billboard }) {
       amount: amount,
       callback_url:
         "https://advertisementplatform-0xpy.onrender.com/api/v1/payments/",
-      return_url: "/BillboardDashboard",
+      return_url: "https://www.google.com/",
       currency: "ETB",
     });
   };
