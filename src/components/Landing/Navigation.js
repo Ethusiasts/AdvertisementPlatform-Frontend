@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { getCookie, navMenus } from "../../utils/index";
-import { Link, useLocation } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { getCookie, navMenus, removeCookie } from "../../utils/index";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import UserProfileDropDown from "../authentication/userprofile";
 function Navigation() {
   const [mobile, setMobile] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   // Check if the current route is localhost:3000
-  console.log(getCookie("user"));
   const handleMobile = () => {
     setMobile(!mobile);
   };
+  const handleLogout = () => {
+    // Remove the token from the cookie
+    removeCookie("user");
+    removeCookie("user_profile");
+    // Redirect to the home page
+    return navigate("/signin");
+  };
+
   return (
     <div>
       <nav className="relative px-4 py-4 transition ease-in-out delay-150 flex justify-between items-center bg-white">
@@ -88,7 +96,7 @@ function Navigation() {
             </Link>
           </>
         ) : (
-          <FaUserCircle />
+          <UserProfileDropDown />
         )}
       </nav>
       <div
@@ -141,6 +149,24 @@ function Navigation() {
                     </li>
                   );
                 })}
+
+                <li>
+                  <Link
+                    to={"/userprofile"}
+                    className="block px-4 py-2 text-gray-800 bg-white font-black hover:bg-gray-200 rounded-tl rounded-tr"
+                  >
+                    User Profile
+                  </Link>
+                </li>
+
+                <li>
+                  <a
+                    onClick={handleLogout}
+                    className="block px-4 py-2 text-white bg-red-700 font-black hover:bg-red-800 rounded-bl rounded-br cursor-pointer"
+                  >
+                    Log out{" "}
+                  </a>
+                </li>
               </ul>
             </div>
           ) : (
@@ -166,7 +192,7 @@ function Navigation() {
                   </Link>
                 </>
               ) : (
-                <FaUserCircle />
+                <UserProfileDropDown />
               )}
             </div>
             <p className="my-4 text-xs text-center text-gray-400">

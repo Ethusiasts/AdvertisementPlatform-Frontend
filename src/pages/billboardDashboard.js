@@ -2,6 +2,7 @@ import Card from "../components/billboards/card";
 import Table from "../components/billboards/table";
 import SideBar from "../components/billboards/sidebar";
 import Header from "../components/billboards/header";
+import { getCookie } from "../utils";
 export default function BillboardDashboard() {
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
