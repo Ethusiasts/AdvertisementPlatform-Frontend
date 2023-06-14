@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import AlertService from "../alertService";
 import { userStepper } from "../../services/user_stepper_api";
-import { getCookie } from "../../utils";
+import { getCookie, setCookie } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { PropagateLoaderSpinner } from "../spinners";
 import jwtDecode from "jwt-decode";
@@ -26,18 +26,18 @@ export default function ProfileForm() {
       if (data.status === 201) {
         console.log(data);
         toast.success("Success");
+        setCookie("user_profile", JSON.stringify(data.data));
+
         setTimeout(() => {
-          navigate("/signin");
+          navigate(-1);
         }, 3000);
       } else {
         var errors = "";
         Object.keys(data.response.data.message).forEach((key) => {
-          // console.log(data.response.data.message[key][0]);
           errors += data.response.data.message[key][0] + "\n";
         });
         console.log(errors);
-        setNotification(errors);
-        setType("error");
+        toast.error(errors);
       }
     },
     onError: () => {

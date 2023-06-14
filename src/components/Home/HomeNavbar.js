@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { getCookie, navMenus } from "../../utils/index";
-import { Link } from "react-router-dom";
+import { getCookie, navMenus, removeCookie } from "../../utils/index";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import UserProfileDropDown from "../authentication/userprofile";
 function HomeNavBar() {
   const [mobile, setMobile] = useState(false);
+  const navigate = useNavigate();
+
   const handleMobile = () => {
     setMobile(!mobile);
   };
+  const handleLogout = () => {
+    // Remove the token from the cookie
+    removeCookie("user");
+    removeCookie("user_profile");
+    // Redirect to the home page
+    return navigate("/signin");
+  };
+
   return (
     <div>
       <nav className="relative px-4 py-4 transition duration-500 flex justify-between items-center bg-black bg-opacity-30">
@@ -81,7 +92,7 @@ function HomeNavBar() {
             </Link>
           </>
         ) : (
-          <FaUserCircle />
+          <UserProfileDropDown style={"text-white"} />
         )}
       </nav>
       <div
@@ -133,6 +144,23 @@ function HomeNavBar() {
                   </li>
                 );
               })}
+              <li>
+                <Link
+                  to={"/userprofile"}
+                  className="block px-4 py-2 text-gray-800 bg-white font-black hover:bg-gray-200 rounded-tl rounded-tr"
+                >
+                  User Profile
+                </Link>
+              </li>
+
+              <li>
+                <a
+                  onClick={handleLogout}
+                  className="block px-4 py-2 text-white bg-red-700 font-black hover:bg-red-800 rounded-bl rounded-br cursor-pointer"
+                >
+                  Log out{" "}
+                </a>
+              </li>
             </ul>
           </div>
           <div className="mt-auto">
@@ -153,7 +181,7 @@ function HomeNavBar() {
                   </Link>
                 </>
               ) : (
-                <FaUserCircle />
+                <UserProfileDropDown />
               )}
             </div>
             <p className="my-4 text-xs text-center text-gray-400">

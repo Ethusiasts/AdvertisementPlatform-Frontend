@@ -289,7 +289,10 @@ const router = createBrowserRouter([
   {
     path: "/UserProfile",
     element: (
-      <ProtectedRoute Component={UserProfilePage} roles={["customer"]} />
+      <ProtectedRoute
+        Component={UserProfilePage}
+        roles={["customer", "landowner"]}
+      />
     ),
   },
   {
