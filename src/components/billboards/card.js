@@ -1,4 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import { getMediaAgencyStats } from "../../services/mediaAgencyStat";
 export default function Card() {
+  const { data: stat, isLoading } = useQuery(["proposals"], () => {
+    return getMediaAgencyStats()
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
+  console.log(stat);
   return (
     <div class="bg-gray-100  rounded-lg shadow-md overflow-hidden">
       <div class="px-4 py-5 sm:p-6">
@@ -10,12 +23,12 @@ export default function Card() {
         <div class="my-5">
           <div class="flex justify-center items-center gap-3">
             <div class="flex flex-col justify-center items-center gap-2">
-              <div class="text-3xl font-bold">77</div>
+              <div class="text-3xl font-bold">{stat?.total_billboards}</div>
               <div class="text-xs text-gray-400">billboards</div>
             </div>
             <div class="border border-gray-700 h-6"></div>
             <div class="flex flex-col justify-center items-center gap-2">
-              <div class="text-3xl font-bold">56</div>
+              <div class="text-3xl font-bold">{stat?.total_proposals}</div>
               <div class="text-xs text-gray-400">proposals</div>
             </div>
           </div>

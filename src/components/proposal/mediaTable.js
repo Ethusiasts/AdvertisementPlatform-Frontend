@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getMediaAgencyProposals } from "../../services/proposal";
 import ButtonWithModal from "./buttonWithModal";
 import MediaProposalPopup from "./mediaProposalDetail";
+
 export default function MediaTable() {
   const { data: proposals, isLoading } = useQuery(["proposals"], () => {
     return getMediaAgencyProposals()
@@ -107,11 +108,11 @@ export default function MediaTable() {
                             approved={proposal.approved}
                             total_price={proposal.total_price}
                             advertisement={proposal.advertisement_id}
-                            media={proposal.media_id}
+                            media={proposal.agency_id}
                           />
                         }
                       />
-                      <Link to={`/CreateContract`} className="text-blue">
+                      <Link to={`/MediaCreateContract`} className="text-blue">
                         <button className="text-red-500">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

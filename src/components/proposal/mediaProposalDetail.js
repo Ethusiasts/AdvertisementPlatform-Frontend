@@ -71,7 +71,7 @@ export default function MediaProposalPopup({
           </div>
         </div>
         <div class="flex justify-end">
-          <a href={`/Proposal/${id}/CreateContract`}>
+          <a href={`/Proposal/${id}/MediaCreateContract`}>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
               Sign Contract
             </button>

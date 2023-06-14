@@ -23,7 +23,6 @@ import CreateRadioAd from "./pages/advertisement/createRadioAd";
 import AdminDashboard from "./pages/admin/adminDashboard";
 import UserControl from "./pages/admin/userControl";
 import HelpAndSupport from "./pages/admin/helpAndSupport";
-import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ForgotPassword from "./pages/authentication/forgotPassword";
@@ -43,7 +42,6 @@ import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import CreateContract from "./pages/contract/createContract";
 import UserEditProfilePage from "./pages/profile/userEditProfilePage";
 import MediaEditProfilePage from "./pages/profile/mediaEditProfilePage";
 import UserProfilePage from "./pages/profile/userProfilePage";
@@ -59,6 +57,8 @@ import jwtDecode from "jwt-decode";
 import ErrorPage from "./components/error";
 import React, { useState } from "react";
 import CreateMedia from "./pages/medias/createMedia";
+import BillboardCreateContract from "./pages/contract/billboardCreateContract";
+import MediaCreateContract from "./pages/contract/mediaCreateContract";
 // HOC for checking authentication and authorization
 export const ImgContext = React.createContext();
 
@@ -237,9 +237,12 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "proposal/:proposalId/CreateContract",
+    path: "proposal/:proposalId/BillboardCreateContract",
     element: (
-      <ProtectedRoute Component={CreateContract} roles={["landowner"]} />
+      <ProtectedRoute
+        Component={BillboardCreateContract}
+        roles={["landowner", "TV", "RADIO"]}
+      />
     ),
   },
   {
@@ -274,6 +277,15 @@ const router = createBrowserRouter([
     path: "/MediaContract",
     element: (
       <ProtectedRoute Component={MediaContract} roles={["TV", "RADIO"]} />
+    ),
+  },
+  {
+    path: "proposal/:proposalId/MediaCreateContract",
+    element: (
+      <ProtectedRoute
+        Component={MediaCreateContract}
+        roles={["landowner", "TV", "RADIO"]}
+      />
     ),
   },
   {
