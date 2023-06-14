@@ -305,7 +305,10 @@ const router = createBrowserRouter([
   {
     path: "/UserProfile",
     element: (
-      <ProtectedRoute Component={UserProfilePage} roles={["customer"]} />
+      <ProtectedRoute
+        Component={UserProfilePage}
+        roles={["customer", "landowner"]}
+      />
     ),
   },
   {
@@ -331,7 +334,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaEditProfilePage}
-        roles={["tv", "radio", "gazeta"]}
+        roles={["tv", "radio", "gazeta", "landowner"]}
       />
     ),
   },
