@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import AdvertisementSelect from "./autocompleteDropDown";
 import { createProposal } from "../../services/proposal";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import getUser from "../../utils/utils";
+import AdvertisementSelect from "../billboardDetails/autocompleteDropDown";
 
 export default function CreateMediaProposal({ media }) {
   const user = getUser();
