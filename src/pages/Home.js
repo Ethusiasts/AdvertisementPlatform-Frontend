@@ -202,17 +202,6 @@ export default function Home() {
                       >
                         Price
                       </button>
-
-                      <button
-                        className={classNames(
-                          "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-                          { "bg-gray-100": sortBy === "location" }
-                        )}
-                        role="menuitem"
-                        onClick={() => handleChildSort("location")}
-                      >
-                        Location
-                      </button>
                       <button
                         className={classNames(
                           "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",

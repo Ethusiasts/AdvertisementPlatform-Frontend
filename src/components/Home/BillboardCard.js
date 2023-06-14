@@ -52,7 +52,13 @@ export default function Card({
       </Link>
 
       <div className=" rounded-lg px-6 float-right  mt-2">
-        <span className="text-[#0FA958] font-bold text-md">{status}</span>
+        <span
+          className={`${
+            status === "Occupied" ? "text-red-500" : "text-[#0FA958]"
+          } font-bold text-md`}
+        >
+          {status}
+        </span>
       </div>
 
       <div className="p-4">

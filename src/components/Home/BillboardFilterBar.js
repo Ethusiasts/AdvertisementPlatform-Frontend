@@ -4,6 +4,7 @@ import {
   faAmericanSignLanguageInterpreting,
   faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import PriceFilter from "./PriceFilter";
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -12,6 +13,7 @@ import { searchAgencies } from "../../services/agency_api";
 import Geocode from "react-geocode";
 import axios from "axios";
 import { getLocations } from "../../services/location_api";
+import RadiusFilter from "./RadiusFilter";
 export default function BillboardFilterBar({
   onClose,
   query,
@@ -22,12 +24,16 @@ export default function BillboardFilterBar({
 }) {
   const [size, setSize] = useState(0);
   const [location, setLocation] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [type, setType] = useState("");
   const [promotionTime, setpromotionTime] = useState("");
   const [resetPriceFilter, setResetPriceFilter] = useState(false);
+  const [resetSearchDistance, setResetSearchDistance] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [priceValue, setPriceValue] = useState([0, 2000]);
+  const [searchDistanceValue, setsearchDistanceValue] = useState(1);
   const [channelType, setchannelType] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const options = ["TV", "RADIO", "MAGAZINE"];
@@ -76,15 +82,15 @@ export default function BillboardFilterBar({
 
   const handleLocationSelect = (selectedLocation) => {
     // Get the latitude and longitude of the selected location
-    const { lat, lon } = selectedLocation.lat;
+    const { lat, lon } = selectedLocation;
 
     console.log(`Selected Location:, ${selectedLocation}`);
-    console.log(`Latitude:, ${selectedLocation.lat}`);
-    console.log(`Latitude:, ${selectedLocation.lon}`);
-
-    // console.log("Longitude:", selectedLocation.lon);
+    console.log(`Latitude:, ${lat}`);
+    console.log(`Longitude:, ${lon}`);
 
     // Further processing or actions with the selected location
+    setLatitude(lat);
+    setLongitude(lon);
 
     setLocation(selectedLocation.display_name);
     setSuggestions([]); // Clear suggestions
@@ -96,6 +102,9 @@ export default function BillboardFilterBar({
   const handlePriceValueChange = (value) => {
     setPriceValue(value);
   };
+  const handleSearchDistanceValueChange = (value) => {
+    setsearchDistanceValue(value);
+  };
   const handleOptionClick = (option) => {
     setchannelType(option);
     setIsDropdownOpen(false);
@@ -106,6 +115,7 @@ export default function BillboardFilterBar({
     setLocation("");
     setType("");
     setResetPriceFilter(true); // Set the resetPriceFilter state to trigger PriceFilter reset
+    setResetSearchDistance(true);
     onFilterStateChange(false);
     setpromotionTime("");
     setchannelType(null);
@@ -116,11 +126,13 @@ export default function BillboardFilterBar({
       searchBillboards({
         currentPage,
         query,
-        location,
+        latitude,
+        longitude,
         type,
         size,
         min_price,
         max_price,
+        searchDistanceValue,
       })
         .then((res) => {
           setFilterResults(res.results);
@@ -199,7 +211,7 @@ export default function BillboardFilterBar({
                   onChange={handleLocationChange}
                 />
               </div>
-              {location && suggestions && (
+              {location && (
                 <>
                   <ul
                     style={
@@ -210,18 +222,38 @@ export default function BillboardFilterBar({
                         // zIndex: 1,
                       }
                     }
+                    className="pt-2"
                   >
-                    {suggestions.map((suggest) => (
-                      <li
-                        key={suggest.place_id}
-                        onClick={() => handleLocationSelect(suggest)}
-                      >
-                        {suggest.display_name}
-                      </li>
-                    ))}
+                    {suggestions
+                      .filter((suggest) => suggest.display_name !== location)
+                      .map((suggest) => (
+                        <li
+                          key={suggest.place_id}
+                          onClick={() => handleLocationSelect(suggest)}
+                          className="cursor-pointer transition duration-300 hover:bg-gray-200"
+                        >
+                          <FontAwesomeIcon
+                            icon={faMapMarkerAlt}
+                            className="text-gray-500 pr-3"
+                          />
+
+                          <span className="py-2">{suggest.display_name}</span>
+                        </li>
+                      ))}
                   </ul>
                 </>
               )}
+              <div className="py-2">
+                <li className=" text-[#2E4541] font-bold text-l pt-3  ">
+                  Search Distance(KM)
+                </li>
+
+                <RadiusFilter
+                  onResetSearchDistance={resetSearchDistance}
+                  onSearchDistanceValueChange={handleSearchDistanceValueChange}
+                  setResetSearchDistance={setResetSearchDistance}
+                />
+              </div>
             </>
           )}
 
@@ -285,8 +317,9 @@ export default function BillboardFilterBar({
 
           <li className="text-[#2E4541] font-bold text-l py-4">Price</li>
           <PriceFilter
-            resetPriceFilter={resetPriceFilter}
+            onResetPriceFilter={resetPriceFilter}
             onPriceValueChange={handlePriceValueChange}
+            setResetPriceFilter={setResetPriceFilter}
           />
 
           {isBillboard === true && (
