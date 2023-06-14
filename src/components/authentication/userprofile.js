@@ -40,7 +40,8 @@ const UserProfileDropDown = ({ style }) => {
           <img
             src={profilePic}
             alt="Profile Pic"
-            className="w-6 h-6 rounded-full"
+            className="w-6 h-6 rounded-full cursor-pointer"
+            onClick={toggleMenu}
           />
         ) : (
           <FaUserCircle
