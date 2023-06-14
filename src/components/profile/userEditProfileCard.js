@@ -1,12 +1,45 @@
 import userSix from "../../images/user-06.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProfilePicEdit from "./profilePicEdit";
+import jwtDecode from "jwt-decode";
+import { getCookie } from "../../utils";
+import { editUserStepper } from "../../services/user_stepper_api";
+import { ImgContext } from "../../App";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import AlertService from "../alertService";
+import { useNavigate } from "react-router-dom";
 
-export default function UserEditProfileCard({}) {
-  const [userName, setUserName] = useState("Devid27");
-  const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
-  const [firstName, setFirstName] = useState("Devid");
-  const [lastName, setLastName] = useState("Jhon");
+export default function UserEditProfileCard() {
+  const userProfile = JSON.parse(getCookie("user_profile"));
+
+  const [userName, setUserName] = useState(userProfile.username);
+  const [phoneNumber, setPhoneNumber] = useState(userProfile.phone_number);
+  const [firstName, setFirstName] = useState(userProfile.first_name);
+  const [lastName, setLastName] = useState(userProfile.last_name);
+  const profileImg = useContext(ImgContext);
+  const [notification, setNotification] = useState();
+  const [type, setType] = useState();
+  const navigate = useNavigate();
+
+  const { mutate, isLoading } = useMutation(editUserStepper, {
+    onSuccess: async (data) => {
+      if (data.status === 201) {
+        console.log(data);
+        toast.success("Success");
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
+      } else {
+        console.log("Inside errors", data);
+        setNotification(data.response.data.message);
+        setType("error");
+      }
+    },
+    onError: () => {
+      toast.error("Some error occured ...");
+    },
+  });
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -26,19 +59,36 @@ export default function UserEditProfileCard({}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // handle form submission logic here
+    const userInfo = {
+      username: userName,
+      profile_picture: profileImg.ImgUrl,
+      phone_number: phoneNumber,
+      first_name: firstName,
+      last_name: lastName,
+      user: jwtDecode(getCookie("user")).id ?? "",
+    };
+    mutate(userInfo);
+    // handle form submission here
   };
-
   return (
     <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg h-full w-full">
-      <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400"></div>
+      <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400">
+        {" "}
+        {notification ? (
+          <AlertService message={notification} type={type} />
+        ) : (
+          ""
+        )}
+      </div>
       <div className="flex justify-between ml-10 -mt-14">
         <div className="flex justify-between gap-10">
           <ProfilePicEdit />
           <div className="flex items-center">
             <div className="mr-4">
-              <h2 className="text-3xl font-semi-bold">Abenezer Fekadu</h2>
-              <p className="text-xl text-gray-600">@abeni27</p>
+              <h2 className="text-3xl font-semi-bold">
+                {userProfile.first_name} {userProfile.last_name}
+              </h2>
+              <p className="text-xl text-gray-600">{userProfile.username}</p>
             </div>
           </div>
         </div>
@@ -87,7 +137,7 @@ export default function UserEditProfileCard({}) {
                   id="userName"
                   placeholder="Devid27"
                   value={userName}
-                  onChange={handleUserNameChange}
+                  onChange={(e) => handleUserNameChange(e)}
                 />
               </div>
             </div>
@@ -106,7 +156,7 @@ export default function UserEditProfileCard({}) {
                 id="phoneNumber"
                 placeholder="+990 3343 7865"
                 value={phoneNumber}
-                onChange={handlePhoneNumberChange}
+                onChange={(e) => handlePhoneNumberChange(e)}
               />
             </div>
           </div>
@@ -152,7 +202,7 @@ export default function UserEditProfileCard({}) {
                   id="firstName"
                   placeholder="Devid"
                   value={firstName}
-                  onChange={handleFirstNameChange}
+                  onChange={(e) => handleFirstNameChange(e)}
                 />
               </div>
             </div>
@@ -196,7 +246,7 @@ export default function UserEditProfileCard({}) {
                   name="lastName"
                   id="lastName"
                   value={lastName}
-                  onChange={handleLastNameChange}
+                  onChange={(e) => handleLastNameChange(e)}
                   placeholder="Jhon"
                 />
               </div>

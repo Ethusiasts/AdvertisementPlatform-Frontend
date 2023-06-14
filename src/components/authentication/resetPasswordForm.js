@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { resetPassword } from "../../services/auth/reset_password_api";
 import { useMutation } from "@tanstack/react-query";
 import AlertService from "../alertService";
+import toast from "react-hot-toast";
+import jwtDecode from "jwt-decode";
 
 export default function ResetPasswordForm() {
   const [password, setPassword] = useState("");
@@ -33,16 +35,15 @@ export default function ResetPasswordForm() {
 
   const onSubmit = (data) => {
     data.preventDefault();
-    setNotification();
 
     if (password !== rePassword) {
-      setNotification("Password should match");
-      setType("error");
+      toast.error("Password should match");
     } else {
       const user = {
         password: password,
       };
-      mutate(user);
+      console.log(jwtDecode("c167779c31deeedcba4fc9ceb9682375e6c78319"));
+      // mutate(user);
     }
   };
 

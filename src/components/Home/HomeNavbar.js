@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { navMenus } from "../../utils/index";
-import { Link } from "react-router-dom";
-
+import { getCookie, navMenus, removeCookie } from "../../utils/index";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
+import UserProfileDropDown from "../authentication/userprofile";
 function HomeNavBar() {
   const [mobile, setMobile] = useState(false);
+  const navigate = useNavigate();
+
   const handleMobile = () => {
     setMobile(!mobile);
   };
+  const handleLogout = () => {
+    // Remove the token from the cookie
+    removeCookie("user");
+    removeCookie("user_profile");
+    // Redirect to the home page
+    return navigate("/signin");
+  };
+
   return (
     <div>
       <nav className="relative px-4 py-4 transition duration-500 flex justify-between items-center bg-black bg-opacity-30">
@@ -64,18 +75,25 @@ function HomeNavBar() {
             );
           })}
         </ul>
-        <Link
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 transition-all duration-300  hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl "
-          to={"/signin"}
-        >
-          Sign In
-        </Link>
-        <Link
-          className="hidden lg:inline-block py-2 px-6 bg-blue-500 transition-all duration-300 transform hover:bg-blue-600 text-sm text-white font-bold rounded-xl "
-          to={"/signup"}
-        >
-          Sign up
-        </Link>
+        {!getCookie("user") ? (
+          <>
+            {" "}
+            <Link
+              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+              to={"/signin"}
+            >
+              Sign In
+            </Link>
+            <Link
+              className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+              to={"/signup"}
+            >
+              Sign up
+            </Link>
+          </>
+        ) : (
+          <UserProfileDropDown style={"text-white"} />
+        )}
       </nav>
       <div
         className={
@@ -126,22 +144,45 @@ function HomeNavBar() {
                   </li>
                 );
               })}
+              <li>
+                <Link
+                  to={"/userprofile"}
+                  className="block px-4 py-2 text-gray-800 bg-white font-black hover:bg-gray-200 rounded-tl rounded-tr"
+                >
+                  User Profile
+                </Link>
+              </li>
+
+              <li>
+                <a
+                  onClick={handleLogout}
+                  className="block px-4 py-2 text-white bg-red-700 font-black hover:bg-red-800 rounded-bl rounded-br cursor-pointer"
+                >
+                  Log out{" "}
+                </a>
+              </li>
             </ul>
           </div>
           <div className="mt-auto">
             <div className="pt-6">
-              <Link
-                className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                to={"/signin"}
-              >
-                Sign in
-              </Link>
-              <Link
-                className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                to={"/signup"}
-              >
-                Sign Up
-              </Link>
+              {!getCookie("user") ? (
+                <>
+                  <Link
+                    className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                    href="/signIn"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                    to={"/signup"}
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              ) : (
+                <UserProfileDropDown />
+              )}
             </div>
             <p className="my-4 text-xs text-center text-gray-400">
               <span>Copyright © {new Date().getFullYear() + " "}</span>

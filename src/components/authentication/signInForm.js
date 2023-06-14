@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../services/auth/signin_api";
@@ -6,8 +6,9 @@ import { PropagateLoaderSpinner } from "../spinners";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
-import { setCookie } from "../../utils";
+import { getCookie, setCookie } from "../../utils";
 import { toast } from "react-hot-toast";
+import { getUserStepper } from "../../services/user_stepper_api";
 
 export default function SignInForm() {
   const navigate = useNavigate();
@@ -17,18 +18,25 @@ export default function SignInForm() {
   const { mutate, isLoading } = useMutation(signIn, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        console.log(data);
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
         setCookie("user", data.token, cred.exp);
-
         data.firstTimeLogin
           ? setTimeout(() => {
-              navigate("/userstepper");
+              if (cred.role === "customer") {
+                navigate("/userstepper");
+              } else if (cred.role === "landowner") {
+                navigate("/mediaAgencyStepper");
+              }
             }, 3000)
           : setTimeout(() => {
-              navigate("/search");
+              getUserStepper(cred.id);
+              if (cred.role === "customer") {
+                navigate("/search");
+              } else if (cred.role === "landowner") {
+                navigate("/BillboardDashboard");
+              }
             }, 3000);
       } else {
         toast.error(data.response.data.message);

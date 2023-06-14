@@ -1,49 +1,47 @@
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AlertService from "../alertService";
 import { userStepper } from "../../services/user_stepper_api";
-import { getCookie } from "../../utils";
+import { getCookie, setCookie } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { PropagateLoaderSpinner } from "../spinners";
+import jwtDecode from "jwt-decode";
+import { toast } from "react-hot-toast";
+import { ImgContext } from "../../App";
 
-export default function ProfileForm({ imgUrl }) {
+export default function ProfileForm() {
   const [userName, setUserName] = useState("Devid27");
   const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
   const [firstName, setFirstName] = useState("Devid");
   const [lastName, setLastName] = useState("Jhon");
   const [notification, setNotification] = useState();
   const [type, setType] = useState();
+  const profileImg = useContext(ImgContext);
 
   const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(userStepper, {
     onSuccess: async (data) => {
       console.log(data);
-      if (data.status === 200) {
+      if (data.status === 201) {
         console.log(data);
-        setNotification(data.message);
-        setType("success");
+        toast.success("Success");
+        setCookie("user_profile", JSON.stringify(data.data));
 
         setTimeout(() => {
-          navigate("/search");
+          navigate(-1);
         }, 3000);
       } else {
         var errors = "";
         Object.keys(data.response.data.message).forEach((key) => {
-          // console.log(data.response.data.message[key][0]);
           errors += data.response.data.message[key][0] + "\n";
         });
         console.log(errors);
-        setNotification(errors);
-        setType("error");
-        // setNotification(data.response.data.message);
-        // console.log(data.response.data.message);
-
-        // setType("error");
+        toast.error(errors);
       }
     },
     onError: () => {
-      setNotification("Some error occurred...");
+      toast.error("Some error occured ...");
     },
   });
 
@@ -67,11 +65,11 @@ export default function ProfileForm({ imgUrl }) {
     event.preventDefault();
     const userInfo = {
       username: userName,
-      profile_picture: imgUrl,
+      profile_picture: profileImg.ImgUrl,
       phone_number: phoneNumber,
       first_name: firstName,
       last_name: lastName,
-      user: getCookie("user"),
+      user: jwtDecode(getCookie("user")).id ?? "",
     };
     mutate(userInfo);
     // handle form submission here

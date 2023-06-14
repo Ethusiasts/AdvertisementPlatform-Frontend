@@ -12,8 +12,6 @@ export default function UserStepper({
   imageSrc,
   alt,
 }) {
-  const [imgUrl, setImgUrl] = useState();
-
   return (
     <div className="flex justify-center items-center p-10 shadow-sm">
       <div className="rounded-sm border border-stroke bg-white shadow-default">
@@ -23,8 +21,8 @@ export default function UserStepper({
           </h2>
 
           <div className="grid grid-cols-5 gap-8 w-full">
-            <ProfileForm imgUrl={imgUrl} />
-            <ProfilePictureForm mgUrl={imgUrl} setImgUrl={setImgUrl} />
+            <ProfileForm />
+            <ProfilePictureForm />
           </div>
 
           {/* <button

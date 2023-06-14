@@ -111,7 +111,7 @@ export default function ContractDetailCard({ photo, title, description }) {
           <div className="flex justify-start items-center w-1/2 gap-5">
             <p className="font-semibold">Client:</p>
 
-            {contract?.customer_signature != "!" ? (
+            {contract?.customer_signature != "1" ? (
               <img
                 class="w-auto h-16"
                 src={contract?.customer_signature}

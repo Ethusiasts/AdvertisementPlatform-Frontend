@@ -14,7 +14,7 @@ const customStyles = {
     borderRadius: "0.5rem",
   },
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
     zIndex: 1000,
   },
 };

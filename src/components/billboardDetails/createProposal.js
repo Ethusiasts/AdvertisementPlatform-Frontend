@@ -36,9 +36,8 @@ export default function CreateProposalForm({ billboard }) {
       name: proposalName,
       description: proposalDescription,
       total_price: totalPrice,
-      approved: true,
-      user_id: 5,
-      billBoard_id: billboard?.id,
+      user_id: 1,
+      billboard_id: billboard?.id,
       media_agency_id: billboard?.media_agency_id,
       advertisement_id: advertisement?.id,
     });
@@ -55,11 +54,10 @@ export default function CreateProposalForm({ billboard }) {
       name: proposalName,
       description: proposalDescription,
       total_price: totalPrice,
-      approved: true,
-      user_id: 5,
-      billBoard_id: billboard.id,
-      media_agency_id: billboard.media_agency_id,
-      advertisement_id: advertisement.id,
+      user_id: 1,
+      billboard_id: billboard?.id,
+      media_agency_id: billboard?.media_agency_id,
+      advertisement_id: advertisement?.id,
     });
   };
 

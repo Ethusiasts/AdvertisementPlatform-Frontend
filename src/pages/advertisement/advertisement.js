@@ -3,7 +3,7 @@ import Table from "../../components/advertisement/table";
 import SideBar from "../../components/user/sidebar";
 import Header from "../../components/user/header";
 import Label from "../../components/advertisement/label";
-export default function Advertisement({}) {
+export default function Advertisement() {
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
       <div class="fixed flex flex-col left-0 w-14 hover:w-64 md:w-64 bg-gray-100 h-full text-white transition-all duration-300 border-none z-10 sidebar">

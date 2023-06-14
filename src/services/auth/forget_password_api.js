@@ -1,9 +1,10 @@
 import { axiosInstance } from "../../utils/axiosInstance";
 
-export const forgetPassword = ({ email }) => {
-  const body = {
-    email: email,
-  };
+export const forgetPassword = (body) => {
+  // const body = {
+  //   email: email,
+  // };
+  console.log(body);
   return axiosInstance
     .post("/auth/forgot-password", body)
     .then((res) => {

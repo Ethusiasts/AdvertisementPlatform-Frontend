@@ -58,32 +58,18 @@ export default function CreateMagazineAdForm({ photo, title, description }) {
     mutation.mutate({
       advertisement_name: advertisementName,
       advertisement_type: "magazine",
-      duration_in_hour: null,
       advertisement_file: url,
       width: width,
       height: height,
-      approved: false,
       quantity: quantity,
-      user_id: 5,
+      user_id: 1,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (doc == null) return;
-    const audioRef = ref(
-      storage,
-      `Advertisement/docs/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${doc.name}`
-    );
+    const audioRef = ref(storage, `Advertisement/docs/` + `${Date.now()}`);
 
     uploadBytes(audioRef, doc).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {

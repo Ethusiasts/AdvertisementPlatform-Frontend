@@ -1,7 +1,21 @@
 import { axiosInstance } from "../utils/axiosInstance";
+
 export const getBillboardDetail = ({ billboardId }) => {
   return axiosInstance
     .get(`/billboards/${billboardId}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+
+export const deleteBillboard = ({ billboardId }) => {
+  console.log(billboardId);
+  return axiosInstance
+    .delete(`/billboards/${billboardId}`)
     .then((res) => {
       return res.data;
     })
@@ -24,15 +38,13 @@ export const getBillboards = ({ currentPage }) => {
 };
 
 export const createBillboard = (billboard) => {
-  console.log(billboard);
   return axiosInstance
     .post(`/billboards/`, billboard)
     .then((res) => {
-      return res.data;
+      return { success: true, data: res.data };
     })
     .catch((error) => {
-      console.error(error);
-      return error;
+      return { success: false, data: error };
     });
 };
 

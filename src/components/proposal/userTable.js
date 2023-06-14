@@ -4,20 +4,16 @@ import ButtonWithModal from "./buttonWithModal";
 import ProposalPopup from "./proposalDetail";
 import UserProposalPopup from "./userProposalDetail";
 export default function UserTable() {
-  const user_id = 5;
-  const { data: proposals, isLoading } = useQuery(
-    ["proposals"],
-    () => {
-      return getUserProposals(user_id)
-        .then((res) => {
-          return res;
-        })
-        .catch((error) => {
-          return error;
-        });
-    },
-    { user_id }
-  );
+  const { data: proposals, isLoading } = useQuery(["proposals"], () => {
+    return getUserProposals()
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
+  console.log(proposals);
 
   if (isLoading) {
     return (
@@ -123,6 +119,8 @@ export default function UserTable() {
                             description={proposal.description}
                             approved={proposal.approved}
                             total_price={proposal.total_price}
+                            advertisement={proposal.advertisement_id}
+                            billboard={proposal.billboard_id}
                           />
                         }
                       />
