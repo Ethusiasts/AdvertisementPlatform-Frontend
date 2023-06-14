@@ -6,8 +6,9 @@ import { useMutation } from "@tanstack/react-query";
 import { editMediaAgencyStepper } from "../../services/media_agency_stepper_api";
 import { toast } from "react-hot-toast";
 import jwtDecode from "jwt-decode";
-import { getCookie } from "../../utils";
+import { getCookie, setCookie } from "../../utils";
 import { editUserStepper } from "../../services/user_stepper_api";
+import { useNavigate } from "react-router-dom";
 
 export default function MediaEditProfileCard({}) {
   const [userName, setUserName] = useState("Devid27");
@@ -18,18 +19,21 @@ export default function MediaEditProfileCard({}) {
   const [companyName, setCompanyName] = useState("Five Star Advertisers PLC");
   const [tinNumber, setTinNumber] = useState("008836655");
   const { id } = jwtDecode(getCookie("user"));
+  const navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(editUserStepper, {
     onSuccess: async (data) => {
       if (data.status === 200) {
         console.log(data);
-        toast.success("Success");
+        setCookie("user_profile", JSON.stringify(data.data));
+
+        toast.success("Successfully updated profile");
         setTimeout(() => {
-          // navigate(-1);
+          navigate(-1);
         }, 3000);
       } else {
         console.log("Inside errors", data);
-        toast.error("Error");
+        toast.error("Check Your Inputs Again");
       }
     },
     onError: () => {
