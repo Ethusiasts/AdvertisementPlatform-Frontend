@@ -52,6 +52,7 @@ export default function ProfilePictureForm() {
 
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
+        console.log(url);
         toast.success("Uploaded Successfully!");
 
         profileImg.setImgUrl(url);

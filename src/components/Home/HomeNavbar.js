@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { navMenus } from "../../utils/index";
+import { getCookie, navMenus } from "../../utils/index";
 import { Link } from "react-router-dom";
-
+import { FaUserCircle } from "react-icons/fa";
 function HomeNavBar() {
   const [mobile, setMobile] = useState(false);
   const handleMobile = () => {
@@ -64,18 +64,25 @@ function HomeNavBar() {
             );
           })}
         </ul>
-        <Link
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 transition-all duration-300  hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl "
-          to={"/signin"}
-        >
-          Sign In
-        </Link>
-        <Link
-          className="hidden lg:inline-block py-2 px-6 bg-blue-500 transition-all duration-300 transform hover:bg-blue-600 text-sm text-white font-bold rounded-xl "
-          to={"/signup"}
-        >
-          Sign up
-        </Link>
+        {!getCookie("user") ? (
+          <>
+            {" "}
+            <Link
+              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+              to={"/signin"}
+            >
+              Sign In
+            </Link>
+            <Link
+              className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+              to={"/signup"}
+            >
+              Sign up
+            </Link>
+          </>
+        ) : (
+          <FaUserCircle />
+        )}
       </nav>
       <div
         className={
@@ -130,18 +137,24 @@ function HomeNavBar() {
           </div>
           <div className="mt-auto">
             <div className="pt-6">
-              <Link
-                className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                to={"/signin"}
-              >
-                Sign in
-              </Link>
-              <Link
-                className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                to={"/signup"}
-              >
-                Sign Up
-              </Link>
+              {!getCookie("user") ? (
+                <>
+                  <Link
+                    className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                    href="/signIn"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                    to={"/signup"}
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              ) : (
+                <FaUserCircle />
+              )}
             </div>
             <p className="my-4 text-xs text-center text-gray-400">
               <span>Copyright © {new Date().getFullYear() + " "}</span>

@@ -209,37 +209,32 @@ const router = createBrowserRouter([
   // Billboard User
   {
     path: "/BillboardDashboard",
-    element: <BillboardDashboard />,
-    // element: (
-    //   <ProtectedRoute Component={BillboardDashboard} roles={["landowner"]} />
-    // ),
+    element: (
+      <ProtectedRoute Component={BillboardDashboard} roles={["landowner"]} />
+    ),
   },
   {
     path: "/BillboardProposal",
-    element: <BillboardProposal />,
-    // element: (
-    //   <ProtectedRoute Component={BillboardProposal} roles={["landowner"]} />
-    // ),
+    element: (
+      <ProtectedRoute Component={BillboardProposal} roles={["landowner"]} />
+    ),
   },
   {
     path: "/BillboardContract",
-    element: <BillboardContract />,
-    // element: (
-    //   <ProtectedRoute Component={BillboardContract} roles={["landowner"]} />
-    // ),
+    element: (
+      <ProtectedRoute Component={BillboardContract} roles={["landowner"]} />
+    ),
   },
 
   {
     path: "/Billboard",
-    element: <Billboard />,
-    // element: <ProtectedRoute Component={Billboard} roles={["landowner"]} />,
+    element: <ProtectedRoute Component={Billboard} roles={["landowner"]} />,
   },
   {
     path: "/CreateBillboard",
-    element: <CreateBillboard />,
-    // element: (
-    //   <ProtectedRoute Component={CreateBillboard} roles={["landowner"]} />
-    // ),
+    element: (
+      <ProtectedRoute Component={CreateBillboard} roles={["landowner"]} />
+    ),
   },
   {
     path: "/CreateContract",
@@ -250,10 +245,7 @@ const router = createBrowserRouter([
   {
     path: "/ContractDetail/:contractId",
     element: (
-      <ProtectedRoute
-        Component={UserContractDetail}
-        roles={["customer", "landowner"]}
-      />
+      <ProtectedRoute Component={UserContractDetail} roles={["landowner"]} />
     ),
   },
   {
