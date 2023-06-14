@@ -54,6 +54,7 @@ import BillboardEditProfilePage from "./pages/profile/billboardEditProfilePage";
 import BillboardProfilePage from "./pages/profile/billboardProfilePage";
 import ContractDetail from "./pages/contract/contractDetail";
 import UserContractDetail from "./pages/contract/userContractDetail";
+import ApproveContract from "./pages/contract/approveContract";
 import { Toaster } from "react-hot-toast";
 import { getCookie } from "./utils";
 import jwtDecode from "jwt-decode";
@@ -64,12 +65,10 @@ export const ImgContext = React.createContext();
 
 const ProtectedRoute = ({ Component, roles, ...rest }) => {
   const token = getCookie("user");
-
   if (!token) {
     // Redirect to the login page if not authenticated
     return <Navigate to="/SignIn" replace={true} />;
   }
-
   const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
   if (roles && !roles.includes(role)) {
     // Redirect to a forbidden page if the user's role is not allowed
@@ -162,20 +161,29 @@ const router = createBrowserRouter([
   {
     path: "CreateBillboardAd",
     element: (
-      <ProtectedRoute Component={CreateBillboardAd} roles={["landowner"]} />
+      <ProtectedRoute Component={CreateBillboardAd} roles={["customer"]} />
     ),
   },
   {
     path: "CreateTvAd",
-    element: <ProtectedRoute Component={CreateTvAd} roles={["tv"]} />,
+    element: (
+      <ProtectedRoute Component={CreateTvAd} roles={["customer", "tv"]} />
+    ),
   },
   {
     path: "CreateMagazineAd",
-    element: <ProtectedRoute Component={CreateMagazineAd} roles={["gazeta"]} />,
+    element: (
+      <ProtectedRoute
+        Component={CreateMagazineAd}
+        roles={["customer", "gazeta"]}
+      />
+    ),
   },
   {
     path: "CreateRadioAd",
-    element: <ProtectedRoute Component={CreateRadioAd} roles={["radio"]} />,
+    element: (
+      <ProtectedRoute Component={CreateRadioAd} roles={["customer", "radio"]} />
+    ),
   },
   {
     path: "/UserProposal",
@@ -184,6 +192,14 @@ const router = createBrowserRouter([
   {
     path: "/UserContract",
     element: <ProtectedRoute Component={UserContract} roles={["customer"]} />,
+  },
+  {
+    path: "/ApproveContract/:contractId",
+    element: <ApproveContract />,
+  },
+  {
+    path: "/ApproveContract/:contractId",
+    element: <ApproveContract />,
   },
   {
     path: "/ContactUs",
@@ -221,7 +237,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/CreateContract",
+    path: "proposal/:proposalId/CreateContract",
     element: (
       <ProtectedRoute Component={CreateContract} roles={["landowner"]} />
     ),

@@ -1,34 +1,33 @@
 import SignatureCanvas from "react-signature-canvas";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { approveContract, getContract } from "../../services/contract";
 import { useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { getProposal } from "../../services/proposal";
-import { useQuery } from "@tanstack/react-query";
-import { useMutation } from "@tanstack/react-query";
-import { createContract } from "../../services/contract";
-import { useParams } from "react-router-dom";
-import getUser from "../../utils/utils";
 
-export default function CreateContractForm({ photo, title, description }) {
-  const { proposalId } = useParams();
-  console.log(proposalId);
-  const { data: proposal, isLoading } = useQuery(
-    ["proposals"],
+export default function ApproveContractForm({ photo, title, description }) {
+  let { contractId } = useParams();
+  const { data: contract } = useQuery(
+    ["contract"],
     () => {
-      return getProposal(proposalId)
+      return getContract(contractId)
         .then((res) => {
           return res.data;
         })
         .catch((error) => {
-          return error;
+          throw new Error(error);
         });
     },
-    { proposalId }
+    { contractId }
   );
 
+  console.log(contract);
+
   const mutation = useMutation({
-    mutationFn: (contract) => {
-      return createContract(contract);
+    mutationFn: ([contract_id, contract]) => {
+      return approveContract(contract_id, contract);
     },
     onSuccess: () => {
       alert("successfully posted");
@@ -36,15 +35,13 @@ export default function CreateContractForm({ photo, title, description }) {
   });
 
   const [signatureRef, setSignatureRef] = useState("");
-  const [mediaAgencySignature, setmediaAgencySignature] = useState(null);
-  const [mediaAgencySignatureImage, setmediaAgencySignatureImage] =
-    useState(null);
+  const [customerSignature, setcustomerSignature] = useState(null);
+  const [customerSignatureImage, setcustomerSignatureImage] = useState(null);
 
   function handleSave(event) {
     event.preventDefault();
     const sign = signatureRef.getTrimmedCanvas().toDataURL();
     const signToBe = signatureRef.toDataURL();
-
     // Convert the data URL to a Blob object
     const blobBin = atob(signToBe.split(",")[1]);
     const array = [];
@@ -52,26 +49,26 @@ export default function CreateContractForm({ photo, title, description }) {
       array.push(blobBin.charCodeAt(i));
     }
     const file = new Blob([new Uint8Array(array)], { type: "image/png" });
-    setmediaAgencySignature(sign);
-    setmediaAgencySignatureImage(file);
+    setcustomerSignature(sign);
+    setcustomerSignatureImage(file);
   }
 
   function handleClear(event) {
     event.preventDefault();
     signatureRef.clear();
-    setmediaAgencySignature(null);
+    setcustomerSignature(null);
   }
 
   const uploadImage = (event) => {
     event.preventDefault();
 
-    if (mediaAgencySignatureImage == null) return;
+    if (customerSignatureImage == null) return;
     const imageRef = ref(
       storage,
       `Advertisement/signatures/` + `${Date.now()}`
     );
 
-    uploadBytes(imageRef, mediaAgencySignatureImage).then((snapshot) => {
+    uploadBytes(imageRef, customerSignatureImage).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         handleSubmit(url);
         alert("Image Uploaded");
@@ -80,19 +77,35 @@ export default function CreateContractForm({ photo, title, description }) {
   };
 
   const handleSubmit = (url) => {
-    mutation.mutate({
-      total_tax: String((proposal?.total_price * 0.15)?.toFixed(2)),
-      gross_total_fee: String((proposal?.total_price * 1)?.toFixed(2)),
-      net_free: String((proposal?.total_price * 0.85)?.toFixed(2)),
-      proposal_id: proposalId,
-      agency_signature: url,
-      media_agency_id: proposal.billboard_id.media_agency_id,
-      user_id: getUser()?.id,
+    console.log({
+      total_tax: contract?.total_tax,
+      gross_total_fee: contract?.gross_total_fee,
+      net_free: contract?.net_free,
+      proposal_id: contract?.proposal_id.id,
+      agency_signature: contract?.agency_signature,
+      customer_signature: url,
+      media_agency_id: contract?.media_agency_id.id,
+      user_id: contract?.user_id.id,
     });
+
+    mutation.mutate([
+      contract?.id,
+      {
+        total_tax: contract?.total_tax,
+        gross_total_fee: contract?.gross_total_fee,
+        net_free: contract?.net_free,
+        proposal_id: contract?.proposal_id.id,
+        agency_signature: contract?.agency_signature,
+        customer_signature: customerSignature,
+        media_agency_id: contract?.media_agency_id.id,
+        user_id: contract?.user_id.id,
+      },
+    ]);
   };
+
   return (
     <form onSubmit={uploadImage}>
-      <div className="container mx-auto py-5 px-8">
+      <div className="container mx-auto py-10 px-8">
         <div className="bg-white shadow-md rounded p-8" id="contract">
           <h1 className="text-3xl font-semibold mb-4">
             Billboard Advertising Contract
@@ -120,20 +133,15 @@ export default function CreateContractForm({ photo, title, description }) {
             </li>
             <li>
               Net Fee:{" "}
-              <span className="font-semibold">
-                ${(proposal?.total_price * 0.85)?.toFixed(2)}
-              </span>
+              <span className="font-semibold">${contract?.net_free}</span>
             </li>
             <li>
-              Tax:{" "}
-              <span className="font-semibold">
-                ${(proposal?.total_price * 0.15)?.toFixed(2)}
-              </span>
+              Tax: <span className="font-semibold">${contract?.total_tax}</span>
             </li>
             <li>
               Gross Fee:{" "}
               <span className="font-semibold">
-                ${(proposal?.total_price * 1)?.toFixed(2)}
+                ${contract?.gross_total_fee}
               </span>
             </li>
           </ul>
@@ -146,18 +154,30 @@ export default function CreateContractForm({ photo, title, description }) {
           <div className="mt-8 flex justify-between">
             <div className="flex justify-start items-center w-1/2 gap-5">
               <p className="font-semibold">Client:</p>
-              <p>________________________________</p>
+
+              {customerSignature ? (
+                <img
+                  class="w-auto h-16"
+                  src={customerSignature}
+                  alt=""
+                  loading="lazy"
+                />
+              ) : (
+                <p>______________________________</p>
+              )}
             </div>
             <div className="flex justify-start items-center w-1/2 gap-5">
               <p className="font-semibold">Owner:</p>
 
-              {mediaAgencySignature ? (
-                <img
-                  class="w-auto h-16"
-                  src={mediaAgencySignature}
-                  alt=""
-                  loading="lazy"
-                />
+              {contract?.agency_signature ? (
+                -(
+                  <img
+                    class="w-auto h-16"
+                    src={contract?.agency_signature}
+                    alt=""
+                    loading="lazy"
+                  />
+                )
               ) : (
                 <p>______________________________</p>
               )}
@@ -204,7 +224,7 @@ export default function CreateContractForm({ photo, title, description }) {
               type="submit"
               class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-2 px-20 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
             >
-              Send Contract
+              Approve Contract
             </button>
           </div>
         </div>

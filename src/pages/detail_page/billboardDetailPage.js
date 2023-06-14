@@ -76,6 +76,7 @@ export default function BillboardDetail() {
       <ImageCard
         image={billboardDetail?.image}
         status={billboardDetail.status}
+        billboard={billboardDetail}
       />
       {/* Description */}
       <Description description={billboardDetail.description} />

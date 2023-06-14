@@ -1,4 +1,7 @@
 import { axiosInstance } from "../utils/axiosInstance";
+import getUser from "../utils/utils";
+
+const id = getUser()?.id;
 export const createProposal = (proposal) => {
   console.log(proposal);
   return axiosInstance
@@ -24,9 +27,10 @@ export const getProposal = (proposal_id) => {
     });
 };
 
-export const getMediaAgencyProposals = (media_agency_id) => {
+export const getMediaAgencyProposals = () => {
+  console.log(id);
   return axiosInstance
-    .get(`/media_agencies/${media_agency_id}/proposals/`)
+    .get(`/media_agencies/${id}/proposals/`)
     .then((res) => {
       return res.data;
     })
@@ -36,9 +40,9 @@ export const getMediaAgencyProposals = (media_agency_id) => {
     });
 };
 
-export const getUserProposals = (user_id) => {
+export const getUserProposals = () => {
   return axiosInstance
-    .get(`/auth/${user_id}/proposals/`)
+    .get(`/auth/${id}/proposals/`)
     .then((res) => {
       return res.data;
     })

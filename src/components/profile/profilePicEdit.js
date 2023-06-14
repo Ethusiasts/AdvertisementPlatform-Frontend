@@ -4,8 +4,10 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import userSix from "../../images/user-06.png";
 import { ImgContext } from "../../App";
 import { toast } from "react-hot-toast";
+import { getCookie } from "../../utils";
 
 export default function ProfilePicEdit({}) {
+  const userProfile = JSON.parse(getCookie("user_profile"));
   const profileImg = useContext(ImgContext);
 
   const [image, setImage] = useState(null);
@@ -18,19 +20,10 @@ export default function ProfilePicEdit({}) {
 
   const uploadImage = () => {
     toast.success("uploading");
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (image == null) return;
     const imageRef = ref(
       storage,
-      `profile/images/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${image.name}`
+      `profile/images/` + `${Date.now()}` + `${image.name}`
     );
 
     uploadBytes(imageRef, image).then((snapshot) => {
@@ -46,7 +39,11 @@ export default function ProfilePicEdit({}) {
     <form action={uploadImage}>
       <div className="relative z-30 mx-auto  h-48 w-48 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:w-44 sm:p-2">
         <div className="relative drop-shadow-2">
-          <img src={userSix} alt="profile" class="h-28 w-28 sm:h-40 sm:w-40" />
+          <img
+            src={userProfile.profile_picture}
+            alt="profile"
+            class="h-28 w-28 sm:h-40 sm:w-40 rounded-full"
+          />
           <label
             htmlFor="profile"
             className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-700 text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"

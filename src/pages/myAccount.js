@@ -13,23 +13,11 @@ export default function MyAccount() {
       <div class="h-full ml-14 mr-14 mt-5 mb-10 md:ml-64">
         <Header title="Analytics" />
         <div class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="p-12">
-            <Card />
-          </div>
-          <div class="p-12">
+          <div class="p-4 col-span-2">
             <Card />
           </div>
           <div class="col-start-3 row-start-1 rounded-md m-4">
             <InfoCard />
-          </div>
-          <div class="col-start-3 row-start-2 rounded-md m-4">
-            <FavouritesCard />
-          </div>
-          <div class="p-12 col-start-1 row-start-2">
-            <Card />
-          </div>
-          <div class="p-12 col-start-2 row-start-2">
-            <Card />
           </div>
         </div>
         <Table />

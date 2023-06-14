@@ -4,21 +4,16 @@ import { getMediaAgencyProposals } from "../../services/proposal";
 import ButtonWithModal from "./buttonWithModal";
 import BillboardProposalPopup from "./billboardProposalDetail";
 export default function BillboardTable() {
-  const media_agency_id = 1;
-  const { data: proposals, isLoading } = useQuery(
-    ["proposals"],
-    () => {
-      return getMediaAgencyProposals(media_agency_id)
-        .then((res) => {
-          return res;
-        })
-        .catch((error) => {
-          return error;
-        });
-    },
-    { media_agency_id }
-  );
-
+  const { data: proposals, isLoading } = useQuery(["proposals"], () => {
+    return getMediaAgencyProposals()
+      .then((res) => {
+        return res;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
+  console.log(proposals?.results);
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
@@ -113,16 +108,21 @@ export default function BillboardTable() {
   </p>  
   } */}
                   </td>
-                  <td class="px-4 py-3 text-sm">15-01-2021</td>
+                  <td class="px-4 py-3 text-sm">
+                    {new Date(proposal?.created_at).toLocaleDateString()}
+                  </td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       <ButtonWithModal
                         modalContent={
                           <BillboardProposalPopup
+                            id={proposal.id}
                             name={proposal.name}
                             description={proposal.description}
                             approved={proposal.approved}
                             total_price={proposal.total_price}
+                            advertisement={proposal.advertisement_id}
+                            billboard={proposal.billboard_id}
                           />
                         }
                       />
