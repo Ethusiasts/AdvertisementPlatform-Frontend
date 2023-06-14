@@ -26,7 +26,7 @@ export default function SignInForm() {
         setCookie("user", data.token, cred.exp);
         data.firstTimeLogin
           ? setTimeout(() => {
-              if (cred.role === "Customer") {
+              if (cred.role === "customer") {
                 navigate("/userstepper");
               } else if (cred.role === "landowner") {
                 navigate("/mediaAgencyStepper");
@@ -34,7 +34,7 @@ export default function SignInForm() {
             }, 3000)
           : setTimeout(() => {
               getUserStepper(cred.id);
-              if (cred.role === "Customer") {
+              if (cred.role === "customer") {
                 navigate("/search");
               } else if (cred.role === "landowner") {
                 navigate("/BillboardDashboard");
