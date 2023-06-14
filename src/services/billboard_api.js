@@ -52,18 +52,27 @@ export const searchBillboardsWithQueryOnly = ({ query, currentPage }) => {
 export const searchBillboards = ({
   currentPage,
   query,
-  location,
+  latitude,
+  longitude,
   type,
   size,
   min_price,
   max_price,
+  searchDistanceValue,
 }) => {
   let url = `/billboards/search`;
   if (query) {
     url += `?q=${query}`;
   }
-  if (location) {
-    url += `&location=${location}`;
+  if (searchDistanceValue) {
+    console.log(searchDistanceValue, "radius");
+    url += `&radius=${searchDistanceValue}`;
+  }
+  if (latitude) {
+    url += `&latitude=${latitude}`;
+  }
+  if (longitude) {
+    url += `&longitude=${longitude}`;
   }
   if (type) {
     if (type === "Production") {
