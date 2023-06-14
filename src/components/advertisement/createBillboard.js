@@ -58,32 +58,19 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
     mutation.mutate({
       advertisement_name: advertisementName,
       advertisement_type: "billboard",
-      duration_in_hour: null,
       advertisement_file: url,
       width: width,
       height: height,
-      approved: false,
       quantity: quantity,
-      user_id: 5,
+      user_id: 1,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
 
     if (image == null) return;
-    const imageRef = ref(
-      storage,
-      `Advertisement/images/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${image.name}`
-    );
+    const imageRef = ref(storage, `Advertisement/images/` + `${Date.now()}`);
 
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {

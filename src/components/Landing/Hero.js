@@ -13,7 +13,7 @@ function Hero() {
         <div className="grid grid-cols-10 ">
           <div className="row-span-full  col-span-6 col-end-11 self-center">
             <img
-              className=" rounded-lg"
+              className=" rounded-lg "
               src="https://images.unsplash.com/photo-1530099486328-e021101a494a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1547&q=80"
               alt=""
             />

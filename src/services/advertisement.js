@@ -1,4 +1,7 @@
 import { axiosInstance } from "../utils/axiosInstance";
+import getUser from "../utils/utils";
+
+const id = getUser()?.id;
 
 export const createAdvertisement = (advertisement) => {
   console.log(advertisement);
@@ -13,9 +16,9 @@ export const createAdvertisement = (advertisement) => {
     });
 };
 
-export const getUserAdvertisements = (user_id) => {
+export const getUserAdvertisements = () => {
   return axiosInstance
-    .get(`/auth/${user_id}/advertisements/`)
+    .get(`/auth/${id}/advertisements/`)
     .then((res) => {
       return res.data;
     })

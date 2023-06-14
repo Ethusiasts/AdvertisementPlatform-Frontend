@@ -1,10 +1,15 @@
 import React from "react";
 import BillboardCard from "./billboardCard";
+import CardWithModal from "./cardWithModal";
+import AdPopup from "../advertisement/advertisementDetail";
 export default function BillboardProposalPopup({
+  id,
   name,
   description,
   total_price,
   approved,
+  advertisement,
+  billboard,
 }) {
   console.log(name, description, total_price, approved);
   return (
@@ -14,10 +19,19 @@ export default function BillboardProposalPopup({
         <h2 class="text-2xl font-bold mb-4">Proposal Details</h2>
         <div class="flex justify-center items-center gap-4">
           <div class="w-1/2">
-            <BillboardCard />
+            <CardWithModal
+              advertisement={advertisement}
+              modalContent={
+                <AdPopup
+                  name={advertisement.advertisement_name}
+                  type={advertisement.advertisement_type}
+                  mediaUrl={advertisement.advertisement_file}
+                />
+              }
+            />
           </div>
           <div class="w-1/2">
-            <BillboardCard />
+            <BillboardCard billboard={billboard} />
           </div>
         </div>
         <div class="flex justify-center items-center">
@@ -57,7 +71,7 @@ export default function BillboardProposalPopup({
           </div>
         </div>
         <div class="flex justify-end">
-          <a href="/CreateContract">
+          <a href={`/Proposal/${id}/CreateContract`}>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
               Sign Contract
             </button>

@@ -6,7 +6,7 @@ import { PropagateLoaderSpinner } from "../spinners";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { signInwithGoogle } from "../../services/auth/signin_google";
-import { setCookie } from "../../utils";
+import { getCookie, setCookie } from "../../utils";
 import { toast } from "react-hot-toast";
 import { getUserStepper } from "../../services/user_stepper_api";
 
@@ -18,27 +18,24 @@ export default function SignInForm() {
   const { mutate, isLoading } = useMutation(signIn, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        console.log(data);
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
         setCookie("user", data.token, cred.exp);
-
-        console.log(data.firstTimeLogin);
         data.firstTimeLogin
           ? setTimeout(() => {
               if (cred.role === "customer") {
                 navigate("/userstepper");
               } else if (cred.role === "landowner") {
-                navigate("/mediaagencystepper");
+                navigate("/mediaAgencyStepper");
               }
             }, 3000)
           : setTimeout(() => {
-              getUserStepper(cred.user_id);
+              getUserStepper(cred.id);
               if (cred.role === "customer") {
                 navigate("/search");
               } else if (cred.role === "landowner") {
-                navigate("/billboarddashboard");
+                navigate("/BillboardDashboard");
               }
             }, 3000);
       } else {

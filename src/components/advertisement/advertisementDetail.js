@@ -3,7 +3,7 @@ export default function AdPopup({ name, type, mediaUrl }) {
   console.log(name, type, mediaUrl);
   return (
     <div>
-      <div className="mb-6" style={{ width: "50rem" }}>
+      <div className="mb-6" style={{ height: "30rem" }}>
         {type == "magazine" && (
           <embed
             src={mediaUrl}
@@ -15,7 +15,7 @@ export default function AdPopup({ name, type, mediaUrl }) {
         {type == "tv" && <video src={mediaUrl} width="100%" controls />}
         {type == "radio" && <audio src={mediaUrl} controls />}
         {type == "billboard" && (
-          <img src={mediaUrl} alt={name} className="w-full h-auto" />
+          <img src={mediaUrl} alt={name} className="w-auto h-full" />
         )}
       </div>
       <div className="flex justify-between items-center mb-4">
