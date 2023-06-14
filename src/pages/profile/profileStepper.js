@@ -36,7 +36,7 @@ export const PlaceOrder = () => {
   const { mutate, isLoading: isLoadingUser } = useMutation(userStepper, {
     onSuccess: async (data) => {
       console.log(data);
-      if (data.status === 201) {
+      if (data.status === 200) {
         console.log(data.data);
         toast.success(data.message);
 
@@ -63,7 +63,7 @@ export const PlaceOrder = () => {
     {
       onSuccess: async (data) => {
         console.log(data);
-        if (data.status === 201) {
+        if (data.status === 200) {
         } else {
           var errors = "";
           Object.keys(data.response.data.message).forEach((key) => {
@@ -391,7 +391,7 @@ export const PlaceOrder = () => {
                       </div>
                     </div>
 
-                    <div className="mb-5">
+                    {/* <div className="mb-5">
                       <label
                         className="mb-3 block text-sm font-medium text-black "
                         htmlFor="emailAddress"
@@ -432,7 +432,7 @@ export const PlaceOrder = () => {
                           defaultValue="Addis Ababa, Ethiopia"
                         />
                       </div>
-                    </div>
+                    </div> */}
                   </form>
                 </div>
               </div>
@@ -449,10 +449,11 @@ export const PlaceOrder = () => {
       )}
       {goSteps === 2 && (
         <>
-          <div className="grid  w-full">
-            <ProfilePictureForm />
+          <div className="grid w-full">
+            <div className="">
+              <ProfilePictureForm />
+            </div>
           </div>
-
           <button
             className="mt-5 text-white bg-blue-700 hover:bg-blue-800  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 "
             onClick={handleSubmit}
