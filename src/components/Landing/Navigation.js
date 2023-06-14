@@ -44,11 +44,11 @@ function Navigation() {
         </div>
         {location.pathname === "/" ? (
           <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
-            {navMenus.map((nav) => {
+            {navMenus.map((nav, index) => {
               return (
                 <>
                   {" "}
-                  <li>
+                  <li key={index}>
                     <a
                       className="text-sm text-black hover:text-gray-500"
                       href={`#${nav[1]}`}
@@ -137,9 +137,9 @@ function Navigation() {
           {location.pathname === "/" ? (
             <div>
               <ul>
-                {navMenus.map((nav) => {
+                {navMenus.map((nav, index) => {
                   return (
-                    <li className="mb-1">
+                    <li className="mb-1" key={index}>
                       <a
                         className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href={`#${nav[1]}`}

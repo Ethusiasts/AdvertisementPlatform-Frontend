@@ -11,3 +11,19 @@ export const mediaAgencyStepper = (agency) => {
       return error;
     });
 };
+
+export const editMediaAgencyStepper = (agency) => {
+  console.log(agency);
+
+  return axiosInstance
+    .put(`/media_agencies/${agency.user}`, agency)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log(error);
+
+      return error;
+    });
+};
