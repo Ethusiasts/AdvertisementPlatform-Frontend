@@ -21,10 +21,12 @@ export default function SignInForm() {
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
+        console.log(cred);
+
         setCookie("user", data.token, cred.exp);
         data.firstTimeLogin
           ? setTimeout(() => {
-              if (cred.role === "customer") {
+              if (cred.role === "Customer") {
                 navigate("/userstepper");
               } else if (cred.role === "landowner") {
                 navigate("/mediaAgencyStepper");
@@ -32,7 +34,7 @@ export default function SignInForm() {
             }, 3000)
           : setTimeout(() => {
               getUserStepper(cred.id);
-              if (cred.role === "customer") {
+              if (cred.role === "Customer") {
                 navigate("/search");
               } else if (cred.role === "landowner") {
                 navigate("/BillboardDashboard");
@@ -85,8 +87,6 @@ export default function SignInForm() {
       email: email,
     };
     mutateGoogle(user);
-
-    localStorage.setItem("user", JSON.stringify(user));
   };
 
   return (

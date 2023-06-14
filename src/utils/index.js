@@ -8,7 +8,7 @@ export const navMenus = [
 ];
 
 export const selectOptionsSignUp = [
-  { value: "customer", label: "Customer" },
+  { value: "Customer", label: "Customer" },
   { value: "landowner", label: " Landowner" },
 ];
 export const heroSectionTitle = "Advertising your brands";
