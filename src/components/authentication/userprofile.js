@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const UserProfileDropDown = ({ style }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userName, setUsername] = useState("");
+  const [profilePic, setProfilePic] = useState(null);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -13,9 +14,11 @@ const UserProfileDropDown = ({ style }) => {
   };
 
   const handleSetProfile = () => {
-    console.log(JSON.parse(getCookie("user_profile")).username);
-    setUsername(JSON.parse(getCookie("user_profile")).username ?? "");
+    const user_profile = JSON.parse(getCookie("user_profile"));
+    setUsername(user_profile.username ?? "");
+    setProfilePic(user_profile.profile_picture ?? "");
   };
+
   const handleLogout = () => {
     // Remove the token from the cookie
     removeCookie("user");
@@ -29,15 +32,23 @@ const UserProfileDropDown = ({ style }) => {
   }, []);
 
   return (
-    <div className={`relative ${style ?? ""} hidden lg:block  `}>
-      <div className="flex flex-row gap-4">
-        {" "}
-        <div className="">{userName}</div>
-        <FaUserCircle
-          onClick={toggleMenu}
-          size={30}
-          className="cursor-pointer"
-        />
+    <div className={`relative ${style ?? ""} hidden lg:block`}>
+      <div className="flex flex-row gap-4 items-center">
+        <div>{userName}</div>
+
+        {profilePic ? (
+          <img
+            src={profilePic}
+            alt="Profile Pic"
+            className="w-6 h-6 rounded-full"
+          />
+        ) : (
+          <FaUserCircle
+            onClick={toggleMenu}
+            size={30}
+            className="cursor-pointer"
+          />
+        )}
       </div>
       {/* Menu options */}
       {isMenuOpen && (
