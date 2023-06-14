@@ -1,12 +1,12 @@
-import { getBillboardReviews } from "../../services/billboard_api";
+import { getReviews } from "../../services/billboard_api";
 import { useQuery } from "@tanstack/react-query";
 import Rating from "@material-ui/lab/Rating";
 
-export default function Messages({ billboardId }) {
-  const { data: billboardReviews, isLoading } = useQuery(
-    ["billboardReviews"],
+export default function Messages({ mediaId, type }) {
+  const { data: reviews, isLoading } = useQuery(
+    ["reviews"],
     () => {
-      return getBillboardReviews({ billboardId })
+      return getReviews({ mediaId, type })
         .then((res) => {
           return res.data;
         })
@@ -14,14 +14,13 @@ export default function Messages({ billboardId }) {
           return error;
         });
     },
-    { billboardId }
+    { mediaId }
   );
-  console.log(billboardReviews);
 
   return (
-    <div class="flex mx-16">
+    <div class="flex mx-16 mb-10">
       <div class="max-w-xl">
-        {billboardReviews?.results?.map((review) => (
+        {reviews?.results?.map((review) => (
           <div class="">
             <Rating
               name="read-only"

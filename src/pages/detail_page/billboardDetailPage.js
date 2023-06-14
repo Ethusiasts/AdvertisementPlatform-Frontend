@@ -91,11 +91,11 @@ export default function BillboardDetail() {
         longitude={billboardDetail.longitude}
       />
       {/* Reviews */}
-      <Ratings billboard={billboardDetail} />
+      <Ratings media={billboardDetail} type="billboards" />
       {/* Comments */}
-      <Comments billboardId={billboardDetail.id} />
+      <Comments billboardId={billboardDetail.id} type="Billboard" />
       {/* Message */}
-      <Messages billboardId={billboardDetail.id} />
+      <Messages mediaId={billboardDetail.id} type="billboards" />
       {/* Nearby Places */}
       <Nearby
         latitude={billboardDetail.latitude}

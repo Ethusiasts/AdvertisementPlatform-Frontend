@@ -5,7 +5,7 @@ import CreateMediaProposal from "./createMediaProposal";
 export default function MediaImageCard({ image, media }) {
   return (
     <div class="relative">
-      <img src={image} alt="billboard" class="w-full h-96 object-cover" />
+      <img src={image} alt="media" class="w-full h-96 object-cover" />
       {/* <div class="absolute inset-x-0 bottom-0 h-9 bg-gradient-to-t from-transparent to-white"></div> */}
       {/* <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-transparent to-black"></div> */}
 
