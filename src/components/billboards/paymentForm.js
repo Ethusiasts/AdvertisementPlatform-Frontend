@@ -17,7 +17,7 @@ export default function PaymentForm({ billboard }) {
   });
 
   const user = getUser();
-  const userProfile = JSON.parse(getCookie("userProfile"));
+  const userProfile = JSON.parse(getCookie("user_profile"));
 
   const [firstName, setFirstName] = useState(userProfile?.first_name);
   const [lastName, setLastName] = useState(userProfile?.last_name);

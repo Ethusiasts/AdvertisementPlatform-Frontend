@@ -4,7 +4,7 @@ import getUser from "../../utils/utils";
 
 export default function UserProfileCard() {
   const user = getUser();
-  const userProfile = JSON.parse(getCookie("userProfile"));
+  const userProfile = JSON.parse(getCookie("user_profile"));
   return (
     <div class="w-full overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div class="relative z-20 h-35 md:h-48">

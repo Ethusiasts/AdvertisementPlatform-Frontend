@@ -170,12 +170,14 @@ export default function ApproveContractForm({ photo, title, description }) {
               <p className="font-semibold">Owner:</p>
 
               {contract?.agency_signature ? (
-                <img
-                  class="w-auto h-16"
-                  src={contract?.agency_signature}
-                  alt=""
-                  loading="lazy"
-                />
+                -(
+                  <img
+                    class="w-auto h-16"
+                    src={contract?.agency_signature}
+                    alt=""
+                    loading="lazy"
+                  />
+                )
               ) : (
                 <p>______________________________</p>
               )}

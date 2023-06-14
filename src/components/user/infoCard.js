@@ -4,7 +4,7 @@ import { getCookie } from "../../utils";
 
 export default function InfoCard() {
   const user = getUser();
-  const userProfile = JSON.parse(getCookie("userProfile"));
+  const userProfile = JSON.parse(getCookie("user_profile"));
   return (
     <div className="w-96 bg-gray-100 rounded-lg overflow-hidden shadow-md mb-8">
       <div class="ml-2 mt-5 mb-5 grid grid-cols-5">

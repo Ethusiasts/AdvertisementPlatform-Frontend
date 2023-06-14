@@ -1,6 +1,6 @@
 import { getCookie } from "../../utils";
 export default function Table() {
-  const userProfile = JSON.parse(getCookie("userProfile"));
+  const userProfile = JSON.parse(getCookie("user_profile"));
   return (
     <div class="mt-4 mx-4">
       <div class="w-full overflow-hidden rounded-lg shadow-xs">

@@ -1,6 +1,6 @@
 import { getCookie } from "../../utils";
 export default function Header({ title }) {
-  const userProfile = JSON.parse(getCookie("userProfile"));
+  const userProfile = JSON.parse(getCookie("user_profile"));
   return (
     <div className="flex justify-between items-center p-4">
       <h1 className="text-3xl font-bold">{title}</h1>

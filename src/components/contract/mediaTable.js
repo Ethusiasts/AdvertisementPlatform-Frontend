@@ -1,7 +1,7 @@
 import { getCookie } from "../../utils";
 
 export default function MediaTable() {
-  const userProfile = JSON.parse(getCookie("userProfile"));
+  const userProfile = JSON.parse(getCookie("user_profile"));
 
   return (
     <div class="mt-4 mx-4">
