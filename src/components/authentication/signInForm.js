@@ -26,7 +26,7 @@ export default function SignInForm() {
           ? setTimeout(() => {
               if (cred.role === "customer") {
                 navigate("/userstepper");
-              } else if (cred.role === "landowner") {
+              } else {
                 navigate("/mediaAgencyStepper");
               }
             }, 3000)
@@ -36,6 +36,8 @@ export default function SignInForm() {
                 navigate("/search");
               } else if (cred.role === "landowner") {
                 navigate("/BillboardDashboard");
+              } else {
+                navigate("/MediaDashboard");
               }
             }, 3000);
       } else {

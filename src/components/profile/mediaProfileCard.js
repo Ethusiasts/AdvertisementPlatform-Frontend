@@ -1,36 +1,42 @@
-import userSix from "../../images/user-06.png";
+import { Link } from "react-router-dom";
+import { getCookie } from "../../utils";
+import getUser from "../../utils/utils";
 
 export default function MediaProfileCard() {
+  const user = getUser();
+  const userProfile = JSON.parse(getCookie("user_profile"));
   return (
-    <div class="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div class="w-full overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div class="relative z-20 h-35 md:h-48">
         <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400"></div>
         <div class="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
-          <a href="/EditProfile">
+          <Link to="/UserEditProfile">
             <label
               for="cover"
               class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-1 px-2 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
             >
               <span class="mx-5">Edit Profile</span>
             </label>
-          </a>
+          </Link>
         </div>
       </div>
       <div class="px-4 pb-6 text-center lg:pb-8 xl:pb-11">
         <div className="relative z-30 mx-auto -mt-20 h-30 w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:w-44 sm:p-2">
           <div className="relative drop-shadow-2">
             <img
-              src={userSix}
+              src={userProfile.profile_picture}
               alt="profile"
-              class="h-28 w-28 sm:h-40 sm:w-40"
+              class="h-28 w-28 sm:h-40 sm:w-40 rounded-full"
             />
           </div>
         </div>
         <div class="mt-4">
           <h3 class="mb-1 text-2xl font-medium text-gray-900 ">
-            Danish Heilium
+            {userProfile.first_name} {userProfile.last_name}
           </h3>
-          <p class="font-medium text-gray-400">Ui/Ux Designer</p>
+          <p class="text-gray-400">{userProfile.username}</p>
+          <h3 class="mb-1 text-xl font-medium text-gray-800 ">{user.email}</h3>
+          <p class="font-medium text-gray-400">{user.role}</p>
           <div class="text-gray-400 mx-auto mt-4 mb-5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2 shadow-5">
             <div class="flex items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
               <span class="font-semibold text-gray-900 ">259</span>
@@ -44,17 +50,6 @@ export default function MediaProfileCard() {
               <span class="font-semibold text-gray-900 ">2K</span>
               <span class="text-sm">Following</span>
             </div>
-          </div>
-
-          <div class="mx-auto max-w-180">
-            <h4 class="font-medium text-gray-900 ">About Me</h4>
-            <p class="mt-4 font-medium text-sm text-gray-400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Pellentesque posuere fermentum urna, eu condimentum mauris tempus
-              ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
-              ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
-              pharetra ligula sed, aliquam lacus.
-            </p>
           </div>
 
           <div class="mt-6">

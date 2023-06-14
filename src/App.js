@@ -60,6 +60,7 @@ import { getCookie } from "./utils";
 import jwtDecode from "jwt-decode";
 import ErrorPage from "./components/error";
 import React, { useState } from "react";
+import CreateMedia from "./pages/medias/createMedia";
 // HOC for checking authentication and authorization
 export const ImgContext = React.createContext();
 
@@ -69,7 +70,8 @@ const ProtectedRoute = ({ Component, roles, ...rest }) => {
     // Redirect to the login page if not authenticated
     return <Navigate to="/SignIn" replace={true} />;
   }
-  const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
+  const { role } = jwtDecode(token);
+  // Replace with your authentication library and access the user's authentication status and role
   if (roles && !roles.includes(role)) {
     // Redirect to a forbidden page if the user's role is not allowed
 
@@ -130,7 +132,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaAgencyStepper}
-        roles={["tv", "radio", "landowner", "customer"]}
+        roles={["TV", "RADIO", "landowner"]}
       />
     ),
   },
@@ -167,7 +169,7 @@ const router = createBrowserRouter([
   {
     path: "CreateTvAd",
     element: (
-      <ProtectedRoute Component={CreateTvAd} roles={["customer", "tv"]} />
+      <ProtectedRoute Component={CreateTvAd} roles={["customer", "TV"]} />
     ),
   },
   {
@@ -182,7 +184,7 @@ const router = createBrowserRouter([
   {
     path: "CreateRadioAd",
     element: (
-      <ProtectedRoute Component={CreateRadioAd} roles={["customer", "radio"]} />
+      <ProtectedRoute Component={CreateRadioAd} roles={["customer", "RADIO"]} />
     ),
   },
   {
@@ -261,29 +263,33 @@ const router = createBrowserRouter([
   {
     path: "/MediaDashboard",
     element: (
-      <ProtectedRoute Component={MediaDashboard} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaDashboard} roles={["TV", "RADIO"]} />
     ),
   },
   {
     path: "/MediaProposal",
     element: (
-      <ProtectedRoute Component={MediaProposal} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaProposal} roles={["TV", "RADIO"]} />
     ),
   },
   {
     path: "/MediaContract",
     element: (
-      <ProtectedRoute Component={MediaContract} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaContract} roles={["TV", "RADIO"]} />
     ),
   },
   {
     path: "/Media",
-    element: <ProtectedRoute Component={Media} roles={["tv", "radio"]} />,
+    element: <ProtectedRoute Component={Media} roles={["TV", "RADIO"]} />,
   },
   {
-    path: "/user/:userId/medias/:mediaId",
+    path: "/CreateMedia",
+    element: <ProtectedRoute Component={CreateMedia} roles={["TV", "RADIO"]} />,
+  },
+  {
+    path: "/user/:userId/agencies/:mediaId",
     element: (
-      <ProtectedRoute Component={AgenciesMediaDetail} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={AgenciesMediaDetail} roles={["TV", "RADIO"]} />
     ),
   },
 
@@ -314,7 +320,7 @@ const router = createBrowserRouter([
   {
     path: "/MediaProfile",
     element: (
-      <ProtectedRoute Component={MediaProfilePage} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaProfilePage} roles={["TV", "RADIO"]} />
     ),
   },
   {
@@ -334,7 +340,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaEditProfilePage}
-        roles={["tv", "radio", "gazeta", "landowner"]}
+        roles={["TV", "RADIO", "gazeta", "landowner"]}
       />
     ),
   },

@@ -11,7 +11,7 @@ import { ImgContext } from "../../App";
 
 export default function ProfileForm() {
   const [userName, setUserName] = useState("Devid27");
-  const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
+  const [phoneNumber, setPhoneNumber] = useState("+251935647789");
   const [firstName, setFirstName] = useState("Devid");
   const [lastName, setLastName] = useState("Jhon");
   const [notification, setNotification] = useState();
@@ -143,7 +143,7 @@ export default function ProfileForm() {
                   type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
-                  placeholder="+990 3343 7865"
+                  placeholder="+251936489047"
                   value={phoneNumber}
                   required
                   onChange={handlePhoneNumberChange}

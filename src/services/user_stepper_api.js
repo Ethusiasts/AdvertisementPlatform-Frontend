@@ -29,6 +29,7 @@ export const getUserStepper = (userId) => {
   return axiosInstance
     .get(`/auth/profiles/${userId}`)
     .then((res) => {
+      console.log(res.data);
       setCookie("user_profile", JSON.stringify(res.data.data));
       return res.data;
     })

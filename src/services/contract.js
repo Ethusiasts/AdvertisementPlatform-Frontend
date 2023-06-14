@@ -50,6 +50,17 @@ export const getBillboardContracts = () => {
       return error;
     });
 };
+export const getAgencyContracts = () => {
+  return axiosInstance
+    .get(`/media_agencies/${id}/contracts/`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
 
 export const getContract = (contractId) => {
   return axiosInstance

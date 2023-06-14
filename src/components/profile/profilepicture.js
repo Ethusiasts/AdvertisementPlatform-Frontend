@@ -1,26 +1,12 @@
 import React, { useContext, useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useMutation } from "@tanstack/react-query";
-import { createBillboard } from "../../services/billboard_api";
 import { toast } from "react-hot-toast";
 import { ImgContext } from "../../App";
 
 export default function ProfilePictureForm() {
   const [image, setImage] = useState(null);
   const profileImg = useContext(ImgContext);
-  const mutation = useMutation({
-    mutationFn: (billboard) => {
-      return createBillboard(billboard);
-    },
-    onSuccess: () => {},
-  });
-
-  if (mutation.isLoading) {
-  }
-
-  if (mutation.isSuccess) {
-  }
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -32,29 +18,16 @@ export default function ProfilePictureForm() {
   };
 
   const uploadImage = () => {
-    toast.success("Uploading ..");
-
-    // event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (image == null) return;
     const imageRef = ref(
       storage,
-      `profile/images/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${image.name}`
+      `images/` + `${Date.now()}` + `${image.name}`
     );
 
+    console.log("dfasd");
+    console.log(image);
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        console.log(url);
-        toast.success("Uploaded Successfully!");
-
         profileImg.setImgUrl(url);
         handleSubmit(url);
       });

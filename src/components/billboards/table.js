@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import ButtonWithModal from "./buttonWithModal";
 import PaymentForm from "./paymentForm";
 import { deleteBillboard } from "../../services/billboard_api";
+import getUser from "../../utils/utils";
 
 export default function Table() {
+  const user = getUser();
   const {
     data: billboards,
     isLoading,
@@ -168,7 +170,7 @@ export default function Table() {
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       <Link
-                        to={`/user/1/billboards/${billboard.id}`}
+                        to={`/user/${user.id}/billboards/${billboard.id}`}
                         className="text-blue"
                       >
                         <button className="text-blue-500">
