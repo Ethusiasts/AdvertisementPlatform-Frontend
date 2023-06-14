@@ -25,7 +25,7 @@ export default function MediaInfo({
           </div>
           <div class="flex justify-between border-b">
             <h1 class="font-bold">Price:</h1>
-            <p class="sm:tracking-tight ">{price} Birr Per Month</p>
+            <p class="sm:tracking-tight ">{price} Birr Per Daily</p>
           </div>
           <div class="flex justify-between border-b">
             <h1 class="font-bold">Width:</h1>
