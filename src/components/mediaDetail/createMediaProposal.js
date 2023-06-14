@@ -6,7 +6,7 @@ import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import getUser from "../../utils/utils";
 
-export default function CreateProposalForm({ billboard }) {
+export default function CreateMediaProposal({ media }) {
   const user = getUser();
   const mutation = useMutation({
     mutationFn: (proposal) => {
@@ -45,8 +45,8 @@ export default function CreateProposalForm({ billboard }) {
       description: proposalDescription,
       total_price: totalPrice,
       user_id: user?.id,
-      billboard_id: billboard?.id,
-      media_agency_id: billboard?.media_agency_id,
+      agency_id: media?.id,
+      media_agency_id: media?.media_agency_id,
       advertisement_id: advertisement?.id,
     });
   };

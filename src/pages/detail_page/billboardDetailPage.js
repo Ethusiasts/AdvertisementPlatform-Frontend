@@ -97,7 +97,10 @@ export default function BillboardDetail() {
       {/* Message */}
       <Messages billboardId={billboardDetail.id} />
       {/* Nearby Places */}
-      <Nearby />
+      <Nearby
+        latitude={billboardDetail.latitude}
+        longitude={billboardDetail.longitude}
+      />
       {/* Footer */}
       <Footer />
     </>
