@@ -36,8 +36,7 @@ export const PlaceOrder = () => {
   const { mutate, isLoading: isLoadingUser } = useMutation(userStepper, {
     onSuccess: async (data) => {
       console.log(data);
-      if (data.status === 200) {
-        console.log(data.data);
+      if (data.status === 201 || 200) {
         toast.success(data.message);
 
         setCookie("user_profile", JSON.stringify(data.data));
