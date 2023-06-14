@@ -2,11 +2,11 @@ import axios from "axios";
 import Rating from "@material-ui/lab/Rating";
 import { useQuery } from "@tanstack/react-query";
 
-export default function Ratings({ billboard }) {
+export default function Ratings({ media, type }) {
   const { data: totalUserCount } = useQuery(["totalUserCount"], () => {
     return axios
       .get(
-        `https://advertisementplatform-0xpy.onrender.com/api/v1/billboards/${billboard.id}/ratings/`
+        `https://advertisementplatform-0xpy.onrender.com/api/v1/${type}/${media.id}/ratings/`
       )
       .then((res) => {
         return res.data;
@@ -27,13 +27,13 @@ export default function Ratings({ billboard }) {
             <div class="mb-1 tracking-wide px-4">
               <div class="grid grid-cols-4 -mx-8 pb-3">
                 <div class="cols-span-1 mt-1 justify-center">
-                  <h1 class="text-3xl font-bold">{billboard.average_rating}</h1>
+                  <h1 class="text-3xl font-bold">{media.average_rating}</h1>
                   <div class="flex my-2">
                     <Rating
                       name="half-rating"
                       defaultValue={2.5}
                       precision={0.5}
-                      value={billboard.average_rating}
+                      value={media.average_rating}
                       readOnly
                     />
                   </div>

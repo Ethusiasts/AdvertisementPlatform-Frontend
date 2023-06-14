@@ -125,9 +125,9 @@ export const addReview = (reviewData) => {
     });
 };
 
-export const getBillboardReviews = ({ billboardId }) => {
+export const getReviews = ({ mediaId, type }) => {
   return axiosInstance
-    .get(`/billboards/${billboardId}/ratings/`)
+    .get(`/${type}/${mediaId}/ratings/`)
     .then((res) => {
       return { success: true, data: res.data };
     })

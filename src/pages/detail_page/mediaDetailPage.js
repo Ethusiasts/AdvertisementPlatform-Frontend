@@ -7,15 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
 import Description from "../../components/billboardDetails/description";
-// import MediaInfo from "../../components/billboardDetails/mediaInfo";
 import Rating from "../../components/billboardDetails/rating";
 import Comments from "../../components/billboardDetails/comments";
 import Messages from "../../components/billboardDetails/messages";
-import Nearby from "../../components/billboardDetails/nearby";
-import Footer from "../../components/Landing/Footer";
 import { Navigate } from "react-router-dom";
 import MediaImageCard from "../../components/mediaDetail/mediaImageCard";
 import Info from "../../components/mediaDetail/info";
+import Footer from "../../components/Landing/Footer";
+import MediaRelated from "../../components/mediaDetail/related";
 
 export default function MediaDetail() {
   let props = useParams();
@@ -85,13 +84,13 @@ export default function MediaDetail() {
         {/* Media Info */}
         <Info media={mediaDetail} />
         {/* Reviews */}
-        <Rating billboard={mediaDetail} />
+        <Rating billboard={mediaDetail} type="agencies" />
         {/* Comments */}
-        {/* <Comments /> */}
+        <Comments type="Agency" />
         {/* Message */}
-        {/* <Messages /> */}
-        {/* Nearby Places */}
-        {/* <Nearby /> */}
+        <Messages mediaId={mediaDetail.id} type="agencies" />
+        {/* Related Media */}
+        <MediaRelated name={mediaDetail.channel_name} />
         {/* Footer */}
         <Footer />
       </>

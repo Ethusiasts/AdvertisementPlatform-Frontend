@@ -9,7 +9,7 @@ export default function ButtonWithModal({ modalContent }) {
 
   const handleOpenModal = () => {
     if (!user) {
-      toast.error("Please Login to Book this Billboard", { autoClose: 5000 });
+      toast.error("Please Login to Create Proposal", { autoClose: 5000 });
       return;
     }
 
