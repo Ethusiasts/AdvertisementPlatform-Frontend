@@ -4,12 +4,9 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import userSix from "../../images/user-06.png";
 import { ImgContext } from "../../App";
 import { toast } from "react-hot-toast";
-import { getCookie } from "../../utils";
 
 export default function ProfilePicEdit({}) {
-  const userProfile = JSON.parse(getCookie("user_profile"));
   const profileImg = useContext(ImgContext);
-
   const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -40,7 +37,7 @@ export default function ProfilePicEdit({}) {
       <div className="relative z-30 mx-auto  h-48 w-48 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:w-44 sm:p-2">
         <div className="relative drop-shadow-2">
           <img
-            src={userProfile.profile_picture}
+            src={profileImg.ImgUrl ?? userSix}
             alt="profile"
             class="h-28 w-28 sm:h-40 sm:w-40 rounded-full"
           />

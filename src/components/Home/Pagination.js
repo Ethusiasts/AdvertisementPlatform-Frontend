@@ -190,7 +190,7 @@ const Pagination = forwardRef(
                   height={card.height}
                   location={card.location}
                   imageSrc={card.image}
-                  alt="Card Image"
+                  alt="Billboard Image"
                   onAddClick={handleOnAddClick}
                 />
               ))}
@@ -201,10 +201,14 @@ const Pagination = forwardRef(
             <>
               {cardData.map((card) => (
                 <AgencyCard
+                  id={card.id}
+                  rate={card.average_rating}
+                  image={card.image}
                   channel_name={card.channel_name}
                   peak_hour={card.peak_hour}
                   production={card.production}
                   normal_hour={card.normal}
+                  alt="Agency Image"
                 />
               ))}
             </>

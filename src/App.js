@@ -123,7 +123,7 @@ const router = createBrowserRouter([
     element: <ForgotPassword />,
   },
   {
-    path: "/ResetPassword",
+    path: "/ResetPassword/:token",
     element: <ResetPassword />,
   },
 
@@ -364,7 +364,9 @@ const router = createBrowserRouter([
 
 export default function App() {
   const client = new QueryClient();
-  const [ImgUrl, setImgUrl] = useState();
+  const [ImgUrl, setImgUrl] = useState(
+    JSON.parse(getCookie("user_profile")).profile_picture ?? ""
+  );
 
   return (
     <ImgContext.Provider value={{ ImgUrl, setImgUrl }}>
