@@ -9,12 +9,12 @@ import Navigation from "../../components/Landing/Navigation";
 import ImageCard from "../../components/billboardDetails/imageCard";
 import Description from "../../components/billboardDetails/description";
 import MediaInfo from "../../components/billboardDetails/mediaInfo";
-import Rating from "../../components/billboardDetails/rating";
+import Ratings from "../../components/billboardDetails/rating";
 import Comments from "../../components/billboardDetails/comments";
 import Messages from "../../components/billboardDetails/messages";
 import Nearby from "../../components/billboardDetails/nearby";
 import Footer from "../../components/Landing/Footer";
-import ErrorPage from "../../components/error";
+import { Navigate } from "react-router-dom";
 
 export default function BillboardDetail() {
   let props = useParams();
@@ -38,7 +38,6 @@ export default function BillboardDetail() {
   );
 
   console.log(billboardDetail);
-
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
@@ -59,13 +58,17 @@ export default function BillboardDetail() {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
         </div>
       </div>
     );
   }
   if (error) {
-    return <ErrorPage />;
+    const err = {
+      status: "404",
+      message: "Page Not Found",
+      header: "Oops!",
+    };
+    return <Navigate to="/error" state={err} replace={true} />;
   }
   return (
     <>
@@ -73,11 +76,7 @@ export default function BillboardDetail() {
 
       <Navigation />
       {/* Images */}
-      <ImageCard
-        image={billboardDetail?.image}
-        status={billboardDetail.status}
-        billboard={billboardDetail}
-      />
+      <ImageCard image={billboardDetail?.image} billboard={billboardDetail} />
       {/* Description */}
       <Description description={billboardDetail.description} />
       {/* Media Info */}
@@ -92,13 +91,16 @@ export default function BillboardDetail() {
         longitude={billboardDetail.longitude}
       />
       {/* Reviews */}
-      <Rating />
+      <Ratings billboard={billboardDetail} />
       {/* Comments */}
       <Comments billboardId={billboardDetail.id} />
       {/* Message */}
       <Messages billboardId={billboardDetail.id} />
       {/* Nearby Places */}
-      <Nearby />
+      <Nearby
+        latitude={billboardDetail.latitude}
+        longitude={billboardDetail.longitude}
+      />
       {/* Footer */}
       <Footer />
     </>

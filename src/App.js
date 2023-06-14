@@ -11,9 +11,7 @@ import AgenciesMediaDetail from "./pages/agencies_detail_page/agenciesMediaDetai
 import {
   createBrowserRouter,
   Navigate,
-  Route,
   RouterProvider,
-  useNavigate,
 } from "react-router-dom";
 import MyAccount from "./pages/myAccount";
 import Advertisement from "./pages/advertisement/advertisement";

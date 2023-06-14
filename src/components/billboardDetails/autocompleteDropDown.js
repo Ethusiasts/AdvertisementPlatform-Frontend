@@ -4,32 +4,32 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import { getUserAdvertisements } from "../../services/advertisement";
+import getUser from "../../utils/utils";
 
 export default function AdvertisementSelect({ onData }) {
   const handleAutocompleteChange = (event, value) => {
     onData(value);
   };
 
-  const user_id = 1;
-  const { data: advertisements, isLoading } = useQuery(
+  const user = getUser();
+  const { data: advertisements } = useQuery(
     ["advertisements"],
     () => {
-      return getUserAdvertisements(user_id)
+      return getUserAdvertisements(user?.id)
         .then((res) => {
-          console.log(res.results);
           return res.results;
         })
         .catch((error) => {
           return error;
         });
     },
-    { user_id }
+    { enabled: !!user?.id }
   );
 
   return (
     <Autocomplete
       id="country-select-demo"
-      options={advertisements}
+      options={advertisements ?? []}
       autoHighlight
       getOptionLabel={(option) => option.advertisement_name}
       onChange={handleAutocompleteChange}

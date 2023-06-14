@@ -8,7 +8,7 @@ export default function ErrorPage() {
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
         <div className="max-w-md text-center">
           <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
-            <span className="sr-only">{header}</span>
+            <span className="sr-only text-black">{header}</span>
             {status}
           </h2>
           <p className="text-2xl font-semibold md:text-3xl">{message} </p>
