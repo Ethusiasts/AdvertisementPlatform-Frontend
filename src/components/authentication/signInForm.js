@@ -25,16 +25,16 @@ export default function SignInForm() {
 
         data.firstTimeLogin
           ? setTimeout(() => {
-              if (data.role === "customer") {
+              if (cred.role === "customer") {
                 navigate("/userstepper");
-              } else if (data.role === "landowner") {
+              } else if (cred.role === "landowner") {
                 navigate("/mediaagencystepper");
               }
             }, 3000)
           : setTimeout(() => {
-              if (data.role === "customer") {
+              if (cred.role === "customer") {
                 navigate("/search");
-              } else if (data.role === "landowner") {
+              } else if (cred.role === "landowner") {
                 navigate("/billboarddashboard");
               }
             }, 3000);
