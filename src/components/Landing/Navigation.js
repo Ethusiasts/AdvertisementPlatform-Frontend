@@ -6,7 +6,6 @@ function Navigation() {
   const [mobile, setMobile] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  // Check if the current route is localhost:3000
   const handleMobile = () => {
     setMobile(!mobile);
   };

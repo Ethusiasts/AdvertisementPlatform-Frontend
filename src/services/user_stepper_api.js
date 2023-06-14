@@ -3,7 +3,6 @@ import { getCookie, setCookie } from "../utils";
 import { axiosInstance } from "../utils/axiosInstance";
 
 export const userStepper = (user) => {
-  console.log(user);
   return axiosInstance
     .post("/auth/profiles", user)
     .then((res) => {
@@ -26,6 +25,7 @@ export const editUserStepper = (user) => {
 };
 
 export const getUserStepper = (userId) => {
+  console.log("USERID", userId);
   return axiosInstance
     .get(`/auth/profiles/${userId}`)
     .then((res) => {
