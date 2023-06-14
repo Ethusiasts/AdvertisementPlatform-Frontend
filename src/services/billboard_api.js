@@ -1,7 +1,21 @@
 import { axiosInstance } from "../utils/axiosInstance";
+
 export const getBillboardDetail = ({ billboardId }) => {
   return axiosInstance
     .get(`/billboards/${billboardId}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+
+export const deleteBillboard = ({ billboardId }) => {
+  console.log(billboardId);
+  return axiosInstance
+    .delete(`/billboards/${billboardId}`)
     .then((res) => {
       return res.data;
     })
@@ -24,15 +38,13 @@ export const getBillboards = ({ currentPage }) => {
 };
 
 export const createBillboard = (billboard) => {
-  console.log(billboard);
   return axiosInstance
     .post(`/billboards/`, billboard)
     .then((res) => {
-      return res.data;
+      return { success: true, data: res.data };
     })
     .catch((error) => {
-      console.error(error);
-      return error;
+      return { success: false, data: error };
     });
 };
 
@@ -52,18 +64,27 @@ export const searchBillboardsWithQueryOnly = ({ query, currentPage }) => {
 export const searchBillboards = ({
   currentPage,
   query,
-  location,
+  latitude,
+  longitude,
   type,
   size,
   min_price,
   max_price,
+  searchDistanceValue,
 }) => {
   let url = `/billboards/search`;
   if (query) {
     url += `?q=${query}`;
   }
-  if (location) {
-    url += `&location=${location}`;
+  if (searchDistanceValue) {
+    console.log(searchDistanceValue, "radius");
+    url += `&radius=${searchDistanceValue}`;
+  }
+  if (latitude) {
+    url += `&latitude=${latitude}`;
+  }
+  if (longitude) {
+    url += `&longitude=${longitude}`;
   }
   if (type) {
     if (type === "Production") {

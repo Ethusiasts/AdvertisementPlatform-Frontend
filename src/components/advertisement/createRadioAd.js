@@ -60,30 +60,15 @@ export default function CreateRadioAdForm({ photo, title, description }) {
       advertisement_type: "radio",
       duration_in_hour: durationInHour,
       advertisement_file: url,
-      width: null,
-      height: null,
-      approved: false,
       quantity: quantity,
-      user_id: 5,
+      user_id: 1,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (audio == null) return;
-    const audioRef = ref(
-      storage,
-      `Advertisement/audios/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${audio.name}`
-    );
+    const audioRef = ref(storage, `Advertisement/audios/` + `${Date.now()}`);
 
     uploadBytes(audioRef, audio).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
@@ -123,17 +108,6 @@ export default function CreateRadioAdForm({ photo, title, description }) {
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
             type="text"
-            name="height"
-            id="height"
-            placeholder="height"
-            value={height}
-            onChange={handleHeightChange}
-          />
-        </div>
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
             name="Duration in hour"
             id="Duration in hour"
             placeholder="Duration in hour"
@@ -141,21 +115,6 @@ export default function CreateRadioAdForm({ photo, title, description }) {
             onChange={handleDurationInHourChange}
           />
         </div>
-      </div>
-
-      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
-            name="width"
-            id="width"
-            placeholder="width"
-            value={width}
-            onChange={handleWidthChange}
-          />
-        </div>
-        {/* <CheckboxFour /> */}
         <div className="w-full sm:w-1/2">
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"

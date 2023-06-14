@@ -11,10 +11,12 @@ import AlertService from "../alertService";
 import { useNavigate } from "react-router-dom";
 
 export default function UserEditProfileCard() {
-  const [userName, setUserName] = useState("Devid27");
-  const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
-  const [firstName, setFirstName] = useState("Devid");
-  const [lastName, setLastName] = useState("Jhon");
+  const userProfile = JSON.parse(getCookie("user_profile"));
+
+  const [userName, setUserName] = useState(userProfile.username);
+  const [phoneNumber, setPhoneNumber] = useState(userProfile.phone_number);
+  const [firstName, setFirstName] = useState(userProfile.first_name);
+  const [lastName, setLastName] = useState(userProfile.last_name);
   const profileImg = useContext(ImgContext);
   const [notification, setNotification] = useState();
   const [type, setType] = useState();
@@ -79,8 +81,10 @@ export default function UserEditProfileCard() {
           <ProfilePicEdit />
           <div className="flex items-center">
             <div className="mr-4">
-              <h2 className="text-3xl font-semi-bold">Abenezer Fekadu</h2>
-              <p className="text-xl text-gray-600">@abeni27</p>
+              <h2 className="text-3xl font-semi-bold">
+                {userProfile.first_name} {userProfile.last_name}
+              </h2>
+              <p className="text-xl text-gray-600">{userProfile.username}</p>
             </div>
           </div>
         </div>

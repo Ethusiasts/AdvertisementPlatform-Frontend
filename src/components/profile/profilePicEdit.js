@@ -17,19 +17,10 @@ export default function ProfilePicEdit({}) {
 
   const uploadImage = () => {
     toast.success("uploading");
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
     if (image == null) return;
     const imageRef = ref(
       storage,
-      `profile/images/` +
-        `${year}-${month < 10 ? `0${month}` : month}-${
-          day < 10 ? `0${day}` : day
-        }` +
-        `${image.name}`
+      `profile/images/` + `${Date.now()}` + `${image.name}`
     );
 
     uploadBytes(imageRef, image).then((snapshot) => {
