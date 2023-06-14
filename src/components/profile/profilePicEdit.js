@@ -1,42 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useMutation } from "@tanstack/react-query";
-import { createBillboard } from "../../services/billboard_api";
 import userSix from "../../images/user-06.png";
+import { ImgContext } from "../../App";
+import { toast } from "react-hot-toast";
 
 export default function ProfilePicEdit({}) {
-  const mutation = useMutation({
-    mutationFn: (billboard) => {
-      return createBillboard(billboard);
-    },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
-  });
-
-  if (mutation.isLoading) {
-    alert("is loading");
-  }
-
-  if (mutation.isSuccess) {
-    alert("is successfull");
-  }
+  const profileImg = useContext(ImgContext);
 
   const [image, setImage] = useState(null);
 
   const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
-  };
-
-  const handleSubmit = (url) => {
-    mutation.mutate({
-      image: url,
-    });
-  };
-
-  const uploadImage = (event) => {
     event.preventDefault();
+    setImage(event.target.files[0]);
+    uploadImage();
+  };
+
+  const uploadImage = () => {
+    toast.success("uploading");
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -54,9 +35,9 @@ export default function ProfilePicEdit({}) {
 
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        // console.log(url)
-        handleSubmit(url);
-        alert("Image Uploaded");
+        profileImg.setImgUrl(url);
+        toast.success("successfully uploaded");
+        console.log("profileUrl", profileImg.ImgUrl);
       });
     });
   };

@@ -1,13 +1,19 @@
 import { Link } from "react-router-dom";
 import userSix from "../../images/user-06.png";
+import { getCookie } from "../../utils";
+import jwtDecode from "jwt-decode";
 
 export default function UserProfileCard() {
+  const { role } = jwtDecode(getCookie("user")); // Replace with your authentication library and access the user's authentication status and role
+
   return (
     <div class="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div class="relative z-20 h-35 md:h-48">
         <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400"></div>
         <div class="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
-          <Link to={"/EditProfile"}>
+          <Link
+            to={role == "customer" ? "/UserEditProfile" : "/MediaEditProfile"}
+          >
             <label
               for="cover"
               class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-1 px-2 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"

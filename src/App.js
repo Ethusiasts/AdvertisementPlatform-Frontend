@@ -318,7 +318,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaEditProfilePage}
-        roles={["tv", "radio", "gazeta"]}
+        roles={["tv", "radio", "gazeta", "landowner"]}
       />
     ),
   },

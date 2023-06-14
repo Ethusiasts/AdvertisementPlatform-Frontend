@@ -34,7 +34,6 @@ export default function SignInForm() {
             }, 3000)
           : setTimeout(() => {
               getUserStepper(cred.id);
-              console.log("LAND");
               if (cred.role === "customer") {
                 navigate("/search");
               } else if (cred.role === "landowner") {
