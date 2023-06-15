@@ -23,6 +23,7 @@ export const getUserAdvertisements = ({ currentPage }) => {
       return res.data;
     })
     .catch((error) => {
+      console.log("first");
       console.error(error);
       return error;
     });

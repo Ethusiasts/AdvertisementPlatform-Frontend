@@ -122,7 +122,7 @@ export const addReview = (reviewData) => {
 
 export const getReviews = ({ mediaId, type }) => {
   return axiosInstance
-    .get(`/${type}/${mediaId}/ratings/`)
+    .get(`/${type}/${mediaId}/ratings`)
     .then((res) => {
       return { success: true, data: res.data };
     })
