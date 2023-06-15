@@ -100,7 +100,7 @@ export default function Hero() {
       <div className="absolute left-1/2 bottom-0 w-full md:w-2/3 flex justify-around items-end transform -translate-x-1/2">
         {/* ::Our Story */}
         <Link
-          href="#link"
+          to={"/"}
           className="group relative py-5 w-40 rounded-t-xl bg-white bg-opacity-50 text-center text-gray-600 font-semibold font-firacode transition-all duration-300 transform hover:pb-14"
         >
           Our Story
@@ -121,7 +121,7 @@ export default function Hero() {
         </Link>
         {/* ::Our Shop */}
         <Link
-          to={"/landing/#services"}
+          to={"/"}
           className="group relative py-5 w-40 rounded-t-xl bg-white bg-opacity-50 text-center text-gray-600 font-semibold font-firacode transition-all duration-300 transform hover:pb-14"
         >
           Our Services
@@ -142,7 +142,7 @@ export default function Hero() {
         </Link>
         {/* ::Our Contact */}
         <Link
-          href="#link"
+          to={"/"}
           className="group relative py-5 w-40 rounded-t-xl bg-white bg-opacity-50 text-center text-gray-600 font-semibold font-firacode transition-all duration-300 transform hover:pb-14"
         >
           Our Contact

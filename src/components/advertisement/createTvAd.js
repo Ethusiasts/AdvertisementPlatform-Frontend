@@ -65,9 +65,8 @@ export default function CreateTvAdForm({ photo, title, description }) {
     uploadBytes(videoRef, video).then((snapshot) => {
       getDownloadURL(snapshot.ref)
         .then((url) => {
-          // console.log(url)
+          toast.success("Video uploaded successfully");
           handleSubmit(url);
-          alert("Image Uploaded");
         })
         .catch((error) => {
           setIsLoading(false);
