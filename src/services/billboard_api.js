@@ -7,20 +7,17 @@ export const getBillboardDetail = ({ billboardId }) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
       return error;
     });
 };
 
 export const deleteBillboard = ({ billboardId }) => {
-  console.log(billboardId);
   return axiosInstance
     .delete(`/billboards/${billboardId}`)
     .then((res) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
       return error;
     });
 };
@@ -32,7 +29,6 @@ export const getBillboards = ({ currentPage }) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
       return error;
     });
 };
@@ -52,11 +48,9 @@ export const searchBillboardsWithQueryOnly = ({ query, currentPage }) => {
   return axiosInstance
     .get(`/billboards/search?q=${query}&page=${currentPage}`)
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
       return error;
     });
 };
@@ -77,7 +71,6 @@ export const searchBillboards = ({
     url += `?q=${query}`;
   }
   if (searchDistanceValue) {
-    console.log(searchDistanceValue, "radius");
     url += `&radius=${searchDistanceValue}`;
   }
   if (latitude) {
@@ -101,13 +94,11 @@ export const searchBillboards = ({
     url = url.replace("&", "?");
   }
   url += `&page=${currentPage}`;
-  console.log(url);
 
   return axiosInstance
     .get(url)
     .then((res) => res.data)
     .catch((error) => {
-      console.error(error);
       return error;
     });
 };
@@ -125,9 +116,9 @@ export const addReview = (reviewData) => {
     });
 };
 
-export const getBillboardReviews = ({ billboardId }) => {
+export const getReviews = ({ mediaId, type }) => {
   return axiosInstance
-    .get(`/billboards/${billboardId}/ratings`)
+    .get(`/${type}/${mediaId}/ratings/`)
     .then((res) => {
       return { success: true, data: res.data };
     })

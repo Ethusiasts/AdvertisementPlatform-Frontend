@@ -21,6 +21,7 @@ export default function SignInForm() {
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
+
         setCookie("user", data.token, cred.exp);
         data.firstTimeLogin
           ? setTimeout(() => {
@@ -41,6 +42,7 @@ export default function SignInForm() {
               }
             }, 3000);
       } else {
+        console.log(data);
         toast.error(data.response.data.message);
       }
     },
@@ -87,14 +89,12 @@ export default function SignInForm() {
       email: email,
     };
     mutateGoogle(user);
-
-    localStorage.setItem("user", JSON.stringify(user));
   };
 
   return (
-    <div className="w-full dark:border-strokedark xl:w-1/2  h-screen">
+    <div className="w-full dark:border-strokedark xl:w-1/2  h-screen ">
       <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-        <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
+        <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2 ">
           Sign In to Advert
         </h2>
 
@@ -187,7 +187,7 @@ export default function SignInForm() {
             )}
           </div>
 
-          <GoogleLogin
+          {/* <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
             render={(renderProps) => (
               <button
@@ -234,7 +234,7 @@ export default function SignInForm() {
             onSuccess={responseGoogle}
             onError={responseGoogle}
             cookiePolicy="single_host_origin"
-          />
+          /> */}
 
           <div className="mt-6 text-center">
             <p>

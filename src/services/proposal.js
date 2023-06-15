@@ -3,6 +3,7 @@ import getUser from "../utils/utils";
 
 const id = getUser()?.id;
 export const createProposal = (proposal) => {
+  console.log(proposal);
   return axiosInstance
     .post(`/proposals/`, proposal)
     .then((res) => {

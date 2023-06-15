@@ -6,7 +6,7 @@ import Rating from "@material-ui/lab/Rating";
 import getUser from "../../utils/utils";
 import { CircularProgress } from "@mui/material";
 
-export default function Comments({ billboardId }) {
+export default function Comments({ mediaId, type }) {
   const user = getUser();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(2.5);
@@ -43,9 +43,10 @@ export default function Comments({ billboardId }) {
     // Post the comment
     const review = {
       rating: rating,
-      entity_type: "Billboard",
+      entity_type: type,
       comment: comment,
-      billboard_id: billboardId,
+      billboard_id: type === "Billboard" ? mediaId : "",
+      agency_id: type === "Agency" ? mediaId : "",
       user_id: user?.id,
     };
     // Perform the necessary actions with the comment value

@@ -1,34 +1,43 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createAdvertisement } from "../../services/advertisement";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import getUser from "../../utils/utils";
+import { toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 export default function CreateBillboardAdForm({ photo, title, description }) {
-  const mutation = useMutation({
-    mutationFn: (advertisement) => {
-      return createAdvertisement(advertisement);
-    },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
-  });
-
-  if (mutation.isLoading) {
-    alert("is loading");
-  }
-
-  if (mutation.isSuccess) {
-    alert("is successfull");
-  }
-
+  const user = getUser();
   const [advertisementName, setAdvertisementName] = useState("");
   const [height, setHeight] = useState("");
   const [durationInHour, setDurationInHour] = useState("");
   const [width, setWidth] = useState("");
   const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState(null);
+  const [isAdult, setIsAdult] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const mutation = useMutation({
+    mutationFn: (advertisement) => {
+      return createAdvertisement(advertisement);
+    },
+    onSuccess: () => {
+      toast.success("Advertisement Successfully created");
+      setIsLoading(false);
+    },
+  });
+
+  if (mutation.isLoading) {
+    setIsLoading(true);
+  }
+
+  const handleIsAdultChange = (event) => {
+    setIsAdult(event.target.checked);
+  };
   const handleAdvertisementNameChange = (event) => {
     setAdvertisementName(event.target.value);
   };
@@ -62,22 +71,47 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
       width: width,
       height: height,
       quantity: quantity,
-      user_id: 1,
+      user_id: user?.id,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-
-    if (image == null) return;
+    if (!image || !quantity || !advertisementName || !width || !height) {
+      toast.error("Please fill in all the required fields");
+      return;
+    }
+    setIsLoading(true);
     const imageRef = ref(storage, `Advertisement/images/` + `${Date.now()}`);
 
     uploadBytes(imageRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        // console.log(url)
-        handleSubmit(url);
-        alert("Image Uploaded");
-      });
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          return axios.post(
+            "'https://advertisementplatform-0xpy.onrender.com/api/v1/advertisements/image",
+            {
+              image: url,
+            }
+          );
+        })
+        .then((checkRes) => {
+          console.log(checkRes);
+          if (checkRes?.data === isAdult) {
+            toast.success("Image Passed Profanity Test");
+            handleSubmit(checkRes?.data);
+          } else {
+            setIsLoading(false);
+            toast.error("");
+            return;
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          toast.error("Could Not Create Ad, Check Your Inputs ", {
+            autoClose: 3000,
+          });
+          return error;
+        });
     });
   };
 
@@ -101,6 +135,7 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
             placeholder="Advertisement Name"
             value={advertisementName}
             onChange={handleAdvertisementNameChange}
+            required
           />
         </div>
       </div>
@@ -114,6 +149,7 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
             placeholder="height"
             value={height}
             onChange={handleHeightChange}
+            required
           />
         </div>
         <div className="w-full sm:w-1/2">
@@ -154,7 +190,22 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
           />
         </div>
       </div>
-
+      <div class="mb-2">
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isAdult}
+              onChange={handleIsAdultChange}
+              required
+            />
+          }
+          label={
+            <span style={{ color: isAdult ? "red" : "inherit" }}>
+              Contains Adult Content
+            </span>
+          }
+        />
+      </div>
       <div
         id="FileUpload"
         className="relative mb-4 block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-blue-400 bg-gray-200 py-4 px-4 dark:bg-meta-4 sm:py-7.5"
@@ -203,17 +254,11 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
         </div>
       </div>
       <div class="flex justify-end">
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-600 font-semi-bold py-1 px-4 rounded mr-2 w-60">
-          Cancel
-        </button>
         <button
           onClick={uploadImage}
           class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60"
         >
-          Save Only
-        </button>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60">
-          Save and Continue
+          {isLoading ? <CircularProgress /> : "Save"}
         </button>
       </div>
     </div>

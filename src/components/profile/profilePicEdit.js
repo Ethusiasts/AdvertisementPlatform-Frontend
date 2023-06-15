@@ -8,9 +8,14 @@ import { getCookie } from "../../utils";
 export default function ProfilePicEdit({}) {
   const userProfile = JSON.parse(getCookie("user_profile"));
   const profileImg = useContext(ImgContext);
+  console.log(profileImg.ImgUrl);
 
   const [image, setImage] = useState(null);
 
+  const handleSetProfile = () => {
+    const profile = JSON.parse(getCookie("user_profile") ?? "");
+    profileImg.setImgUrl(profile.profile_picture ?? "");
+  };
   const handleImageChange = (event) => {
     event.preventDefault();
     setImage(event.target.files[0]);

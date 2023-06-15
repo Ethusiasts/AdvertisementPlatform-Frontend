@@ -229,7 +229,7 @@ export default function SignUpForm() {
             )}
           </div>
 
-          <GoogleLogin
+          {/* <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
             render={(renderProps) => (
               <button
@@ -276,7 +276,7 @@ export default function SignUpForm() {
             onSuccess={responseGoogle}
             onError={responseGoogle}
             cookiePolicy="single_host_origin"
-          />
+          /> */}
 
           <div className="mt-6 text-center">
             <p>

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-transform-dynamic-import": "^7.22.1",
-    "@babel/preset-env": "^7.22.4",
+    "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.3",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
@@ -21,6 +21,7 @@
     "@testing-library/react": "^13.4.0",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
+    "enzyme": "^3.11.0",
     "firebase": "^9.22.1",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.6",
@@ -28,6 +29,7 @@
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
+    "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
     "react-form-stepper": "^2.0.3",
     "react-geocode": "^0.2.3",
@@ -48,7 +50,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

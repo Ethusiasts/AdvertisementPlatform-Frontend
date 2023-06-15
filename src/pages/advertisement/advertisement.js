@@ -13,15 +13,7 @@ export default function Advertisement() {
         <Header title="Advertisement" />
         <Label />
 
-        <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4">
-          <div class="p-5">
-            <Card
-              title="Magazine"
-              description="Get Noticed: Create a Stunning Magazine Ad to Showcase Your Brand and Boost Sales"
-              route="/CreateMagazineAd"
-              photo="https://images.unsplash.com/photo-1614036634955-ae5e90f9b9eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
-            />
-          </div>
+        <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
           <div class="p-5">
             <Card
               title="Billboard"
