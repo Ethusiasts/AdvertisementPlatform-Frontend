@@ -20,7 +20,7 @@ export default function Info({ media }) {
           </div>
           <div class="flex justify-between border-b">
             <h1 class="font-bold">Peak Hour Price:</h1>
-            <p class="sm:tracking-tight ">{media?.peak_hour}</p>
+            <p class="sm:tracking-tight ">${media?.peak_hour}</p>
           </div>
           <div class="flex justify-between border-b">
             <h1 class="font-bold">With Production Price:</h1>

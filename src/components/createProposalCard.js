@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { createProposal } from "../../services/proposal";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
-import getUser from "../../utils/utils";
-import AdvertisementSelect from "../billboardDetails/autocompleteDropDown";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import MultiSelect from "./multiSelect";
+import getUser from "../utils/utils";
+import { createProposal } from "../services/proposal";
+import AdvertisementSelect from "./billboardDetails/autocompleteDropDown";
 
-export default function CreateMediaProposal({ media }) {
+export default function CreateCardProposal({ cartItems }) {
   const user = getUser();
   const mutation = useMutation({
     mutationFn: (proposal) => {
@@ -23,42 +22,22 @@ export default function CreateMediaProposal({ media }) {
     },
   });
 
-  let normal = parseFloat(media?.normal);
-  let prod = parseFloat(media?.production);
-  let peak = parseFloat(media?.peak_hour);
-
   const [proposalName, setProposalName] = useState("");
   const [proposalDescription, setProposalDescription] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0);
   const [advertisement, setAdvertisement] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isPeakHour, setIsPeakHour] = useState(false);
+  const [medias, setMedias] = useState([]);
 
-  const handleDataFromChild = (value) => {
+  const handleDataFromSingle = (value) => {
     if (!value) {
-      setTotalPrice(0 + isChecked ? prod : 0 + isPeakHour ? peak : 0);
       return;
     }
     setAdvertisement(value);
-    const duration = parseFloat(value?.duration_in_hour) * 60;
-    setTotalPrice(duration * normal);
   };
-
-  const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
-    if (event.target.checked) {
-      setTotalPrice(totalPrice + prod);
-    } else {
-      setTotalPrice(totalPrice - prod);
+  const handleDataFromMulti = (value) => {
+    if (!value) {
+      return;
     }
-  };
-  const handleIsPeakChange = (event) => {
-    setIsPeakHour(event.target.checked);
-    if (event.target.checked) {
-      setTotalPrice(totalPrice + peak);
-    } else {
-      setTotalPrice(totalPrice - peak);
-    }
+    setMedias(value);
   };
 
   const handleProposalNameChange = (event) => {
@@ -72,13 +51,10 @@ export default function CreateMediaProposal({ media }) {
     mutation.mutate({
       name: proposalName,
       description: proposalDescription,
-      total_price: totalPrice,
-      production: isChecked,
-      peak_hour: isPeakHour,
       user_id: user?.id,
-      agency_id: media?.id,
-      media_agency_id: media?.media_agency_id,
+      medias: medias,
       advertisement_id: advertisement?.id,
+      production: false,
     });
   };
 
@@ -96,6 +72,9 @@ export default function CreateMediaProposal({ media }) {
         our prime billboards. Our team will create a customized proposal to
         showcase your brand in the best possible light.
       </p>
+      <div className="mb-4">
+        <MultiSelect onData={handleDataFromMulti} items={cartItems} />
+      </div>
       <div class="mb-4">
         <div class="flex justify-between gap-4">
           <div className="w-1/2">
@@ -110,7 +89,7 @@ export default function CreateMediaProposal({ media }) {
             />
           </div>
           <div className="w-1/2 mb-4">
-            <AdvertisementSelect onData={handleDataFromChild} />
+            <AdvertisementSelect onData={handleDataFromSingle} />
           </div>
         </div>
       </div>
@@ -128,35 +107,10 @@ export default function CreateMediaProposal({ media }) {
         </div>
       </div>
 
-      <FormControlLabel
-        control={
-          <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
-        }
-        label="With Production"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox checked={isPeakHour} onChange={handleIsPeakChange} />
-        }
-        label="Peak Hour"
-      />
-
-      <div className="w-full flex justify-end">
-        <div class="bg-gray-100 rounded-md p-4">
-          <p class="font-medium text-lg text-gray-800">
-            Total Price :{" "}
-            <span class="text-xl font-bold text-green-500 w-auto">$</span>
-            <span class="text-xl font-bold text-green-500 w-auto">
-              {totalPrice}
-            </span>
-          </p>
-        </div>
-      </div>
-
       <div class="flex justify-end">
         <button
           onClick={handleSubmit}
-          class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60"
+          class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700"
           disabled={mutation.isLoading}
         >
           {mutation.isLoading ? <CircularProgress /> : "Create Proposal"}
