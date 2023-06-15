@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
 import { getCookie } from "../../utils";
 import getUser from "../../utils/utils";
+import { getMediaAgencyStats } from "../../services/mediaAgencyStat";
+import { useQuery } from "@tanstack/react-query";
 
 export default function BillboardProfileCard() {
   const user = getUser();
   const userProfile = JSON.parse(getCookie("user_profile"));
+
+  const { data: stat, isLoading } = useQuery(["proposals"], () => {
+    return getMediaAgencyStats()
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
+  console.log(stat);
   return (
     <div class="w-full overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div class="relative z-20 h-35 md:h-48">
@@ -39,16 +53,22 @@ export default function BillboardProfileCard() {
           <p class="font-medium text-gray-400">{user.role}</p>
           <div class="text-gray-400 mx-auto mt-4 mb-5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2 shadow-5">
             <div class="flex items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-              <span class="font-semibold text-gray-900 ">259</span>
-              <span class="text-sm">Posts</span>
+              <span class="font-semibold text-gray-900 ">
+                {stat?.total_billboards}
+              </span>
+              <span class="text-sm">Billboards</span>
             </div>
             <div class="flex items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
-              <span class="font-semibold text-gray-900 ">129K</span>
-              <span class="text-sm">Followers</span>
+              <span class="font-semibold text-gray-900 ">
+                {stat?.total_proposals}
+              </span>
+              <span class="text-sm">Proposals</span>
             </div>
             <div class="flex items-center justify-center gap-1 px-4 xsm:flex-row">
-              <span class="font-semibold text-gray-900 ">2K</span>
-              <span class="text-sm">Following</span>
+              <span class="font-semibold text-gray-900 ">
+                {stat?.total_contracts}
+              </span>
+              <span class="text-sm">Contracts</span>
             </div>
           </div>
 

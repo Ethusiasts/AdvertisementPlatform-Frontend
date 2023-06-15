@@ -1,4 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import { getUserStats } from "../../services/userStat";
+
 export default function Card() {
+  const { data: stat, isLoading } = useQuery(["stats"], () => {
+    return getUserStats()
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  });
   return (
     <div class="bg-gray-100 rounded-lg shadow-md overflow-hidden">
       <div class="px-4 py-5 sm:p-6">
@@ -33,7 +46,7 @@ export default function Card() {
                 Advertisements
               </div>
               <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
-                100
+                {stat?.total_advertisements}
               </div>
             </div>
             <div>
@@ -41,7 +54,7 @@ export default function Card() {
                 Contracts
               </div>
               <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
-                50
+                {stat?.total_contracts}
               </div>
             </div>
             <div>
@@ -49,7 +62,7 @@ export default function Card() {
                 Proposals
               </div>
               <div class="mt-1 text-3xl font-bold text-gray-700 dark:text-gray-400">
-                50
+                {stat?.total_proposals}
               </div>
             </div>
           </div>

@@ -22,8 +22,6 @@ import CreateMagazineAd from "./pages/advertisement/createMagazineAd";
 import CreateRadioAd from "./pages/advertisement/createRadioAd";
 import AdminDashboard from "./pages/admin/adminDashboard";
 import UserControl from "./pages/admin/userControl";
-import HelpAndSupport from "./pages/admin/helpAndSupport";
-import Contract from "./pages/contract/userContract";
 import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ForgotPassword from "./pages/authentication/forgotPassword";
@@ -43,7 +41,6 @@ import Media from "./pages/medias/media";
 import Billboard from "./pages/billboards/billboard";
 import CreateBillboard from "./pages/billboards/createBillboard";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import CreateContract from "./pages/contract/createContract";
 import UserEditProfilePage from "./pages/profile/userEditProfilePage";
 import MediaEditProfilePage from "./pages/profile/mediaEditProfilePage";
 import UserProfilePage from "./pages/profile/userProfilePage";
@@ -58,6 +55,10 @@ import { getCookie } from "./utils";
 import jwtDecode from "jwt-decode";
 import ErrorPage from "./components/error";
 import React, { useState } from "react";
+import CreateMedia from "./pages/medias/createMedia";
+import BillboardCreateContract from "./pages/contract/billboardCreateContract";
+import MediaCreateContract from "./pages/contract/mediaCreateContract";
+import EmployeeDashboard from "./pages/employee/employeeDashboard";
 // HOC for checking authentication and authorization
 export const ImgContext = React.createContext();
 
@@ -67,7 +68,8 @@ const ProtectedRoute = ({ Component, roles, ...rest }) => {
     // Redirect to the login page if not authenticated
     return <Navigate to="/SignIn" replace={true} />;
   }
-  const { role } = jwtDecode(token); // Replace with your authentication library and access the user's authentication status and role
+  const { role } = jwtDecode(token);
+  // Replace with your authentication library and access the user's authentication status and role
   if (roles && !roles.includes(role)) {
     // Redirect to a forbidden page if the user's role is not allowed
 
@@ -128,7 +130,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaAgencyStepper}
-        roles={["tv", "radio", "landowner", "customer"]}
+        roles={["TV", "RADIO", "landowner"]}
       />
     ),
   },
@@ -165,7 +167,7 @@ const router = createBrowserRouter([
   {
     path: "CreateTvAd",
     element: (
-      <ProtectedRoute Component={CreateTvAd} roles={["customer", "tv"]} />
+      <ProtectedRoute Component={CreateTvAd} roles={["customer", "TV"]} />
     ),
   },
   {
@@ -180,7 +182,7 @@ const router = createBrowserRouter([
   {
     path: "CreateRadioAd",
     element: (
-      <ProtectedRoute Component={CreateRadioAd} roles={["customer", "radio"]} />
+      <ProtectedRoute Component={CreateRadioAd} roles={["customer", "RADIO"]} />
     ),
   },
   {
@@ -235,9 +237,12 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "proposal/:proposalId/CreateContract",
+    path: "proposal/:proposalId/BillboardCreateContract",
     element: (
-      <ProtectedRoute Component={CreateContract} roles={["landowner"]} />
+      <ProtectedRoute
+        Component={BillboardCreateContract}
+        roles={["landowner", "TV", "RADIO"]}
+      />
     ),
   },
   {
@@ -251,7 +256,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={LandlordsBillboardDetail}
-        roles={["landowner"]}
+        roles={["landowner", "Employee"]}
       />
     ),
   },
@@ -259,44 +264,62 @@ const router = createBrowserRouter([
   {
     path: "/MediaDashboard",
     element: (
-      <ProtectedRoute Component={MediaDashboard} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaDashboard} roles={["TV", "RADIO"]} />
     ),
   },
   {
     path: "/MediaProposal",
     element: (
-      <ProtectedRoute Component={MediaProposal} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaProposal} roles={["TV", "RADIO"]} />
     ),
   },
   {
     path: "/MediaContract",
     element: (
-      <ProtectedRoute Component={MediaContract} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaContract} roles={["TV", "RADIO"]} />
+    ),
+  },
+  {
+    path: "proposal/:proposalId/MediaCreateContract",
+    element: (
+      <ProtectedRoute
+        Component={MediaCreateContract}
+        roles={["landowner", "TV", "RADIO"]}
+      />
     ),
   },
   {
     path: "/Media",
-    element: <ProtectedRoute Component={Media} roles={["tv", "radio"]} />,
+    element: <ProtectedRoute Component={Media} roles={["TV", "RADIO"]} />,
   },
   {
-    path: "/user/:userId/medias/:mediaId",
+    path: "/CreateMedia",
+    element: <ProtectedRoute Component={CreateMedia} roles={["TV", "RADIO"]} />,
+  },
+  {
+    path: "/user/:userId/agencies/:mediaId",
     element: (
-      <ProtectedRoute Component={AgenciesMediaDetail} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={AgenciesMediaDetail} roles={["TV", "RADIO"]} />
     ),
   },
 
   // Admin
   {
     path: "/AdminDashboard",
-    element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
+    element: <AdminDashboard />,
+    // element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
   },
   {
     path: "/UserControl",
-    element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
+    element: <UserControl />,
+    // element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
   },
+
+  // Employeee
   {
-    path: "/HelpAndSupport",
-    element: <ProtectedRoute Component={HelpAndSupport} roles={["admin"]} />,
+    path: "/EmployeeDashboard",
+    element: <EmployeeDashboard />,
+    // element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
   },
 
   // Profile
@@ -312,7 +335,7 @@ const router = createBrowserRouter([
   {
     path: "/MediaProfile",
     element: (
-      <ProtectedRoute Component={MediaProfilePage} roles={["tv", "radio"]} />
+      <ProtectedRoute Component={MediaProfilePage} roles={["TV", "RADIO"]} />
     ),
   },
   {
@@ -332,7 +355,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={MediaEditProfilePage}
-        roles={["tv", "radio", "gazeta", "landowner"]}
+        roles={["TV", "RADIO", "gazeta", "landowner"]}
       />
     ),
   },

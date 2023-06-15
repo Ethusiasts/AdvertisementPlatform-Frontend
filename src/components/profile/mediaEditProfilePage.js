@@ -11,10 +11,12 @@ import { editUserStepper } from "../../services/user_stepper_api";
 import { useNavigate } from "react-router-dom";
 
 export default function MediaEditProfileCard({}) {
-  const [userName, setUserName] = useState("Devid27");
-  const [phoneNumber, setPhoneNumber] = useState("+990 3343 7865");
-  const [firstName, setFirstName] = useState("Devid");
-  const [lastName, setLastName] = useState("Jhon");
+  const userProfile = JSON.parse(getCookie("user_profile"));
+
+  const [userName, setUserName] = useState(userProfile.username);
+  const [phoneNumber, setPhoneNumber] = useState(userProfile.phone_number);
+  const [firstName, setFirstName] = useState(userProfile.first_name);
+  const [lastName, setLastName] = useState(userProfile.last_name);
   const profileImg = useContext(ImgContext);
   const [companyName, setCompanyName] = useState("Five Star Advertisers PLC");
   const [tinNumber, setTinNumber] = useState("008836655");
@@ -105,8 +107,10 @@ export default function MediaEditProfileCard({}) {
           <ProfilePicEdit />
           <div className="flex items-center">
             <div className="mr-4">
-              <h2 className="text-3xl font-semi-bold">Abenezer Fekadu</h2>
-              <p className="text-xl text-gray-600">@abeni27</p>
+              <h2 className="text-3xl font-semi-bold">
+                {userProfile.first_name} {userProfile.last_name}
+              </h2>
+              <p className="text-xl text-gray-600">{userProfile.username}</p>
             </div>
           </div>
         </div>
@@ -330,7 +334,6 @@ export default function MediaEditProfileCard({}) {
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
                           placeholder="Five Star Advertisers PLC"
-                          defaultValue="Five Star Advertisers PLC"
                         />
                       </div>
                     </div>
@@ -350,7 +353,6 @@ export default function MediaEditProfileCard({}) {
                         value={tinNumber}
                         onChange={(e) => setTinNumber(e.target.value)}
                         placeholder="008836655"
-                        defaultValue="008836655"
                       />
                     </div>
                   </div>

@@ -16,9 +16,9 @@ export const createAdvertisement = (advertisement) => {
     });
 };
 
-export const getUserAdvertisements = () => {
+export const getUserAdvertisements = ({ currentPage }) => {
   return axiosInstance
-    .get(`/auth/${id}/advertisements/`)
+    .get(`/auth/${id}/advertisements?page=${currentPage}`)
     .then((res) => {
       return res.data;
     })

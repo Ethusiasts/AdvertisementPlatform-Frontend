@@ -2,6 +2,7 @@ import Card from "../components/mediaAgency/card";
 import Table from "../components/mediaAgency/table";
 import SideBar from "../components/mediaAgency/sidebar";
 import Header from "../components/mediaAgency/header";
+import VisitCard from "../components/billboards/visitCard";
 export default function MediaDashboard() {
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
@@ -15,7 +16,7 @@ export default function MediaDashboard() {
             <Card />
           </div>
           <div class="p-12 col-span-2">
-            <Card />
+            <VisitCard />
           </div>
         </div>
         <Table />

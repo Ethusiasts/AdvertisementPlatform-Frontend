@@ -6,25 +6,31 @@ import AdPopup from "../advertisement/advertisementDetail";
 import ButtonWithModal from "./buttonWithModal";
 
 export default function Table() {
+  const [totalPages, setTotalPages] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
-  const user_id = 1;
   const { data: advertisements, isLoading } = useQuery(
     ["advertisements"],
     () => {
-      return getUserAdvertisements(user_id)
+      return getUserAdvertisements({ currentPage })
         .then((res) => {
-          return res.results;
+          setTotalPages(Math.ceil(res.count / 6));
+          return res;
         })
         .catch((error) => {
           return error;
         });
-    },
-    { user_id }
+    }
   );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   if (isLoading) {
     return (
@@ -67,7 +73,7 @@ export default function Table() {
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-300 dark:bg-gray-100">
-              {advertisements?.map((advertisement) => (
+              {advertisements?.results?.map((advertisement) => (
                 <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
                   <td class="px-4 py-3">
                     <div class="flex items-center text-sm">
@@ -133,7 +139,11 @@ export default function Table() {
                       </p>
                     )}
                   </td>
-                  <td class="px-4 py-3 text-sm">15-01-2021</td>
+                  <td class="px-4 py-3 text-sm">
+                    {new Date(advertisement.created_at).toLocaleDateString(
+                      "en-US"
+                    )}
+                  </td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       <ButtonWithModal
@@ -155,81 +165,67 @@ export default function Table() {
         <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-300 bg-gray-50 sm:grid-cols-9 dark:text-black dark:bg-gray-100">
           <span class="flex items-center col-span-3">
             {" "}
-            Showing 21-30 of 100{" "}
+            Showing {(currentPage - 1) * 6 + 1} - {currentPage * 6} of{" "}
+            {advertisements.count}{" "}
           </span>
           <span class="col-span-2"></span>
           <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
               <ul class="inline-flex items-center">
-                <li>
-                  <button
-                    class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                    aria-label="Previous"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="w-4 h-4 fill-current"
-                      viewBox="0 0 20 20"
+                {currentPage > 1 && (
+                  <li>
+                    <button
+                      class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                      aria-label="Previous"
+                      onClick={() => handlePageChange(currentPage - 1)}
                     >
-                      <path
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </button>
-                </li>
-                <li>
-                  <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                    1
-                  </button>
-                </li>
-                <li>
-                  <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                    2
-                  </button>
-                </li>
-                <li>
-                  <button class="px-3 py-1 text-white dark:text-gray-800 transition-colors duration-150 bg-blue-600 dark:bg-gray-100 border border-r-0 border-blue-600 dark:border-gray-100 rounded-md focus:outline-none focus:shadow-outline-purple">
-                    3
-                  </button>
-                </li>
-                <li>
-                  <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                    4
-                  </button>
-                </li>
-                <li>
-                  <span class="px-3 py-1">...</span>
-                </li>
-                <li>
-                  <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                    8
-                  </button>
-                </li>
-                <li>
-                  <button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                    9
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                    aria-label="Next"
-                  >
-                    <svg
-                      class="w-4 h-4 fill-current"
-                      aria-hidden="true"
-                      viewBox="0 0 20 20"
+                      <svg
+                        aria-hidden="true"
+                        class="w-4 h-4 fill-current"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                          clip-rule="evenodd"
+                          fill-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                  </li>
+                )}
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <li key={i}>
+                    <button
+                      class={`px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple  ${
+                        i + 1 === currentPage ? "bg-gray-300" : "bg-white"
+                      }`}
+                      onClick={() => handlePageChange(i + 1)}
                     >
-                      <path
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </button>
-                </li>
+                      {i + 1}
+                    </button>
+                  </li>
+                ))}
+                {currentPage < totalPages && (
+                  <li>
+                    <button
+                      class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+                      aria-label="Next"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                      <svg
+                        class="w-4 h-4 fill-current"
+                        aria-hidden="true"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clip-rule="evenodd"
+                          fill-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                  </li>
+                )}
               </ul>
             </nav>
           </span>

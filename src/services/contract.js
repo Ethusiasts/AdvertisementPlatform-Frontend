@@ -28,9 +28,9 @@ export const approveContract = (contract_id, contract) => {
     });
 };
 
-export const getUserContracts = () => {
+export const getUserContracts = ({ currentPage }) => {
   return axiosInstance
-    .get(`/auth/${id}/contracts/`)
+    .get(`/auth/${id}/contracts?page=${currentPage}`)
     .then((res) => {
       return res.data;
     })
@@ -39,9 +39,20 @@ export const getUserContracts = () => {
       return error;
     });
 };
-export const getBillboardContracts = () => {
+export const getBillboardContracts = ({ currentPage }) => {
   return axiosInstance
-    .get(`/media_agencies/${id}/contracts/`)
+    .get(`/media_agencies/${id}/contracts?page=${currentPage}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+export const getAgencyContracts = () => {
+  return axiosInstance
+    .get(`/media_agencies/${id}/contracts`)
     .then((res) => {
       return res.data;
     })

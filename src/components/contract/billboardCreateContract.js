@@ -9,7 +9,11 @@ import { createContract } from "../../services/contract";
 import { useParams } from "react-router-dom";
 import getUser from "../../utils/utils";
 
-export default function CreateContractForm({ photo, title, description }) {
+export default function BillboardCreateContractForm({
+  photo,
+  title,
+  description,
+}) {
   const { proposalId } = useParams();
   console.log(proposalId);
   const { data: proposal, isLoading } = useQuery(
@@ -25,7 +29,7 @@ export default function CreateContractForm({ photo, title, description }) {
     },
     { proposalId }
   );
-
+  console.log(proposal);
   const mutation = useMutation({
     mutationFn: (contract) => {
       return createContract(contract);
@@ -86,7 +90,9 @@ export default function CreateContractForm({ photo, title, description }) {
       net_free: String((proposal?.total_price * 0.85)?.toFixed(2)),
       proposal_id: proposalId,
       agency_signature: url,
-      media_agency_id: proposal.billboard_id.media_agency_id,
+      media_agency_id:
+        proposal?.billboard_id?.media_agency_id ||
+        proposal?.agency_id?.media_agency_id,
       user_id: getUser()?.id,
     });
   };
