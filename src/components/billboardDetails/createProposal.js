@@ -8,16 +8,31 @@ import Checkbox from "@mui/material/Checkbox";
 
 import { toast } from "react-toastify";
 import getUser from "../../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateProposalForm({ billboard }) {
   const user = getUser();
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: (proposal) => {
       return createProposal(proposal);
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success("Successfully Created");
+        toast
+          .promise(
+            new Promise((resolve) => {
+              toast.success("Successfully Created");
+              resolve();
+            }),
+            {
+              // Set any additional options for the toast notification
+            }
+          )
+          .then(() => {
+            navigate("/UserProposal");
+          });
       } else {
         toast.error("Could Not Create Your Proposal, Check Your Input ");
       }

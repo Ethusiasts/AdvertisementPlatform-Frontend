@@ -7,9 +7,12 @@ import getUser from "../../utils/utils";
 import AdvertisementSelect from "../billboardDetails/autocompleteDropDown";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateMediaProposal({ media }) {
   const user = getUser();
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: (proposal) => {
       return createProposal(proposal);
@@ -17,6 +20,7 @@ export default function CreateMediaProposal({ media }) {
     onSuccess: (data) => {
       if (data.success) {
         toast.success("Successfully Created");
+        navigate("/UserProposal");
       } else {
         toast.error("Could Not Create Your Proposal, Check Your Input ");
       }

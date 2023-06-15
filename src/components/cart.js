@@ -3,6 +3,8 @@ import { getCart, removeItem } from "../utils/cart";
 import ButtonWithModal from "./billboardDetails/buttonWithModal";
 import CreateCardProposal from "./createProposalCard";
 import Navigation from "./Landing/Navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = () => {
   const [cartItems, setItems] = useState([]);
@@ -34,6 +36,8 @@ const Cart = () => {
   return (
     <>
       <Navigation />
+      <ToastContainer />
+
       <div className="container mx-auto p-4">
         <div
           class="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
