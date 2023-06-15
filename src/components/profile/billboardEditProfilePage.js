@@ -1,4 +1,3 @@
-import userSix from "../../images/user-06.png";
 import { useContext, useState } from "react";
 import ProfilePicEdit from "./profilePicEdit";
 import { ImgContext } from "../../App";

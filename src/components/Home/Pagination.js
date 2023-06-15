@@ -13,9 +13,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import Image1 from "../../styles/assets/billboard1.jpg";
-import Image2 from "../../styles/assets/billboard2.jpg";
-import Image3 from "../../styles/assets/billboard3.jpg";
 import { itemsCount } from "../../utils/cart";
 import Card from "./BillboardCard";
 import AgencyCard from "./AgencyCard";

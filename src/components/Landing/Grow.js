@@ -15,8 +15,8 @@ function Grow() {
           Your Growth is Our Growth
         </div>
         <div className="text-xl font-normal text-gray-500 text-center ">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor iure
-          blanditiis laborum.
+          Measure the efficiency of each billboard in reaching your audience by
+          Campaign monitoring, Live Analytics, and delivering ROI.
         </div>
         <button className="flex space-x-7 items-center justify-center px-2 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full md:w-1/2  ">
           <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">

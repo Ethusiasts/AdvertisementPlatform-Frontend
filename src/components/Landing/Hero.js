@@ -1,6 +1,7 @@
 import React from "react";
 import { heroSectionTitle, heroSectionDescription } from "../../utils/index";
 import { BsArrowRight } from "react-icons/bs";
+import { Link } from "react-router-dom";
 function Hero() {
   return (
     <div>
@@ -27,7 +28,7 @@ function Hero() {
             </p>
             <button className="flex space-x-10 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full md:w-1/2  ">
               <span className="text-white font-bold sm:text-xs md:text-xl text-left">
-                Create Advertisement
+                <Link to={"/advertisement"}> Create Advertisement </Link>
               </span>
 
               <BsArrowRight className="text-white" />
