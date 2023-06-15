@@ -12,3 +12,16 @@ export const getEmployeeBillboards = ({ currentPage }) => {
       return error;
     });
 };
+
+export const changeBillboardState = (billboard_id, approved) => {
+  return axiosInstance
+    .put(`/billboards/${billboard_id}`, approved)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};

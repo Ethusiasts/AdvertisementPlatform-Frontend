@@ -10,7 +10,6 @@ export default function Table() {
   const { data: users, isLoading } = useQuery(["proposals"], () => {
     return getAllUsers({ currentPage })
       .then((res) => {
-        console.log(res, "aebni");
         setTotalPages(Math.ceil(res.count / 6));
         return res;
       })

@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { changeUSerState } from "../../services/adminStat";
-import { getEmployeeBillboards } from "../../services/employee";
+import {
+  changeBillboardState,
+  getEmployeeBillboards,
+} from "../../services/employee";
 import { Link } from "react-router-dom";
 import ButtonWithModal from "./buttonWithModal";
 import AdPopup from "./advertisementDetail";
@@ -21,8 +23,8 @@ export default function Table() {
   });
   console.log(users);
   const mutation = useMutation({
-    mutationFn: ([user_id, isBlocked]) => {
-      return changeUSerState(user_id, isBlocked);
+    mutationFn: ([billboard_id, approved]) => {
+      return changeBillboardState(billboard_id, approved);
     },
     onSuccess: () => {
       alert("successfully posted");
@@ -33,20 +35,20 @@ export default function Table() {
     setCurrentPage(pageNumber);
   };
 
-  const handleDeactivate = (event) => {
+  const handleReject = (event) => {
     mutation.mutate([
       event.currentTarget.dataset.id,
       {
-        is_blocked: true,
+        approved: 0,
       },
     ]);
   };
 
-  const handleActivate = (event) => {
+  const handleApprove = (event) => {
     mutation.mutate([
       event.currentTarget.dataset.id,
       {
-        is_blocked: false,
+        approved: 2,
       },
     ]);
   };
@@ -149,19 +151,15 @@ export default function Table() {
                         to={`/user/${user.id}/billboards/${user.billboard_id.id}`}
                         className="text-blue"
                       >
-                        <button
-                          class="px-2 py-1 text-xs font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100"
-                          data-id={user?.user?.id}
-                          onClick={handleDeactivate}
-                        >
+                        <button class="px-2 py-1 text-xs font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100">
                           {" "}
                           View Billboard{" "}
                         </button>
                       </Link>
                       <button
                         class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        data-id={user?.user?.id}
-                        onClick={handleActivate}
+                        data-id={user.billboard_id.id}
+                        onClick={handleApprove}
                       >
                         {" "}
                         Approve{" "}
@@ -169,8 +167,8 @@ export default function Table() {
 
                       <button
                         class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-green-100"
-                        data-id={user?.user?.id}
-                        onClick={handleDeactivate}
+                        data-id={user.billboard_id.id}
+                        onClick={handleReject}
                       >
                         {" "}
                         Reject{" "}
