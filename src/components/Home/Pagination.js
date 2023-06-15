@@ -167,10 +167,16 @@ const Pagination = forwardRef(
     }));
 
     if (isLoading) {
-      return <div>Loading...</div>;
+      return (
+        <div className="flex justify-center items-center h-64">Loading...</div>
+      );
     }
     if (!cardData) {
-      return <div>No data found</div>;
+      return (
+        <div className="flex justify-center items-center h-64">
+          No data found
+        </div>
+      );
     }
 
     return (
@@ -188,6 +194,7 @@ const Pagination = forwardRef(
                   production={card.production}
                   width={card.width}
                   height={card.height}
+                  adult_content={card.adult_content}
                   location={card.location}
                   imageSrc={card.image}
                   alt="Billboard Image"
@@ -202,6 +209,7 @@ const Pagination = forwardRef(
               {cardData.map((card) => (
                 <AgencyCard
                   id={card.id}
+                  item={card}
                   rate={card.average_rating}
                   image={card.image}
                   channel_name={card.channel_name}
@@ -209,6 +217,7 @@ const Pagination = forwardRef(
                   production={card.production}
                   normal_hour={card.normal}
                   alt="Agency Image"
+                  onAddClick={handleOnAddClick}
                 />
               ))}
             </>

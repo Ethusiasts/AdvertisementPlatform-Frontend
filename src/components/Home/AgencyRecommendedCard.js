@@ -1,19 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExpandArrowsAlt,
-  faMapMarkerAlt,
-  faDollarSign,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import RatingStars from "./RatingStars";
 
-export default function RecommendedCard({
-  status,
+export default function AgencyRecommendedCard({
+  channel_name,
   rate,
-  price,
+  peak_hour,
   production,
-  width,
-  height,
+  normal,
   imageSrc,
   alt,
 }) {
@@ -26,14 +20,17 @@ export default function RecommendedCard({
       />
       <div className="px-4 mt-4">
         <div className="flex justify-between items-center">
-          <span className="text-[#0FA958] font-bold text-xs">{status}</span>
+          <span className="text-[#0FA958] font-bold text-xs">
+            {channel_name}
+          </span>
         </div>
         <div className="flex justify-between items-center mt-2">
-          <FontAwesomeIcon
-            icon={faDollarSign}
-            className="text-[#7D7D7D] text-xs"
-          />
-          <span className="text-xs">{price} birr</span>
+          <span>Peak Hour</span>
+          <span className="text-xs">{peak_hour} birr</span>
+        </div>
+        <div className="flex justify-between items-center mt-2">
+          <span>Normal</span>
+          <span className="text-xs">{normal} birr</span>
         </div>
         <div className="flex justify-between items-center mt-2">
           <FontAwesomeIcon
@@ -42,15 +39,6 @@ export default function RecommendedCard({
           />
           <span className="text-xs">
             {production ? "With Production" : "Without Production"}
-          </span>
-        </div>
-        <div className="flex justify-between items-center mt-2">
-          <FontAwesomeIcon
-            icon={faExpandArrowsAlt}
-            className="text-[#7D7D7D] text-xs"
-          />
-          <span className="text-xs">
-            W{width} : H{height}
           </span>
         </div>
         <div className="mt-4">

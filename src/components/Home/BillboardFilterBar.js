@@ -36,7 +36,8 @@ export default function BillboardFilterBar({
   const [searchDistanceValue, setsearchDistanceValue] = useState(1);
   const [channelType, setchannelType] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const options = ["TV", "RADIO", "MAGAZINE"];
+  const [adultContent, setAdultContent] = useState(false);
+  const options = ["TV", "RADIO"];
 
   let min_price = priceValue[0];
   let max_price = priceValue[1];
@@ -46,6 +47,9 @@ export default function BillboardFilterBar({
   };
   const handleLocation = (event) => {
     setLocation(event.target.value);
+  };
+  const handleCheckboxChange = () => {
+    setAdultContent(!adultContent);
   };
 
   useEffect(() => {
@@ -112,6 +116,7 @@ export default function BillboardFilterBar({
 
   const handleClearAllButton = () => {
     setSize(0);
+    setAdultContent(false);
     setLocation("");
     setType("");
     setResetPriceFilter(true); // Set the resetPriceFilter state to trigger PriceFilter reset
@@ -129,6 +134,7 @@ export default function BillboardFilterBar({
         latitude,
         longitude,
         type,
+        adultContent,
         size,
         min_price,
         max_price,
@@ -253,6 +259,21 @@ export default function BillboardFilterBar({
                   onSearchDistanceValueChange={handleSearchDistanceValueChange}
                   setResetSearchDistance={setResetSearchDistance}
                 />
+              </div>
+              <li className=" text-[#2E4541] font-bold text-l pt-2 pb-2 ">
+                Content
+              </li>
+              <div className="flex items-center ">
+                <input
+                  id="checkbox3"
+                  type="checkbox"
+                  className="form-checkbox h-4 w-4 accent-[#3f51b5]  bg-white-500"
+                  checked={adultContent}
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor="checkbox1" className="ml-6 block text-gray-500">
+                  With Adult Content
+                </label>
               </div>
             </>
           )}

@@ -67,6 +67,7 @@ export const searchBillboards = ({
   latitude,
   longitude,
   type,
+  adultContent,
   size,
   min_price,
   max_price,
@@ -79,6 +80,9 @@ export const searchBillboards = ({
   if (searchDistanceValue) {
     console.log(searchDistanceValue, "radius");
     url += `&radius=${searchDistanceValue}`;
+  }
+  if (adultContent) {
+    url += `&adult_content=${adultContent}`;
   }
   if (latitude) {
     url += `&latitude=${latitude}`;
@@ -130,6 +134,17 @@ export const getBillboardReviews = ({ billboardId }) => {
     .get(`/billboards/${billboardId}/ratings/`)
     .then((res) => {
       return { success: true, data: res.data };
+    })
+    .catch((error) => {
+      return { success: false, data: error };
+    });
+};
+
+export const getBillboardRecommendations = () => {
+  return axiosInstance
+    .get("/billboards/recommendations")
+    .then((res) => {
+      return res.data;
     })
     .catch((error) => {
       return { success: false, data: error };
