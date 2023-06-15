@@ -13,6 +13,22 @@ const Cart = () => {
     setItems(getCart());
   }, [cartItems]);
 
+  const totalLandlord = cartItems.reduce((count, item) => {
+    if (item?.daily_rate_per_sq) {
+      return count + 1;
+    } else {
+      return count;
+    }
+  }, 0);
+
+  const totalAgencies = cartItems.reduce((count, item) => {
+    if (item?.peak_hour) {
+      return count + 1;
+    } else {
+      return count;
+    }
+  }, 0);
+
   return (
     <>
       <Navigation />
@@ -117,24 +133,25 @@ const Cart = () => {
                   </div>
                   <div class="flex items-center justify-between pt-5">
                     <p class="text-base leading-none text-gray-800 dark:text-white">
-                      Shipping
+                      Number of Landlords:
                     </p>
-                    <p class="text-base leading-none text-gray-800 dark:text-white"></p>
+                    <p class="text-base leading-none text-gray-800 dark:text-white">
+                      {totalLandlord}
+                    </p>
                   </div>
                   <div class="flex items-center justify-between pt-5">
                     <p class="text-base leading-none text-gray-800 dark:text-white">
-                      Tax
+                      Number of Agencies:
                     </p>
-                    <p class="text-base leading-none text-gray-800 dark:text-white"></p>
+                    <p class="text-base leading-none text-gray-800 dark:text-white">
+                      {totalAgencies}
+                    </p>
                   </div>
                 </div>
                 <div>
                   <div class="flex items-center pb-6 justify-between lg:pt-5 pt-20">
                     <p class="text-2xl leading-normal text-gray-800 dark:text-white">
-                      Total
-                    </p>
-                    <p class="text-2xl font-bold leading-normal text-right text-gray-800 dark:text-white">
-                      ,240
+                      Send Proposal For All
                     </p>
                   </div>
                   <button
