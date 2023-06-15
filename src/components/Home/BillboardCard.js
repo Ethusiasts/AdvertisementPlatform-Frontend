@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpandArrowsAlt } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { faDollar } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +19,7 @@ export default function Card({
   width,
   height,
   location,
+  adult_content,
   imageSrc,
   alt,
   onAddClick,
@@ -79,6 +81,21 @@ export default function Card({
             {production ? "With Production" : "Without Production"}
           </span>
         </div>
+        <div className="flex pt-2">
+          <FontAwesomeIcon
+            icon={faExclamationTriangle}
+            className=" text-[#7D7D7D] pr-3 text-xs"
+          />
+          <span
+            className={`${
+              adult_content === false ? "text-red-500" : "text-[#0FA958]"
+            }  text-xs`}
+          >
+            {adult_content
+              ? "Adult content Allowed"
+              : "Adult content not allowed"}
+          </span>
+        </div>
         <div className="flex pt-3">
           <FontAwesomeIcon
             icon={faExpandArrowsAlt}
@@ -88,6 +105,7 @@ export default function Card({
             W{width} : H{height}
           </span>
         </div>
+
         {/* <div className="flex pt-3">
           <FontAwesomeIcon
             icon={faLocationCrosshairs}

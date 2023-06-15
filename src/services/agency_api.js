@@ -119,5 +119,16 @@ export const getMedias = ({ currentPage }) => {
     });
 };
 
+export const getAgencyRecommendations = () => {
+  return axiosInstance
+    .get("/agencies/recommendations")
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      return { success: false, data: error };
+    });
+};
+
 export const addMedias = () => {};
 export const updateMedias = ({ mediaId }) => {};
