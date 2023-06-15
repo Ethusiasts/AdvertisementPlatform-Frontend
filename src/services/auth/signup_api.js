@@ -13,7 +13,6 @@ export const signUp = ({ email, role, is_verified, password }) => {
       return res.data;
     })
     .catch((error) => {
-      console.error(error);
       return error;
     });
 };
