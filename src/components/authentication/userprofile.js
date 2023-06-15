@@ -14,7 +14,7 @@ const UserProfileDropDown = ({ style }) => {
   };
 
   const handleSetProfile = () => {
-    const user_profile = JSON.parse(getCookie("user_profile"));
+    const user_profile = JSON.parse(getCookie("user_profile") ?? "");
     setUsername(user_profile.username ?? "");
     setProfilePic(user_profile.profile_picture ?? "");
   };

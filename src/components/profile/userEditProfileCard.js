@@ -24,16 +24,19 @@ export default function UserEditProfileCard() {
 
   const { mutate, isLoading } = useMutation(editUserStepper, {
     onSuccess: async (data) => {
-      if (data.status === 201) {
+      if (data.status === 200) {
         console.log(data);
-        toast.success("Success");
+        toast.success("Successfully Updated Profile");
         setTimeout(() => {
           navigate(-1);
         }, 3000);
       } else {
-        console.log("Inside errors", data);
-        setNotification(data.response.data.message);
-        setType("error");
+        var errors = "";
+        Object.keys(data.response.data.message).forEach((key) => {
+          errors += data.response.data.message[key][0] + "\n";
+        });
+        console.log(errors);
+        toast.error(errors);
       }
     },
     onError: () => {
@@ -72,14 +75,7 @@ export default function UserEditProfileCard() {
   };
   return (
     <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg h-full w-full">
-      <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400">
-        {" "}
-        {notification ? (
-          <AlertService message={notification} type={type} />
-        ) : (
-          ""
-        )}
-      </div>
+      <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400"></div>
       <div className="flex justify-between ml-10 -mt-14">
         <div className="flex justify-between gap-10">
           <ProfilePicEdit />
@@ -254,12 +250,6 @@ export default function UserEditProfileCard() {
           </div>
 
           <div className="flex justify-end gap-4">
-            <button
-              className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark"
-              type="submit"
-            >
-              Cancel
-            </button>
             <button
               className="flex justify-center rounded bg-blue-600 py-2 px-6 font-medium text-white hover:shadow-1"
               type="submit"

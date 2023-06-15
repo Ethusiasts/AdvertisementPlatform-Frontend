@@ -21,6 +21,7 @@ export default function SignInForm() {
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
+
         setCookie("user", data.token, cred.exp);
         data.firstTimeLogin
           ? setTimeout(() => {
@@ -85,8 +86,6 @@ export default function SignInForm() {
       email: email,
     };
     mutateGoogle(user);
-
-    localStorage.setItem("user", JSON.stringify(user));
   };
 
   return (
