@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { getCookie, navMenus, removeCookie } from "../../utils/index";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserProfileDropDown from "../authentication/userprofile";
+import { FaSearch } from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
 function Navigation() {
   const [mobile, setMobile] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  // Check if the current route is localhost:3000
   const handleMobile = () => {
     setMobile(!mobile);
   };
@@ -75,6 +76,15 @@ function Navigation() {
                 </>
               );
             })}
+
+            <li>
+              <Link
+                className="text-sm text-black hover:text-gray-500"
+                to="/search"
+              >
+                <BsSearch size={20} />
+              </Link>
+            </li>
           </ul>
         ) : (
           ""
@@ -149,6 +159,15 @@ function Navigation() {
                     </li>
                   );
                 })}
+
+                <li>
+                  <Link
+                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                    to="/search"
+                  >
+                    Search
+                  </Link>
+                </li>
 
                 <li>
                   <Link

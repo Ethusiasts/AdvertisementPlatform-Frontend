@@ -1,12 +1,12 @@
-import { getBillboardReviews } from "../../services/billboard_api";
+import { getReviews } from "../../services/billboard_api";
 import { useQuery } from "@tanstack/react-query";
 import Rating from "@material-ui/lab/Rating";
 
-export default function Messages({ billboardId }) {
-  const { data: billboardReviews, isLoading } = useQuery(
-    ["billboardReviews"],
+export default function Messages({ mediaId, type }) {
+  const { data: reviews, isLoading } = useQuery(
+    ["reviews"],
     () => {
-      return getBillboardReviews({ billboardId })
+      return getReviews({ mediaId, type })
         .then((res) => {
           return res.data;
         })
@@ -14,14 +14,13 @@ export default function Messages({ billboardId }) {
           return error;
         });
     },
-    { billboardId }
+    { mediaId }
   );
-  // console.log(billboardReviews);
 
   return (
-    <div class="flex mx-16">
+    <div class="flex mx-16 mb-10">
       <div class="max-w-xl">
-        {billboardReviews?.results?.map((review) => (
+        {reviews?.results?.map((review) => (
           <div class="">
             <Rating
               name="read-only"
@@ -35,12 +34,15 @@ export default function Messages({ billboardId }) {
                 <div class="">
                   <img
                     class="w-6 h-6 rounded-full"
-                    src="https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"
+                    src={review.user_id?.image}
                     alt=""
                   />
                 </div>
                 <div class="text-sm font-semibold">
-                  John Lucas • <span class="font-normal"> 5 minutes ago</span>
+                  {review.user_id?.first_name} {review.user_id.last_name} •{" "}
+                  <span class="font-normal">
+                    {new Date(review.created_at).toLocaleDateString()}
+                  </span>
                 </div>
               </div>
             </div>

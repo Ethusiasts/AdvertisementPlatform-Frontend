@@ -1,67 +1,76 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { React } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import ButtonWithModal from "./buttonWithModal";
 import CreateProposalForm from "./createProposal";
 
-export default function ImageCard({ image, status, billboard }) {
-  const [images, setImages] = useState({
-    img1: "https://bookmybillboards.com/wp-content/uploads/2017/08/OUtdoor-advertising-in-United-Kingdom.jpg",
-    img2: "https://bookmybillboards.com/wp-content/uploads/2017/08/glamour.jpg",
-    img4: "https://bookmybillboards.com/wp-content/uploads/2017/07/DEL03-1.jpg",
+export default function ImageCard({ image, billboard }) {
+  const { data: location } = useQuery(["location"], () => {
+    return axios
+      .get(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${billboard.latitude}&lon=${billboard.longitude}`
+      )
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   });
-  const [activeImg, setActiveImage] = useState(image);
 
   return (
     <div class="relative">
-      <img src={activeImg} alt="billboard" class="w-full h-96 object-cover" />
-      <div class="absolute inset-x-0 bottom-0 h-9 bg-gradient-to-t from-transparent to-white"></div>
+      <img src={image} alt="billboard" class="w-full h-96 object-cover" />
+      {/* <div class="absolute inset-x-0 bottom-0 h-9 bg-gradient-to-t from-transparent to-white"></div> */}
+      {/* <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-transparent to-black"></div> */}
 
-      <span class="absolute top-5 left-[5%] p-2 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-1xl font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-        {status}
-      </span>
-      <div className="absolute flex flex-row gap-4 bottom-16 left-[5%] h-24">
-        <img
-          src={images.img1}
-          alt=""
-          className="w-30 h-24 rounded-md cursor-pointer border-2 border-white-600"
-          onClick={() => setActiveImage(images.img1)}
-        />
-        <img
-          src={images.img2}
-          alt=""
-          className="w-30 h-24 rounded-md cursor-pointer border-2 border-white-600"
-          onClick={() => setActiveImage(images.img2)}
-        />
-        <img
-          src={images.img4}
-          alt=""
-          className="w-30 h-24 rounded-md cursor-pointer border-2 border-white-600"
-          onClick={() => setActiveImage(images.img4)}
-        />
+      {billboard?.status === "Free" ? (
+        <span className="absolute top-5 left-[5%] p-2 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-1xl font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+          {billboard?.status}
+        </span>
+      ) : (
+        <span className="absolute top-5 left-[5%] p-2 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-1xl font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+          {billboard?.status}
+        </span>
+      )}
+
+      <div className="absolute flex flex-row gap-4 bottom-1 left-[4%] h-24">
+        <span class="text-2xl text-white text-bold">
+          {location?.display_name}
+        </span>
       </div>
 
       <div class="absolute right-[5%] -mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0 -translate-y-44">
         <div class="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-15 shadow-md">
           <div class="mx-auto max-w-xs px-8">
             <p class="text-base font-semibold text-gray-600">
-              Pay once, own it forever
+              Daily Rate Per sqm
             </p>
             <p class="mt-6 flex items-baseline justify-center gap-x-2">
               <span class="text-5xl font-bold tracking-tight text-gray-900">
-                $349
+                ${billboard.daily_rate_per_sq}
               </span>
               <span class="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                 ETB
               </span>
             </p>
-            <ButtonWithModal
-              modalContent={
-                <div>
-                  <CreateProposalForm billboard={billboard} />
-                </div>
-              }
-            />
+            {billboard?.status === "Free" ? (
+              <ButtonWithModal
+                modalContent={
+                  <div>
+                    <CreateProposalForm billboard={billboard} />
+                  </div>
+                }
+              />
+            ) : (
+              <></>
+            )}
             <p class="mt-6 text-xs leading-5 text-gray-600">
-              Invoices and receipts available for easy company reimbursement
+              Additional price with production{" "}
+              <span class="text-red-800 text-bold text-2xl">
+                +${billboard.production}
+              </span>
             </p>
           </div>
         </div>

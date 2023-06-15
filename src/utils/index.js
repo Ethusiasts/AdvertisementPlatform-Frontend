@@ -14,27 +14,26 @@ export const selectOptionsSignUp = [
 export const heroSectionTitle = "Advertising your brands";
 export const trustSectionTitle = "Trusted by content creators across the world";
 export const advertisementTitle = "For Advertisers";
-export const monetiseTitle = "How to Monetize Your Site";
+export const monetiseTitle = "How to Monetize Your Billboard";
 export const testimonialTitle = "Our Clients Testimonials Excellence";
 export const testimonialDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+  "Advert has been instrumental in driving our advertising success. Their programmatic marketplace and targeted reach solutions have allowed us to precisely target our audience and achieve impressive results. ";
 
 export const monetiseDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+  "Discover the perfect solution to monetize your billboard with Advert. Our innovative platform connects billboard owners with advertisers and media agencies, enabling you to maximize your revenue effortlessly.Through our programmatic marketplace, you gain access to a vast network of advertisers seeking prime billboard spaces. Say goodbye to empty ad slots and hello to a constant stream of revenue. We handle the logistics, ensuring a seamless experience for both parties involved..";
 
 export const advertisementDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
-
+  "Discover Advert, the ultimate platform connecting advertisers with billboard owners and media agencies. Say goodbye to conventional advertising challenges and embrace our cutting-edge solution.\n\nOur programmatic marketplace empowers advertisers to execute location-based out-of-home (OOH) campaigns efficiently and at a cost-effective scale. With our advanced automation and performance-driven approach, you'll achieve unmatched results in the market.";
 export const heroSectionDescription =
-  "Creativity without strategy is called art, creative with strategy is called advertisement";
+  "Creativity without strategy is called art, creative with strategy is called advertisement.";
 export const trustSectionDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+  "We specialize in serving the outdoor media and digital out-of-home (DOOH) marketplace, ensuring that you reach your target audience effectively. Whether you're a business owner, marketer, or media agency, our platform empowers you to maximize your advertising efforts and achieve outstanding results.";
 export const sliderImages = [
-  "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png",
-  "https://www.freepnglogos.com/uploads/tut-wuri-handayani-png-logo/lambang-logo-logo-depdiknas-wuri-handayani-10.png",
-  "https://www.freepnglogos.com/uploads/netflix-logo-circle-png-5.png",
-  "https://banner2.cleanpng.com/20171218/f41/apple-logo-png-5a37e212dfda18.3311147015136117949169.jpg",
-  "https://png2.cleanpng.com/sh/c18d3d5c614a9a980b41f02eaec11c2e/L0KzQYm3U8MxN6poj5H0aYP2gLBuTfNwdaF6jNd7LXnmf7B6Tfxwb5Cygd9qZ3Wwg7nokvlvb15rhNN9LXTog7rujr1qdqR5edl7YX2wRbLphcBnOpc5UacBMUOxRIq8VcY6PGE2TaQ7NEC4QYeAU8AxPF91htk=/kisspng-computer-icons-logo-image-sharing-flat-design-instagram-5abe0f2f495613.4955694015224051673004.png",
+  "https://img.shgstatic.com/clutchco-static/image/scale/65x65/s3fs-public/logos/b30dd41db474bf7dc740a7c98fe24ad9.svg",
+  "https://img.shgstatic.com/clutchco-static/image/scale/50x50/s3fs-public/logos/2f98dad19b700e39b0d15b1266c0a8ef.jpeg",
+  "https://img.shgstatic.com/clutchco-static/image/scale/50x50/s3fs-public/logos/4f7181f723d74539be2a3ed9502d2c84.png",
+  "https://img.shgstatic.com/clutchco-static/image/scale/65x65/s3fs-public/logos/8414994bc2a3e96e82559256a0b6ad95.png",
+  "https://img.shgstatic.com/clutchco-static/image/scale/65x65/s3fs-public/logos/bnngwj-a_400x400.jpg",
 ];
 
 export const InfiniteLoopSlider = ({ children, duration, reverse = false }) => {

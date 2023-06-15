@@ -3,7 +3,6 @@ import Table from "../../components/mediaAgency/table";
 import SideBar from "../../components/mediaAgency/sidebar";
 import Header from "../../components/mediaAgency/header";
 import Label from "../../components/medias/label";
-
 export default function Media() {
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
@@ -11,39 +10,15 @@ export default function Media() {
         <SideBar />
       </div>
       <div class="h-full ml-14 mr-14 mt-5 mb-10 md:ml-64">
-        <Header title="Advertisement" />
+        <Header title="Media" />
         <Label />
 
         <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4">
           <div class="p-5">
             <Card
-              title="Magazine"
-              description="Get Noticed: Create a Stunning Magazine Ad to Showcase Your Brand and Boost Sales"
-              route="/Advertisement/CreateMagazineAd"
-              photo="https://images.unsplash.com/photo-1614036634955-ae5e90f9b9eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
-            />
-          </div>
-          <div class="p-5">
-            <Card
-              title="Billboard"
-              description="Take Your Message to New Heights: Design a Memorable Billboard Ad Today"
-              route="/Advertisement/CreateBillboard"
-              photo="https://images.unsplash.com/photo-1576864333214-b2cee50f8283?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
-            />
-          </div>
-          <div class="p-5">
-            <Card
-              title="Radio"
-              description="Make Waves in the Airwaves: Create a Captivating Radio Ad That Stands Out from the Competition!"
-              route="/Advertisement/CreateRadioAd"
-              photo="https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
-            />
-          </div>
-          <div class="p-5">
-            <Card
-              title="TV"
+              title="TV or Radio Media"
               description="Tell Your Story on the Big Screen: Design a TV Ad That Leaves a Lasting Impression on Your Viewers!"
-              route="/Advertisement/CreateTvAd"
+              route="/CreateMedia"
               photo="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
             />
           </div>

@@ -12,7 +12,7 @@ function Slider() {
   return (
     <div className=" wrap w-5/6 mx-auto  font-Lato my-4 ">
       <header>
-        <h1>Meet Our Top Clients Around The World</h1>
+        <h1>Meet Our Top Clients </h1>
       </header>
       <div className="img-list">
         <InfiniteLoopSlider

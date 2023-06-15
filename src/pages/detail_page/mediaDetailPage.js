@@ -2,21 +2,28 @@ import "../../styles/detail.css";
 import { getMediaDetail } from "../../services/agency_api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
-import ImageCard from "../../components/billboardDetails/imageCard";
 import Description from "../../components/billboardDetails/description";
-import MediaInfo from "../../components/billboardDetails/mediaInfo";
 import Rating from "../../components/billboardDetails/rating";
 import Comments from "../../components/billboardDetails/comments";
 import Messages from "../../components/billboardDetails/messages";
-import Nearby from "../../components/billboardDetails/nearby";
+import { Navigate } from "react-router-dom";
+import MediaImageCard from "../../components/mediaDetail/mediaImageCard";
+import Info from "../../components/mediaDetail/info";
 import Footer from "../../components/Landing/Footer";
+import MediaRelated from "../../components/mediaDetail/related";
 
 export default function MediaDetail() {
   let props = useParams();
   const { mediaId } = props;
-  const { data: mediaDetail, isLoading } = useQuery(
+  const {
+    data: mediaDetail,
+    isLoading,
+    error,
+  } = useQuery(
     ["mediaDetail"],
     () => {
       return getMediaDetail({ mediaId })
@@ -27,8 +34,9 @@ export default function MediaDetail() {
           return error;
         });
     },
-    { mediaId }
+    { enabled: !!mediaId }
   );
+  console.log(mediaDetail);
 
   if (isLoading) {
     return (
@@ -50,40 +58,39 @@ export default function MediaDetail() {
               fill="currentFill"
             />
           </svg>
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only"></span>
         </div>
       </div>
     );
   }
+  if (error) {
+    const err = {
+      status: "404",
+      message: "Page Not Found",
+      header: "Oops!",
+    };
+    return <Navigate to="/error" state={err} replace={true} />;
+  }
   if (mediaDetail) {
     return (
       <>
+        <ToastContainer />
+
         <Navigation />
         {/* Images */}
-        <ImageCard image={mediaDetail?.image} status={mediaDetail?.status} />
+        <MediaImageCard image={mediaDetail?.image} media={mediaDetail} />
         {/* Description */}
-        <Description
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi,
-    consectetur."
-        />
+        <Description description={mediaDetail?.description} />
         {/* Media Info */}
-        <MediaInfo
-          billboardId={mediaDetail?.id}
-          width={mediaDetail?.width}
-          height={mediaDetail?.height}
-          status={mediaDetail?.status}
-          price={mediaDetail?.monthly_rate_per_sq}
-          size={mediaDetail?.height * mediaDetail?.width}
-          location={mediaDetail?.location}
-        />
+        <Info media={mediaDetail} />
         {/* Reviews */}
-        <Rating />
+        <Rating billboard={mediaDetail} type="agencies" />
         {/* Comments */}
-        <Comments />
+        <Comments type="Agency" />
         {/* Message */}
-        <Messages />
-        {/* Nearby Places */}
-        <Nearby />
+        <Messages mediaId={mediaDetail.id} type="agencies" />
+        {/* Related Media */}
+        <MediaRelated name={mediaDetail.channel_name} />
         {/* Footer */}
         <Footer />
       </>

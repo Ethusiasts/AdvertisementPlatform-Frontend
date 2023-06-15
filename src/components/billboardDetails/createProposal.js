@@ -2,51 +2,62 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import AdvertisementSelect from "./autocompleteDropDown";
 import { createProposal } from "../../services/proposal";
+import { CircularProgress } from "@mui/material";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+
+import { toast } from "react-toastify";
+import getUser from "../../utils/utils";
 
 export default function CreateProposalForm({ billboard }) {
-  console.log(billboard);
+  const user = getUser();
   const mutation = useMutation({
     mutationFn: (proposal) => {
       return createProposal(proposal);
     },
-    onSuccess: () => {
-      alert("successfully posted");
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success("Successfully Created");
+      } else {
+        toast.error("Could Not Create Your Proposal, Check Your Input ");
+      }
     },
   });
 
-  if (mutation.isLoading) {
-    alert("is loading");
-  }
-
-  if (mutation.isSuccess) {
-    alert("is successfull");
-  }
+  let daily = parseFloat(billboard?.daily_rate_per_sq);
+  let prod = parseFloat(billboard?.production);
 
   const [proposalName, setProposalName] = useState("");
   const [proposalDescription, setProposalDescription] = useState("");
-  const [totalPrice, setTotalPrice] = useState("99.99");
+  const [totalPrice, setTotalPrice] = useState(0);
   const [advertisement, setAdvertisement] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+    if (event.target.checked) {
+      setTotalPrice(totalPrice + prod);
+    } else {
+      setTotalPrice(totalPrice - prod);
+    }
+  };
+
   const handleDataFromChild = (value) => {
+    if (!value) {
+      setTotalPrice(0 + isChecked ? prod : 0);
+      return;
+    }
     setAdvertisement(value);
+    const width = parseFloat(value?.width);
+    const height = parseFloat(value?.height);
+    setTotalPrice(width * height * daily);
   };
 
   const handleProposalNameChange = (event) => {
     setProposalName(event.target.value);
-    console.log({
-      name: proposalName,
-      description: proposalDescription,
-      total_price: totalPrice,
-      user_id: 1,
-      billboard_id: billboard?.id,
-      media_agency_id: billboard?.media_agency_id,
-      advertisement_id: advertisement?.id,
-    });
   };
   const handleProposalDescriptionChange = (event) => {
     setProposalDescription(event.target.value);
-  };
-  const handleTotalPriceChange = (event) => {
-    setTotalPrice(event.target.value);
   };
 
   const handleSubmit = (url) => {
@@ -54,7 +65,8 @@ export default function CreateProposalForm({ billboard }) {
       name: proposalName,
       description: proposalDescription,
       total_price: totalPrice,
-      user_id: 1,
+      production: isChecked,
+      user_id: user?.id,
       billboard_id: billboard?.id,
       media_agency_id: billboard?.media_agency_id,
       advertisement_id: advertisement?.id,
@@ -86,6 +98,7 @@ export default function CreateProposalForm({ billboard }) {
               placeholder="Proposal Name"
               value={proposalName}
               onChange={handleProposalNameChange}
+              required
             />
           </div>
           <div className="w-1/2 mb-4">
@@ -103,20 +116,25 @@ export default function CreateProposalForm({ billboard }) {
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
             value={proposalDescription}
             onChange={handleProposalDescriptionChange}
+            required
           ></textarea>
         </div>
       </div>
+      <FormControlLabel
+        control={
+          <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+        }
+        label="With Production"
+      />
 
       <div className="w-full flex justify-end">
         <div class="bg-gray-100 rounded-md p-4">
           <p class="font-medium text-lg text-gray-800">
-            Total Price:
-            <input
-              value={totalPrice}
-              onChange={handleTotalPriceChange}
-              class="text-xl font-bold text-green-500 w-auto"
-              disabled
-            />
+            Daily Price :{" "}
+            <span class="text-xl font-bold text-green-500 w-auto">$</span>
+            <span class="text-xl font-bold text-green-500 w-auto">
+              {totalPrice}
+            </span>
           </p>
         </div>
       </div>
@@ -125,8 +143,9 @@ export default function CreateProposalForm({ billboard }) {
         <button
           onClick={handleSubmit}
           class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60"
+          disabled={mutation.isLoading}
         >
-          Continue
+          {mutation.isLoading ? <CircularProgress /> : "Create Proposal"}
         </button>
       </div>
     </div>

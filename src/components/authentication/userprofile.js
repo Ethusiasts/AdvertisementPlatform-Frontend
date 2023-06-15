@@ -13,10 +13,19 @@ const UserProfileDropDown = ({ style }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleSetProfile = () => {
-    const user_profile = JSON.parse(getCookie("user_profile"));
-    setUsername(user_profile.username ?? "");
-    setProfilePic(user_profile.profile_picture ?? "");
+  const handleSetProfile = async () => {
+    const user_profile = JSON.parse(getCookie("user_profile")) ?? "";
+
+    if (!user_profile) {
+      const cookieValue = await getCookie("user_profile");
+      const parsedValue = JSON.parse(cookieValue) ?? {};
+
+      setUsername(parsedValue.username ?? "");
+      setProfilePic(parsedValue.profile_picture ?? "");
+    } else {
+      setUsername(user_profile.username ?? "");
+      setProfilePic(user_profile.profile_picture ?? "");
+    }
   };
 
   const handleLogout = () => {

@@ -1,6 +1,7 @@
 import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { monetiseDescription, monetiseTitle } from "../../utils";
+import { Link } from "react-router-dom";
 
 function Monetise() {
   return (
@@ -15,12 +16,19 @@ function Monetise() {
         </div>
         <div className="row-span-full  col-start-5 col-end-9 flex flex-col gap-y-8 ">
           <h1 className="text-3xl font-bold mt-0">{monetiseTitle}</h1>
+          <h2 className="text-2xl font-bold text-gray-600 ">
+            Unlock the Potential of Your Billboard <br />
+            <br />
+            <span className="text-gray-700 text-xl">
+              Monetization Made Easy!
+            </span>
+          </h2>
           <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-xl ">
             {monetiseDescription}
           </p>
           <button className="flex space-x-10 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
             <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">
-              Get Started
+              <Link to={"/search"}> Get Started</Link>
             </span>
 
             <BsArrowRight className="text-white" />

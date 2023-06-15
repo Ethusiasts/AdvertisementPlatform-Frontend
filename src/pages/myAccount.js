@@ -1,9 +1,8 @@
 import Card from "../components/user/card";
-import Table from "../components/user/table";
 import SideBar from "../components/user/sidebar";
-import FavouritesCard from "../components/user/favourites";
 import InfoCard from "../components/user/infoCard";
 import Header from "../components/user/header";
+import Table from "../components/advertisement/table";
 export default function MyAccount() {
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">

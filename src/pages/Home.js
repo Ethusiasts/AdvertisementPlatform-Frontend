@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Home/Pagination";
-import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import BillboardFilterBar from "../components/Home/BillboardFilterBar";
 import SearchBox from "../components/Home/SearchBox";
@@ -17,6 +16,7 @@ import Cart from "../components/Home/Cart";
 import { Link } from "react-router-dom";
 
 import { itemsCount } from "../utils/cart";
+import Footer from "../components/Landing/Footer";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -91,9 +91,23 @@ export default function Home() {
       <Hero />
       <div className="backgroundImg">
         <div className="header2 py-5 ">
-          <button onClick={() => setIsBillboard(true)}> Billboards</button>{" "}
+          <button
+            onClick={() => setIsBillboard(true)}
+            className={
+              isBillboard ? "text-blue-400 text-bold text-xl" : "text-xl"
+            }
+          >
+            {" "}
+            Billboards
+          </button>{" "}
           <span className="md:mr-3 text-[#D0CFCE]">|</span>{" "}
-          <button onClick={() => setIsBillboard(false)}> Media Agencies</button>
+          <button
+            onClick={() => setIsBillboard(false)}
+            class={!isBillboard ? "text-blue-400 text-bold text-xl" : "text-xl"}
+          >
+            {" "}
+            Media Agencies
+          </button>
         </div>
 
         <div className="grid grid-cols-10">
@@ -250,8 +264,6 @@ export default function Home() {
       <div className="mx-7">
         <RecommendedCarousel isBillboard={isBillboard} />
       </div>
-
-      <Help />
 
       <div className="mt-20">
         <Footer />

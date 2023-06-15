@@ -116,47 +116,7 @@ function Footer() {
             </a>
           </div>
 
-          <div>
-            <form action="">
-              <div class="grid-cols-3 grid items-center justify-center gap-4 md:grid-cols-3">
-                <div class="sm:text-sm md:text-lg font-black md:mb-6 md:ml-auto">
-                  Sign up for our newsletter
-                </div>
-
-                <div class="relative md:mb-6">
-                  <input
-                    type="text"
-                    class="peer block w-full rounded border-solid border-b-2 border-sky-500 bg-transparent px-3 py-[0.32rem] leading-[1.6] text-neutral-200 outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                    placeholder="Email address"
-                  />
-                </div>
-
-                <div class="mb-6 md:mr-auto">
-                  <button
-                    type="submit"
-                    class="inline-block rounded border-2 border-neutral-50 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-100 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-neutral-100 focus:border-neutral-100 focus:text-neutral-100 focus:outline-none focus:ring-0 active:border-neutral-200 active:text-neutral-200 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-                    data-te-ripple-init
-                    data-te-ripple-color="light"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="grid md:grid-cols-2 lg:grid-cols-4">
-            <div class="mb-6 text-justify">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-              distinctio earum repellat quaerat voluptatibus placeat nam,
-              commodi optio pariatur est quia magnam eum harum corrupti dicta,
-              aliquam sequi voluptate quas.
-            </div>
-            <OurServices />
-            <About />
-
-            <Resources />
-          </div>
+          <div></div>
         </div>
 
         <div class="p-4 text-center bg-gray-700">

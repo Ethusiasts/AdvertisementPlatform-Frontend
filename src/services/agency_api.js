@@ -22,6 +22,30 @@ export const getAgencies = ({ currentPage }) => {
     });
 };
 
+export const createAgency = (agency) => {
+  return axiosInstance
+    .post(`/agencies/`, agency)
+    .then((res) => {
+      return { success: true, data: res.data };
+    })
+    .catch((error) => {
+      return { success: false, data: error };
+    });
+};
+
+export const deleteAgency = ({ agencyId }) => {
+  console.log(agencyId);
+  return axiosInstance
+    .delete(`/agencies/${agencyId}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error;
+    });
+};
+
 export const searchAgenciesWithQueryOnly = ({ query, currentPage }) => {
   return axiosInstance
     .get(`/agencies/search?q=${query}&page=${currentPage}`)
