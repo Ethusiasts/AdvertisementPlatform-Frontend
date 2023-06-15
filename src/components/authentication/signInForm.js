@@ -21,12 +21,11 @@ export default function SignInForm() {
         toast.success(data.message);
 
         const cred = jwt_decode(data.token);
-        console.log(cred);
 
         setCookie("user", data.token, cred.exp);
         data.firstTimeLogin
           ? setTimeout(() => {
-              if (cred.role === "Customer") {
+              if (cred.role === "customer") {
                 navigate("/userstepper");
               } else if (cred.role === "landowner") {
                 navigate("/mediaAgencyStepper");
@@ -34,7 +33,7 @@ export default function SignInForm() {
             }, 3000)
           : setTimeout(() => {
               getUserStepper(cred.id);
-              if (cred.role === "Customer") {
+              if (cred.role === "customer") {
                 navigate("/search");
               } else if (cred.role === "landowner") {
                 navigate("/BillboardDashboard");

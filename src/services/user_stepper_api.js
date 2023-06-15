@@ -25,7 +25,6 @@ export const editUserStepper = (user) => {
 };
 
 export const getUserStepper = (userId) => {
-  console.log("USERID", userId);
   return axiosInstance
     .get(`/auth/profiles/${userId}`)
     .then((res) => {
@@ -34,7 +33,6 @@ export const getUserStepper = (userId) => {
     })
     .catch((error) => {
       console.error(error);
-      console.log(error);
 
       return error;
     });
