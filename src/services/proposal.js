@@ -25,10 +25,10 @@ export const getProposal = (proposal_id) => {
     });
 };
 
-export const getMediaAgencyProposals = () => {
+export const getMediaAgencyProposals = ({ currentPage }) => {
   console.log(id);
   return axiosInstance
-    .get(`/media_agencies/${id}/proposals/`)
+    .get(`/media_agencies/${id}/proposals?page=${currentPage}`)
     .then((res) => {
       return res.data;
     })
@@ -38,9 +38,9 @@ export const getMediaAgencyProposals = () => {
     });
 };
 
-export const getUserProposals = () => {
+export const getUserProposals = ({ currentPage }) => {
   return axiosInstance
-    .get(`/auth/${id}/proposals/`)
+    .get(`/auth/${id}/proposals?page=${currentPage}`)
     .then((res) => {
       return res.data;
     })

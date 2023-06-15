@@ -3,9 +3,9 @@ import getUser from "../utils/utils";
 
 const id = getUser()?.id;
 
-export const getMediaAgencyBillbaords = () => {
+export const getMediaAgencyBillbaords = ({ currentPage }) => {
   return axiosInstance
-    .get(`/media_agencies/${id}/billboards/`)
+    .get(`/media_agencies/${id}/billboards?page=${currentPage}`)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -16,9 +16,9 @@ export const getMediaAgencyBillbaords = () => {
     });
 };
 
-export const getMediaAgencyAgencies = () => {
+export const getMediaAgencyAgencies = ({ currentPage }) => {
   return axiosInstance
-    .get(`/media_agencies/${id}/agencies/`)
+    .get(`/media_agencies/${id}/agencies?page=${currentPage}`)
     .then((res) => {
       return res.data;
     })

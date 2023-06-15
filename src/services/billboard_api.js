@@ -127,7 +127,7 @@ export const addReview = (reviewData) => {
 
 export const getBillboardReviews = ({ billboardId }) => {
   return axiosInstance
-    .get(`/billboards/${billboardId}/ratings/`)
+    .get(`/billboards/${billboardId}/ratings`)
     .then((res) => {
       return { success: true, data: res.data };
     })

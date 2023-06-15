@@ -145,52 +145,6 @@ export default function SideBar({
             <span class="ml-2 text-sm tracking-wide truncate">Contracts</span>
           </a>
         </li>
-        <li>
-          <a
-            href="#"
-            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-400 text-black hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
-          >
-            <span class="inline-flex justify-center items-center ml-4">
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-              </svg>{" "}
-            </span>
-            <span class="ml-2 text-sm tracking-wide truncate">Favourites</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/ContactUs"
-            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-400 text-black hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
-          >
-            <span class="inline-flex justify-center items-center ml-4">
-              <svg
-                class="w-5 h-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-            </span>
-            <span class="ml-2 text-sm tracking-wide truncate">Contact Us</span>
-          </a>
-        </li>
         <li class="px-5 hidden md:block">
           <div class="flex flex-row items-center mt-5 h-8">
             <div class="text-sm font-light tracking-wide text-gray-400 uppercase">

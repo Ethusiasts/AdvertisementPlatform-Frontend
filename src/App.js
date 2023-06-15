@@ -22,7 +22,6 @@ import CreateMagazineAd from "./pages/advertisement/createMagazineAd";
 import CreateRadioAd from "./pages/advertisement/createRadioAd";
 import AdminDashboard from "./pages/admin/adminDashboard";
 import UserControl from "./pages/admin/userControl";
-import HelpAndSupport from "./pages/admin/helpAndSupport";
 import ContactUs from "./pages/contactUs/contactUs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ForgotPassword from "./pages/authentication/forgotPassword";
@@ -59,6 +58,7 @@ import React, { useState } from "react";
 import CreateMedia from "./pages/medias/createMedia";
 import BillboardCreateContract from "./pages/contract/billboardCreateContract";
 import MediaCreateContract from "./pages/contract/mediaCreateContract";
+import EmployeeDashboard from "./pages/employee/employeeDashboard";
 // HOC for checking authentication and authorization
 export const ImgContext = React.createContext();
 
@@ -256,7 +256,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute
         Component={LandlordsBillboardDetail}
-        roles={["landowner"]}
+        roles={["landowner", "Employee"]}
       />
     ),
   },
@@ -306,15 +306,20 @@ const router = createBrowserRouter([
   // Admin
   {
     path: "/AdminDashboard",
-    element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
+    element: <AdminDashboard />,
+    // element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
   },
   {
     path: "/UserControl",
-    element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
+    element: <UserControl />,
+    // element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
   },
+
+  // Employeee
   {
-    path: "/HelpAndSupport",
-    element: <ProtectedRoute Component={HelpAndSupport} roles={["admin"]} />,
+    path: "/EmployeeDashboard",
+    element: <EmployeeDashboard />,
+    // element: <ProtectedRoute Component={AdminDashboard} roles={["admin"]} />,
   },
 
   // Profile

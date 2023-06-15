@@ -1,16 +1,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getAllUsers } from "../../services/users";
-import ButtonWithModal from "./buttonWithModal";
 import { changeUSerState } from "../../services/adminStat";
+import { getEmployeeBillboards } from "../../services/employee";
+import { Link } from "react-router-dom";
+import ButtonWithModal from "./buttonWithModal";
+import AdPopup from "./advertisementDetail";
 import { useState } from "react";
 export default function Table() {
   const [totalPages, setTotalPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: users, isLoading } = useQuery(["proposals"], () => {
-    return getAllUsers({ currentPage })
+  const { data: users, isLoading } = useQuery(["user.billboard_ids"], () => {
+    return getEmployeeBillboards({ currentPage })
       .then((res) => {
-        console.log(res, "aebni");
         setTotalPages(Math.ceil(res.count / 6));
         return res;
       })
@@ -18,10 +19,6 @@ export default function Table() {
         return error;
       });
   });
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
   console.log(users);
   const mutation = useMutation({
     mutationFn: ([user_id, isBlocked]) => {
@@ -31,6 +28,10 @@ export default function Table() {
       alert("successfully posted");
     },
   });
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handleDeactivate = (event) => {
     mutation.mutate([
@@ -56,12 +57,13 @@ export default function Table() {
         <div class="w-full overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-300 bg-gray-50 dark:text-gray-400 dark:bg-gray-100">
-                <th class="px-4 py-3">User</th>
-                <th class="px-4 py-3">Email</th>
-                <th class="px-4 py-3">Role</th>
+              <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-300 bg-gray-50 dark:text-gray-500 dark:bg-gray-100">
+                <th class="px-4 py-3">Location</th>
+                <th class="px-4 py-3">Daily Fee per square feet</th>
                 <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Joined Date</th>
+                <th class="px-4 py-3">Approved</th>
+                <th class="px-4 py-3">Paid</th>
+                <th class="px-4 py-3">Created Date</th>
                 <th class="px-4 py-3"></th>
               </tr>
             </thead>
@@ -73,7 +75,7 @@ export default function Table() {
                       <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
                         <img
                           class="object-cover w-full h-full rounded-full"
-                          src={user.profile_picture}
+                          src={user.billboard_id.image}
                           alt=""
                           loading="lazy"
                         />
@@ -84,81 +86,99 @@ export default function Table() {
                       </div>
                       <div>
                         <p class="font-semibold">
-                          {user.first_name} {user.last_name}
+                          {user.billboard_id.location}
+                        </p>
+                        <p class="text-xs font-bold text-gray-600 dark:text-black">
+                          {user.billboard_id.height} X {user.billboard_id.width}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td class="px-4 py-3 text-sm">{user?.user?.email}</td>
-                  <td class="px-4 py-3 text-sm">{user?.user?.role}</td>
+                  <td class="px-4 py-3 text-sm">
+                    ${user.billboard_id.daily_rate_per_sq}
+                  </td>
                   <td class="px-4 py-3 text-xs">
-                    {user?.user?.is_blocked ? (
-                      <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
-                        Blocked
+                    {user.billboard_id.status === "Free" ? (
+                      <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
+                        Free
                       </p>
                     ) : (
-                      <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
-                        Active
+                      <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
+                        Occupied
                       </p>
                     )}
                   </td>
-                  <td class="px-4 py-3 text-sm">
-                    {new Date(user?.created_at).toLocaleDateString()}
+                  <td class="px-4 py-3 text-xs">
+                    {user.billboard_id.approved === 2 ? (
+                      <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
+                        Approved
+                      </p>
+                    ) : user.billboard_id.approved === 1 ? (
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
+                      </p>
+                    ) : (
+                      <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
+                        Rejected
+                      </p>
+                    )}
                   </td>
-                  <td class="px-4 py-3 text-sm flex justify-center gap-4">
-                    <ButtonWithModal
-                      modalContent={
-                        <div class="w-96 overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                          <div class="relative z-20 h-35 md:h-48">
-                            <div class="h-48 bg-gradient-to-br from-teal-500 to-gray-400"></div>
-                            <div class="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4"></div>
-                          </div>
-                          <div class="px-4 pb-6 text-center lg:pb-8 xl:pb-11">
-                            <div className="relative z-30 mx-auto -mt-20 h-30 w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:w-44 sm:p-2">
-                              <div className="relative drop-shadow-2">
-                                <img
-                                  src={user.profile_picture}
-                                  alt="profile"
-                                  class="h-28 w-28 sm:h-40 sm:w-40 rounded-full"
-                                />
-                              </div>
-                            </div>
-                            <div class="mt-4">
-                              <h3 class="mb-1 text-2xl font-medium text-gray-900 ">
-                                {user.first_name} {user.last_name}
-                              </h3>
-                              <p class="text-gray-400">{user.username}</p>
-                              <h3 class="mb-1 text-xl font-medium text-gray-800 ">
-                                {user?.user?.email}
-                              </h3>
-                              <p class="font-medium text-gray-400">
-                                {user?.user?.role}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      }
-                    />
+                  <td class="px-4 py-3 text-xs">
+                    {user.billboard_id.paid ? (
+                      <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
+                        Paid
+                      </p>
+                    ) : (
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
+                      </p>
+                    )}
+                  </td>
 
-                    {user?.user?.is_blocked ? (
+                  <td class="px-4 py-3 text-sm">
+                    {new Date(user.billboard_id.created_at).toLocaleDateString(
+                      "en-US"
+                    )}
+                  </td>
+                  <td class="px-4 py-3 text-sm">
+                    <div className="flex justify-center items-center space-x-3">
+                      <ButtonWithModal
+                        modalContent={<AdPopup billboard={user.billboard_id} />}
+                      />
+                      <Link
+                        to={`/user/${user.id}/billboards/${user.billboard_id.id}`}
+                        className="text-blue"
+                      >
+                        <button
+                          class="px-2 py-1 text-xs font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100"
+                          data-id={user?.user?.id}
+                          onClick={handleDeactivate}
+                        >
+                          {" "}
+                          View Billboard{" "}
+                        </button>
+                      </Link>
                       <button
                         class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
                         data-id={user?.user?.id}
                         onClick={handleActivate}
                       >
                         {" "}
-                        Activate{" "}
+                        Approve{" "}
                       </button>
-                    ) : (
+
                       <button
                         class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-green-100"
                         data-id={user?.user?.id}
                         onClick={handleDeactivate}
                       >
                         {" "}
-                        Deactivate{" "}
+                        Reject{" "}
                       </button>
-                    )}
+                      {/* <ButtonWithModal
+                              modalContent={<PaymentForm user.billboard_id={user.billboard_id} />}
+                            /> */}
+                    </div>
                   </td>
                 </tr>
               ))}
