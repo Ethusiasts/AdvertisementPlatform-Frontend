@@ -8,15 +8,14 @@ function Advertisers() {
       <div class="grid auto-cols-min  grid-cols-8 sm:grid-cols-1 md:grid-cols-8">
         <div class="row-span-full  flex flex-col gap-y-8 col-start-1 col-end-4  ">
           <h1 className="text-3xl font-bold mt-0">{advertisementTitle}</h1>
+          <h2 className="font-bold text-2xl text-gray-500">
+            <span className="text-gray-700">Advert</span> Revolutionizing
+            Advertising for Advertisers!
+          </h2>
           <p className="mb-2 w-full text-justify  text-gray-500 sm:text-sm lg:text-xl  ">
             {advertisementDescription}
           </p>
-          <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-xl  ">
-            {advertisementDescription}
-          </p>{" "}
-          <p className="mb-2 w-full text-justify text-gray-500 sm:text-sm lg:text-xl  ">
-            {advertisementDescription}
-          </p>
+
           <button className="flex space-x-10 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-full  ">
             <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">
               Create Advertisement
