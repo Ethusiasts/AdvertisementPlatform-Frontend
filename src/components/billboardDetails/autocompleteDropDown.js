@@ -33,6 +33,7 @@ export default function AdvertisementSelect({ onData }) {
       autoHighlight
       getOptionLabel={(option) => option.advertisement_name}
       onChange={handleAutocompleteChange}
+      required
       renderOption={(props, option) => (
         <Box component="li" {...props}>
           <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">

@@ -5,6 +5,8 @@ import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import getUser from "../../utils/utils";
 import AdvertisementSelect from "../billboardDetails/autocompleteDropDown";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 export default function CreateMediaProposal({ media }) {
   const user = getUser();
@@ -21,12 +23,43 @@ export default function CreateMediaProposal({ media }) {
     },
   });
 
+  let normal = parseFloat(media?.normal);
+  let prod = parseFloat(media?.production);
+  let peak = parseFloat(media?.peak_hour);
+
   const [proposalName, setProposalName] = useState("");
   const [proposalDescription, setProposalDescription] = useState("");
-  const [totalPrice, setTotalPrice] = useState("99.99");
+  const [totalPrice, setTotalPrice] = useState(0);
   const [advertisement, setAdvertisement] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isPeakHour, setIsPeakHour] = useState(false);
+
   const handleDataFromChild = (value) => {
+    console.log(value);
+    if (!value) {
+      setTotalPrice(0 + isChecked ? prod : 0 + isPeakHour ? peak : 0);
+      return;
+    }
     setAdvertisement(value);
+    const duration = parseFloat(value?.duration_in_hour) * 60;
+    setTotalPrice(duration * normal);
+  };
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+    if (event.target.checked) {
+      setTotalPrice(totalPrice + prod);
+    } else {
+      setTotalPrice(totalPrice - prod);
+    }
+  };
+  const handleIsPeakChange = (event) => {
+    setIsPeakHour(event.target.checked);
+    if (event.target.checked) {
+      setTotalPrice(totalPrice + peak);
+    } else {
+      setTotalPrice(totalPrice - peak);
+    }
   };
 
   const handleProposalNameChange = (event) => {
@@ -35,15 +68,14 @@ export default function CreateMediaProposal({ media }) {
   const handleProposalDescriptionChange = (event) => {
     setProposalDescription(event.target.value);
   };
-  const handleTotalPriceChange = (event) => {
-    setTotalPrice(event.target.value);
-  };
 
   const handleSubmit = (url) => {
     mutation.mutate({
       name: proposalName,
       description: proposalDescription,
       total_price: totalPrice,
+      production: isChecked,
+      peak_hour: isPeakHour,
       user_id: user?.id,
       agency_id: media?.id,
       media_agency_id: media?.media_agency_id,
@@ -97,17 +129,27 @@ export default function CreateMediaProposal({ media }) {
         </div>
       </div>
 
+      <FormControlLabel
+        control={
+          <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+        }
+        label="With Production"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox checked={isPeakHour} onChange={handleIsPeakChange} />
+        }
+        label="Peak Hour"
+      />
+
       <div className="w-full flex justify-end">
         <div class="bg-gray-100 rounded-md p-4">
           <p class="font-medium text-lg text-gray-800">
             Total Price :{" "}
             <span class="text-xl font-bold text-green-500 w-auto">$</span>
-            <input
-              value={totalPrice}
-              onChange={handleTotalPriceChange}
-              class="text-xl font-bold text-green-500 w-auto"
-              disabled
-            />
+            <span class="text-xl font-bold text-green-500 w-auto">
+              {totalPrice}
+            </span>
           </p>
         </div>
       </div>
