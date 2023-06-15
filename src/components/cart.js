@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { getCart, removeItem } from "../utils/cart";
+import ButtonWithModal from "./billboardDetails/buttonWithModal";
+import CreateCardProposal from "./createProposalCard";
 import Navigation from "./Landing/Navigation";
 
 const Cart = () => {
@@ -11,7 +13,7 @@ const Cart = () => {
 
   useEffect(() => {
     setItems(getCart());
-  }, [cartItems]);
+  }, [cartItems.length]);
 
   const totalLandlord = cartItems.reduce((count, item) => {
     if (item?.daily_rate_per_sq) {
@@ -154,12 +156,14 @@ const Cart = () => {
                       Send Proposal For All
                     </p>
                   </div>
-                  <button
-                    onclick="checkoutHandler1(true)"
-                    class="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white dark:hover:bg-gray-700"
-                  >
-                    Create Proposal
-                  </button>
+
+                  <ButtonWithModal
+                    modalContent={
+                      <div>
+                        <CreateCardProposal cartItems={cartItems} />
+                      </div>
+                    }
+                  />
                 </div>
               </div>
             </div>
