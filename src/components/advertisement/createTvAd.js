@@ -1,31 +1,33 @@
 import React, { useState } from "react";
 import { storage } from "../../firebase";
+import getUser from "../../utils/utils";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createAdvertisement } from "../../services/advertisement";
+import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTvAdForm({ photo, title, description }) {
+  const user = getUser();
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: (advertisement) => {
       return createAdvertisement(advertisement);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      toast.success("Advertisement Successfully created");
+      setIsLoading(false);
+
+      return navigate("/Advertisement");
     },
   });
 
-  if (mutation.isLoading) {
-    alert("is loading");
-  }
-
-  if (mutation.isSuccess) {
-    alert("is successfull");
-  }
-
   const [advertisementName, setAdvertisementName] = useState("");
   const [durationInHour, setDurationInHour] = useState("");
-  const [quantity, setQuantity] = useState("");
   const [video, setVideo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAdvertisementNameChange = (event) => {
     setAdvertisementName(event.target.value);
@@ -33,10 +35,6 @@ export default function CreateTvAdForm({ photo, title, description }) {
 
   const handleDurationInHourChange = (event) => {
     setDurationInHour(event.target.value);
-  };
-
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
   };
 
   const handleVideoChange = (event) => {
@@ -50,22 +48,34 @@ export default function CreateTvAdForm({ photo, title, description }) {
       advertisement_type: "tv",
       duration_in_hour: durationInHour,
       advertisement_file: url,
-      quantity: quantity,
-      user_id: 1,
+      user_id: user?.id,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    if (video == null) return;
+
+    if (!video || !advertisementName || !durationInHour) {
+      toast.error("Please fill in all the required fields");
+      return;
+    }
+    setIsLoading(true);
     const videoRef = ref(storage, `Advertisement/videos/` + `${Date.now()}`);
 
     uploadBytes(videoRef, video).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        // console.log(url)
-        handleSubmit(url);
-        alert("Image Uploaded");
-      });
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          // console.log(url)
+          handleSubmit(url);
+          alert("Image Uploaded");
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          toast.error("Could Not Upload The Video", {
+            autoClose: 3000,
+          });
+          return error;
+        });
     });
   };
 
@@ -80,8 +90,9 @@ export default function CreateTvAdForm({ photo, title, description }) {
         vision to life. Tell your story in a way that captivates your audience
         and generates real results for your business. Start now
       </p>
-      <div class="mb-4">
-        <div className="w-full">
+
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
+        <div className="w-full sm:w-1/2">
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
             type="text"
@@ -92,8 +103,6 @@ export default function CreateTvAdForm({ photo, title, description }) {
             onChange={handleAdvertisementNameChange}
           />
         </div>
-      </div>
-      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
         <div className="w-full sm:w-1/2">
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
@@ -103,17 +112,6 @@ export default function CreateTvAdForm({ photo, title, description }) {
             placeholder="Duration in hour"
             value={durationInHour}
             onChange={handleDurationInHourChange}
-          />
-        </div>
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
-            name="Quantity"
-            id="Quantity"
-            placeholder="Quantity"
-            value={quantity}
-            onChange={handleQuantityChange}
           />
         </div>
       </div>
@@ -161,22 +159,21 @@ export default function CreateTvAdForm({ photo, title, description }) {
             <span className="text-blue-400">Click to upload video</span> or drag
             and drop
           </p>
-          <p className="mt-1">SVG, PNG, JPG or GIF</p>
-          <p>(max, 800 X 800px)</p>
+          <p className="mt-1">MP4, WAVE, WEBM</p>
+          <p>(max, 2mb)</p>
         </div>
       </div>
+
+      <p className={`mt-1.5 ${video ? "text-green-400" : "text-red-400"}`}>
+        {video ? "Selected" : "Not Selected"}
+      </p>
+
       <div class="flex justify-end">
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-600 font-semi-bold py-1 px-4 rounded mr-2 w-60">
-          Cancel
-        </button>
         <button
           onClick={uploadImage}
           class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60"
         >
-          Save Only
-        </button>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60">
-          Save and Continue
+          {isLoading ? <CircularProgress /> : "Save"}
         </button>
       </div>
     </div>

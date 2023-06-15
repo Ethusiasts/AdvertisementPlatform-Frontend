@@ -55,13 +55,17 @@ export default function ImageCard({ image, billboard }) {
                 ETB
               </span>
             </p>
-            <ButtonWithModal
-              modalContent={
-                <div>
-                  <CreateProposalForm billboard={billboard} />
-                </div>
-              }
-            />
+            {billboard?.status === "Free" ? (
+              <ButtonWithModal
+                modalContent={
+                  <div>
+                    <CreateProposalForm billboard={billboard} />
+                  </div>
+                }
+              />
+            ) : (
+              <></>
+            )}
             <p class="mt-6 text-xs leading-5 text-gray-600">
               Additional price with production{" "}
               <span class="text-red-800 text-bold text-2xl">
