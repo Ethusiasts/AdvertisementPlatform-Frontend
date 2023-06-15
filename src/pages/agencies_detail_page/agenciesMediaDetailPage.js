@@ -2,15 +2,18 @@ import "../../styles/detail.css";
 import { getMediaDetail } from "../../services/agency_api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
 import AgenciesImageCard from "../../components/billboardDetails/agenciesImageCard";
 import Description from "../../components/billboardDetails/description";
-import MediaInfo from "../../components/billboardDetails/mediaInfo";
-import Rating from "../../components/billboardDetails/rating";
 import Messages from "../../components/billboardDetails/messages";
-import Nearby from "../../components/billboardDetails/nearby";
+import MediaRelated from "../../components/mediaDetail/related";
 import Footer from "../../components/Landing/Footer";
+import { getReviews } from "../../services/billboard_api";
+import Info from "../../components/mediaDetail/info";
+import Ratings from "../../components/billboardDetails/rating";
 
 export default function AgenciesMediaDetail() {
   let props = useParams();
@@ -26,7 +29,22 @@ export default function AgenciesMediaDetail() {
           return error;
         });
     },
-    { mediaId }
+    { enabled: !!mediaId }
+  );
+
+  const type = "agencies";
+  const { data: reviews } = useQuery(
+    ["reviews"],
+    () => {
+      return getReviews({ mediaId, type })
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    { enabled: !!mediaId }
   );
 
   if (isLoading) {
@@ -54,39 +72,25 @@ export default function AgenciesMediaDetail() {
       </div>
     );
   }
-  if (mediaDetail) {
-    return (
-      <>
-        <Navigation />
-        {/* Images */}
-        <AgenciesImageCard
-          image={mediaDetail?.image}
-          status={mediaDetail?.status}
-        />
-        {/* Description */}
-        <Description
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi,
-    consectetur."
-        />
-        {/* Media Info */}
-        <MediaInfo
-          billboardId={mediaDetail?.id}
-          width={mediaDetail?.width}
-          height={mediaDetail?.height}
-          status={mediaDetail?.status}
-          price={mediaDetail?.monthly_rate_per_sq}
-          size={mediaDetail?.height * mediaDetail?.width}
-          location={mediaDetail?.location}
-        />
-        {/* Reviews */}
-        <Rating />
-        {/* Message */}
-        <Messages />
-        {/* Nearby Places */}
-        <Nearby />
-        {/* Footer */}
-        <Footer />
-      </>
-    );
-  }
+  return (
+    <>
+      <ToastContainer />
+
+      <Navigation />
+      {/* Images */}
+      <AgenciesImageCard image={mediaDetail?.image} media={mediaDetail} />
+      {/* Description */}
+      <Description description={mediaDetail?.description} />
+      {/* Media Info */}
+      <Info media={mediaDetail} />
+      {/* Reviews */}
+      <Ratings media={mediaDetail} type="agencies" />
+      {/* Message */}
+      <Messages reviews={reviews} />
+      {/* Related Media */}
+      <MediaRelated name={mediaDetail.channel_name} />
+      {/* Footer */}
+      <Footer />
+    </>
+  );
 }

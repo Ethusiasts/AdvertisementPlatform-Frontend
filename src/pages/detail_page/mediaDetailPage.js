@@ -90,29 +90,27 @@ export default function MediaDetail() {
     };
     return <Navigate to="/error" state={err} replace={true} />;
   }
-  if (mediaDetail) {
-    return (
-      <>
-        <ToastContainer />
+  return (
+    <>
+      <ToastContainer />
 
-        <Navigation />
-        {/* Images */}
-        <MediaImageCard image={mediaDetail?.image} media={mediaDetail} />
-        {/* Description */}
-        <Description description={mediaDetail?.description} />
-        {/* Media Info */}
-        <Info media={mediaDetail} />
-        {/* Reviews */}
-        <Rating media={mediaDetail} type="agencies" />
-        {/* Comments */}
-        <Comments mediaId={mediaDetail.id} type="Agency" onReview={onReview} />
-        {/* Message */}
-        <Messages reviews={reviews} />
-        {/* Related Media */}
-        <MediaRelated name={mediaDetail.channel_name} />
-        {/* Footer */}
-        <Footer />
-      </>
-    );
-  }
+      <Navigation />
+      {/* Images */}
+      <MediaImageCard image={mediaDetail?.image} media={mediaDetail} />
+      {/* Description */}
+      <Description description={mediaDetail?.description} />
+      {/* Media Info */}
+      <Info media={mediaDetail} />
+      {/* Reviews */}
+      <Rating media={mediaDetail} type="agencies" />
+      {/* Comments */}
+      <Comments mediaId={mediaDetail.id} type="Agency" onReview={onReview} />
+      {/* Message */}
+      <Messages reviews={reviews} />
+      {/* Related Media */}
+      <MediaRelated name={mediaDetail.channel_name} />
+      {/* Footer */}
+      <Footer />
+    </>
+  );
 }
