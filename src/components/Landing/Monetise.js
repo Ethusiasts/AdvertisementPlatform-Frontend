@@ -1,6 +1,7 @@
 import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { monetiseDescription, monetiseTitle } from "../../utils";
+import { Link } from "react-router-dom";
 
 function Monetise() {
   return (
@@ -27,7 +28,7 @@ function Monetise() {
           </p>
           <button className="flex space-x-10 items-center justify-center px-5 py-3 bg-blue-500 hover:bg-blue-700 rounded-none drop-shadow-md sm:w-full lg:w-1/2  ">
             <span className="text-white text-xl font-bold sm:text-sm md:text-xl ">
-              Get Started
+              <Link to={"/search"}> Get Started</Link>
             </span>
 
             <BsArrowRight className="text-white" />
