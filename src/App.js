@@ -358,7 +358,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   const client = new QueryClient();
-  const [ImgUrl, setImgUrl] = useState("");
+  const [ImgUrl, setImgUrl] = useState();
 
   return (
     <ImgContext.Provider value={{ ImgUrl, setImgUrl }}>
