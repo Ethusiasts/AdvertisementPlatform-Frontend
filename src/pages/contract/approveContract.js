@@ -1,5 +1,5 @@
-import SideBar from "../../components/billboards/sidebar";
-import Header from "../../components/billboards/header";
+import SideBar from "../../components/user/sidebar";
+import Header from "../../components/user/header";
 import ApproveContractForm from "../../components/contract/approveContract";
 
 export default function ApproveContract() {

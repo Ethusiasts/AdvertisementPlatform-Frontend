@@ -7,16 +7,20 @@ import { useState } from "react";
 export default function UserTable() {
   const [totalPages, setTotalPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: proposals, isLoading } = useQuery(["proposals"], () => {
-    return getUserProposals({ currentPage })
-      .then((res) => {
-        setTotalPages(Math.ceil(res.count / 6));
-        return res;
-      })
-      .catch((error) => {
-        return error;
-      });
-  });
+  const { data: proposals, isLoading } = useQuery(
+    ["user_proposals", currentPage],
+    () => {
+      return getUserProposals({ currentPage })
+        .then((res) => {
+          setTotalPages(Math.ceil(res.count / 6));
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    [currentPage]
+  );
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);

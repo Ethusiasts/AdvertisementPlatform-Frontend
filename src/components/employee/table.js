@@ -11,16 +11,20 @@ export default function Table() {
   const [totalPages, setTotalPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: users, isLoading } = useQuery(["user.billboard_ids"], () => {
-    return getEmployeeBillboards({ currentPage })
-      .then((res) => {
-        setTotalPages(Math.ceil(res.count / 6));
-        return res;
-      })
-      .catch((error) => {
-        return error;
-      });
-  });
+  const { data: users, isLoading } = useQuery(
+    ["user.billboard_ids", currentPage],
+    () => {
+      return getEmployeeBillboards({ currentPage })
+        .then((res) => {
+          setTotalPages(Math.ceil(res.count / 6));
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    [currentPage]
+  );
   console.log(users);
   const mutation = useMutation({
     mutationFn: ([billboard_id, approved]) => {

@@ -7,16 +7,20 @@ import { useState } from "react";
 export default function BillboardTable() {
   const [totalPages, setTotalPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: proposals, isLoading } = useQuery(["proposals"], () => {
-    return getMediaAgencyProposals({ currentPage })
-      .then((res) => {
-        setTotalPages(Math.ceil(res.count / 6));
-        return res;
-      })
-      .catch((error) => {
-        return error;
-      });
-  });
+  const { data: proposals, isLoading } = useQuery(
+    ["billboard_proposals", currentPage],
+    () => {
+      return getMediaAgencyProposals({ currentPage })
+        .then((res) => {
+          setTotalPages(Math.ceil(res.count / 6));
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    [currentPage]
+  );
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

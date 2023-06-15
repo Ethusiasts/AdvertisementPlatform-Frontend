@@ -58,6 +58,7 @@ export default function Table() {
     );
   }
 
+  console.log(advertisements);
   return (
     <div class="mt-4 mx-4">
       <div class="w-full overflow-hidden rounded-lg shadow-sm">
@@ -78,7 +79,7 @@ export default function Table() {
                   <td class="px-4 py-3">
                     <div class="flex items-center text-sm">
                       <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                        {advertisement.advertisement_type == "billboard" && (
+                        {advertisement.advertisement_type === "billboard" && (
                           <img
                             class="object-cover w-full h-full rounded-full"
                             src={advertisement.advertisement_file}
@@ -86,26 +87,18 @@ export default function Table() {
                             loading="lazy"
                           />
                         )}
-                        {advertisement.advertisement_type == "Tv" && (
+                        {advertisement.advertisement_type === "tv" && (
                           <img
                             class="object-cover w-full h-full rounded-full"
-                            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1159&q=80"
+                            src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
                             alt=""
                             loading="lazy"
                           />
                         )}
-                        {advertisement.advertisement_type == "Radio" && (
+                        {advertisement.advertisement_type === "audio" && (
                           <img
                             class="object-cover w-full h-full rounded-full"
                             src="https://images.unsplash.com/photo-1520444451380-ebe0f7b9cfd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                            alt=""
-                            loading="lazy"
-                          />
-                        )}
-                        {advertisement.advertisement_type == "Magazine" && (
-                          <img
-                            class="object-cover w-full h-full rounded-full"
-                            src="https://images.unsplash.com/photo-1620482061144-696c3a864f86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
                             alt=""
                             loading="lazy"
                           />

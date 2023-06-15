@@ -1,4 +1,4 @@
-import Header from "../../components/billboards/header";
+import Header from "../../components/user/header";
 import ContractDetailCard from "../../components/contract/contractDetail";
 import SideBar from "../../components/user/sidebar";
 export default function UserContractDetail() {

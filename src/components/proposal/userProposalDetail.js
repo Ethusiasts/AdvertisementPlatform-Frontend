@@ -1,6 +1,5 @@
 import React from "react";
 import BillboardCard from "./billboardCard";
-import AdvertisementCard from "./advertisementCard";
 import CardWithModal from "./cardWithModal";
 import AdPopup from "../advertisement/advertisementDetail";
 export default function UserProposalPopup({
@@ -23,9 +22,9 @@ export default function UserProposalPopup({
               advertisement={advertisement}
               modalContent={
                 <AdPopup
-                  name={advertisement.advertisement_name}
-                  type={advertisement.advertisement_type}
-                  mediaUrl={advertisement.advertisement_file}
+                  name={advertisement?.advertisement_name}
+                  type={advertisement?.advertisement_type}
+                  mediaUrl={advertisement?.advertisement_file}
                 />
               }
             />
@@ -66,7 +65,19 @@ export default function UserProposalPopup({
               Status:
             </label>
             <span id="proposal-status" class="text-gray-800">
-              {approved}
+              {approved === 2 ? (
+                <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
+                  Approved
+                </p>
+              ) : approved === 1 ? (
+                <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                  Pending
+                </p>
+              ) : (
+                <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
+                  Rejected
+                </p>
+              )}
             </span>
           </div>
         </div>

@@ -12,7 +12,7 @@ export default function ContractDetailCard({ photo, title, description }) {
     isLoading,
     error,
   } = useQuery(
-    ["contract"],
+    ["contract", contractId],
     () => {
       return getContract(contractId)
         .then((res) => {
@@ -27,6 +27,7 @@ export default function ContractDetailCard({ photo, title, description }) {
 
   console.log(contract);
   function downloadPdf() {
+    console.log(contract?.agency_signature, "akhdfasd");
     const element = document.getElementById("contract");
     const opt = {
       margin: 1,
@@ -111,7 +112,7 @@ export default function ContractDetailCard({ photo, title, description }) {
           <div className="flex justify-start items-center w-1/2 gap-5">
             <p className="font-semibold">Client:</p>
 
-            {contract?.customer_signature != "1" ? (
+            {contract?.customer_signature ? (
               <img
                 class="w-auto h-16"
                 src={contract?.customer_signature}

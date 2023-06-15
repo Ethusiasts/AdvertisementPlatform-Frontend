@@ -25,7 +25,7 @@ export default function PaymentForm({ billboard }) {
   const [taxReference, setTaxReference] = useState(
     `${user?.id}-${billboard.id}-${Date.now()}`
   );
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("500");
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -130,11 +130,11 @@ export default function PaymentForm({ billboard }) {
               type="text"
               name="amount"
               id="amount"
-              p
               placeholder="Amount"
               value={amount}
               onChange={handleAmountChange}
               required
+              disabled
             />
           </div>
           <div className="w-full sm:w-1/2">
