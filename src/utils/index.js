@@ -14,21 +14,20 @@ export const selectOptionsSignUp = [
 export const heroSectionTitle = "Advertising your brands";
 export const trustSectionTitle = "Trusted by content creators across the world";
 export const advertisementTitle = "For Advertisers";
-export const monetiseTitle = "How to Monetize Your Site";
+export const monetiseTitle = "How to Monetize Your Billboard";
 export const testimonialTitle = "Our Clients Testimonials Excellence";
 export const testimonialDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+  "Advert has been instrumental in driving our advertising success. Their programmatic marketplace and targeted reach solutions have allowed us to precisely target our audience and achieve impressive results. ";
 
 export const monetiseDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+  "Discover the perfect solution to monetize your billboard with Advert. Our innovative platform connects billboard owners with advertisers and media agencies, enabling you to maximize your revenue effortlessly.Through our programmatic marketplace, you gain access to a vast network of advertisers seeking prime billboard spaces. Say goodbye to empty ad slots and hello to a constant stream of revenue. We handle the logistics, ensuring a seamless experience for both parties involved..";
 
 export const advertisementDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
-
+  "Discover Advert, the ultimate platform connecting advertisers with billboard owners and media agencies. Say goodbye to conventional advertising challenges and embrace our cutting-edge solution.\n\nOur programmatic marketplace empowers advertisers to execute location-based out-of-home (OOH) campaigns efficiently and at a cost-effective scale. With our advanced automation and performance-driven approach, you'll achieve unmatched results in the market.";
 export const heroSectionDescription =
-  "Creativity without strategy is called art, creative with strategy is called advertisement";
+  "Creativity without strategy is called art, creative with strategy is called advertisement.";
 export const trustSectionDescription =
-  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.";
+  "We specialize in serving the outdoor media and digital out-of-home (DOOH) marketplace, ensuring that you reach your target audience effectively. Whether you're a business owner, marketer, or media agency, our platform empowers you to maximize your advertising efforts and achieve outstanding results.";
 export const sliderImages = [
   "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png",
   "https://www.freepnglogos.com/uploads/tut-wuri-handayani-png-logo/lambang-logo-logo-depdiknas-wuri-handayani-10.png",
