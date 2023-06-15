@@ -4,18 +4,22 @@ import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import MultiSelect from "./multiSelect";
 import getUser from "../utils/utils";
-import { createProposal } from "../services/proposal";
+import { createMultiProposal } from "../services/proposal";
 import AdvertisementSelect from "./billboardDetails/autocompleteDropDown";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateCardProposal({ cartItems }) {
   const user = getUser();
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: (proposal) => {
-      return createProposal(proposal);
+      return createMultiProposal(proposal);
     },
     onSuccess: (data) => {
       if (data.success) {
         toast.success("Successfully Created");
+        return navigate("/UserProposal");
       } else {
         toast.error("Could Not Create Your Proposal, Check Your Input ");
       }

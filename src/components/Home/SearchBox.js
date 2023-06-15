@@ -11,7 +11,7 @@ export default function SearchBox({ handleSearchChange, query }) {
 
   return (
     <div>
-      <div className="max-w-md flex text-center items-center bg-white border-none shadow-sm py-2 my-4">
+      <div className="max-w-md flex text-center items-center bg-white border-none shadow-sm py-2 my-4 rounded-full">
         <FontAwesomeIcon
           icon={faSearch}
           className="text-[#2785AE] text-2xl pl-5"

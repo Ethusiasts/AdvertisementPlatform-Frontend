@@ -4,18 +4,17 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import { getUserAdvertisements } from "../../services/advertisement";
-import getUser from "../../utils/utils";
 
 export default function AdvertisementSelect({ onData }) {
   const handleAutocompleteChange = (event, value) => {
     onData(value);
   };
 
-  const user = getUser();
+  const currentPage = 1;
   const { data: advertisements } = useQuery(
     ["advertisements"],
     () => {
-      return getUserAdvertisements(user?.id)
+      return getUserAdvertisements({ currentPage })
         .then((res) => {
           return res.results;
         })
@@ -23,9 +22,9 @@ export default function AdvertisementSelect({ onData }) {
           return error;
         });
     },
-    { enabled: !!user?.id }
+    []
   );
-
+  console.log(advertisements);
   return (
     <Autocomplete
       id="country-select-demo"
@@ -69,48 +68,3 @@ export default function AdvertisementSelect({ onData }) {
     />
   );
 }
-
-// const advertisements = [
-//   {
-//     adertisementName: "The Shawshank Redemption",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-//   {
-//     adertisementName: "The Godfather",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-//   {
-//     adertisementName: "The Godfather: Part II",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-//   {
-//     adertisementName: "The Dark Knight",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-//   {
-//     adertisementName: "12 Angry Men",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-//   {
-//     adertisementName: "Schindler's List",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-//   {
-//     adertisementName: "Pulp Fiction",
-//     advertisementfile:
-//       "https://images.unsplash.com/photo-1654157925394-4b7809721149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1460&q=80",
-//     date: "1/2/2012",
-//   },
-// ];

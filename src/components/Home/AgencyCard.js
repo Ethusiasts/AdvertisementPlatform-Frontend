@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import RatingStars from "./RatingStars";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { addItem, checkBillboard, removeItem } from "../../utils/cart";
+import { useState } from "react";
 
 export default function AgencyCard({
   id,
+  item,
   image,
   channel_name,
   peak_hour,
@@ -13,7 +17,26 @@ export default function AgencyCard({
   normal_hour,
   rate,
   alt,
+  onAddClick,
 }) {
+  const handleAddToCart = (event) => {
+    event.stopPropagation();
+    if (isInCart) {
+      removeItem(id);
+    } else {
+      addItem(item);
+    }
+    setIsInCart(checkBillboard(id));
+    // console.log("counted");
+    onAddClick();
+    // Call the remove from cart function
+    // onRemoveFromCart(id);
+    // Call the add to cart function
+
+    // console.log("itemssssss");
+    // console.log(getCart());
+  };
+  const [isInCart, setIsInCart] = useState(checkBillboard(id));
   return (
     <div className="billboard-card flex-1 bg-white rounded-lg overflow-hidden shadow-md mb-8">
       <Link key={id} to={`/medias/${id}`}>
@@ -46,6 +69,18 @@ export default function AgencyCard({
           <p className="text-xs pb-2">
             <RatingStars rating={rate} />
           </p>
+        </div>
+        <div className="bg-[#D3F1DA] rounded-lg px-6 inline-block mt-2">
+          <FontAwesomeIcon
+            icon={faShoppingCart}
+            className=" text-[#7D7D7D] pr-3 text-xs"
+          />
+          <button
+            className="text-[#0FA958] font-bold text-xs"
+            onClick={handleAddToCart}
+          >
+            {checkBillboard(id) ? "Remove from Cart" : "Add to Cart"}
+          </button>
         </div>
       </div>
     </div>

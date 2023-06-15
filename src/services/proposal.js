@@ -3,7 +3,6 @@ import getUser from "../utils/utils";
 
 const id = getUser()?.id;
 export const createProposal = (proposal) => {
-  console.log(proposal);
   return axiosInstance
     .post(`/proposals/`, proposal)
     .then((res) => {
@@ -14,6 +13,17 @@ export const createProposal = (proposal) => {
     });
 };
 
+export const createMultiProposal = (proposal) => {
+  console.log(proposal);
+  return axiosInstance
+    .post(`/proposals/multiple`, proposal)
+    .then((res) => {
+      return { success: true, data: res.data };
+    })
+    .catch((error) => {
+      return { success: false, data: error };
+    });
+};
 export const getProposal = (proposal_id) => {
   return axiosInstance
     .get(`/proposals/${proposal_id}`)

@@ -6,7 +6,7 @@ import Rating from "@material-ui/lab/Rating";
 import getUser from "../../utils/utils";
 import { CircularProgress } from "@mui/material";
 
-export default function Comments({ mediaId, type }) {
+export default function Comments({ mediaId, type, onReview }) {
   const user = getUser();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(2.5);
@@ -27,6 +27,7 @@ export default function Comments({ mediaId, type }) {
       if (data.success) {
         setComment("");
         toast.success("Successfully Posted");
+        onReview();
       } else {
         toast.error("Could Not Post Your Review", { autoClose: 6000 });
       }

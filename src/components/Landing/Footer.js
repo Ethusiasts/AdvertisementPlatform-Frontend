@@ -117,20 +117,6 @@ function Footer() {
           </div>
 
           <div></div>
-
-          <div class="grid md:grid-cols-2 lg:grid-cols-4">
-            <div class="mb-6 text-justify">
-              Advert, your premier online platform for connecting customers with
-              billboard owners and media agencies. Whether you're looking to
-              advertise on billboards, TV, or radio, we've got you covered.
-            </div>
-            {/* <OurServices /> */}
-            <h5 class="mb-2.5 font-bold uppercase">Our Services</h5>
-
-            <h5 class="mb-2.5 font-bold uppercase">About</h5>
-
-            <h5 class="mb-2.5 font-bold uppercase">Resources</h5>
-          </div>
         </div>
 
         <div class="p-4 text-center bg-gray-700">

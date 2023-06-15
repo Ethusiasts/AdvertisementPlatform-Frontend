@@ -77,9 +77,8 @@ export default function CreateMediaForm() {
     uploadBytes(imageRef, image)
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
+          toast.error("Image Uploaded");
           handleSubmit(url);
-          alert("Image Uploaded");
         });
       })
       .catch((error) => {

@@ -1,5 +1,5 @@
 import "../../styles/detail.css";
-import { getBillboardDetail } from "../../services/billboard_api";
+import { getBillboardDetail, getReviews } from "../../services/billboard_api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -21,7 +21,7 @@ export default function BillboardDetail() {
   const { billboardId } = props;
   const {
     data: billboardDetail,
-    isLoading,
+    isLoading: billboardDetailLoading,
     error,
   } = useQuery(
     ["billboardDetail"],
@@ -37,8 +37,27 @@ export default function BillboardDetail() {
     { enabled: !!billboardId }
   );
 
-  console.log(billboardDetail);
-  if (isLoading) {
+  const mediaId = billboardDetail?.id;
+  const type = "billboards";
+
+  const { data: reviews, refetch } = useQuery(
+    ["reviews"],
+    () => {
+      return getReviews({ mediaId, type })
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    { enabled: !!mediaId, waitFor: billboardDetailLoading }
+  );
+  function onReview() {
+    refetch();
+  }
+
+  if (billboardDetailLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
         <div role="status">
@@ -93,9 +112,13 @@ export default function BillboardDetail() {
       {/* Reviews */}
       <Ratings media={billboardDetail} type="billboards" />
       {/* Comments */}
-      <Comments billboardId={billboardDetail.id} type="Billboard" />
+      <Comments
+        mediaId={billboardDetail.id}
+        type="Billboard"
+        onReview={onReview}
+      />
       {/* Message */}
-      <Messages mediaId={billboardDetail.id} type="billboards" />
+      <Messages reviews={reviews} />
       {/* Nearby Places */}
       <Nearby
         latitude={billboardDetail.latitude}

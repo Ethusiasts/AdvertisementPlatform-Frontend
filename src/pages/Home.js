@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../components/Home/Pagination";
-import Footer from "../components/Home/Footer";
 import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import BillboardFilterBar from "../components/Home/BillboardFilterBar";
 import SearchBox from "../components/Home/SearchBox";
@@ -17,6 +16,7 @@ import Cart from "../components/Home/Cart";
 import { Link } from "react-router-dom";
 
 import { itemsCount } from "../utils/cart";
+import Footer from "../components/Landing/Footer";
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [sortBy, setSortBy] = useState(null);
@@ -262,10 +262,8 @@ export default function Home() {
       <div className="text-3xl font-bold mt-8 mb-4 ml-20">Recommendations</div>
 
       <div className="mx-7">
-        <RecommendedCarousel />
+        <RecommendedCarousel isBillboard={isBillboard} />
       </div>
-
-      <Help />
 
       <div className="mt-20">
         <Footer />

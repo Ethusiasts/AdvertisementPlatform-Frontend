@@ -1,5 +1,5 @@
 import "../../styles/detail.css";
-import { getBillboardDetail } from "../../services/billboard_api";
+import { getBillboardDetail, getReviews } from "../../services/billboard_api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -9,18 +9,18 @@ import Navigation from "../../components/Landing/Navigation";
 import AgenciesImageCard from "../../components/billboardDetails/agenciesImageCard";
 import Description from "../../components/billboardDetails/description";
 import MediaInfo from "../../components/billboardDetails/mediaInfo";
-import Rating from "../../components/billboardDetails/rating";
 import Messages from "../../components/billboardDetails/messages";
 import Nearby from "../../components/billboardDetails/nearby";
 import Footer from "../../components/Landing/Footer";
-import ErrorPage from "../../components/error";
+import { Navigate } from "react-router-dom";
+import Ratings from "../../components/billboardDetails/rating";
 
 export default function LandlordsBillboardDetail() {
   let props = useParams();
   const { billboardId } = props;
   const {
     data: billboardDetail,
-    isLoading,
+    isLoading: billboardDetailLoading,
     error,
   } = useQuery(
     ["billboardDetail"],
@@ -36,9 +36,24 @@ export default function LandlordsBillboardDetail() {
     { enabled: !!billboardId }
   );
 
-  console.log(billboardDetail);
+  const mediaId = billboardDetail?.id;
+  const type = "billboards";
 
-  if (isLoading) {
+  const { data: reviews } = useQuery(
+    ["reviews"],
+    () => {
+      return getReviews({ mediaId, type })
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    { enabled: !!mediaId, waitFor: billboardDetailLoading }
+  );
+
+  if (billboardDetailLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
         <div role="status">
@@ -64,7 +79,12 @@ export default function LandlordsBillboardDetail() {
     );
   }
   if (error) {
-    return <ErrorPage />;
+    const err = {
+      status: "404",
+      message: "Page Not Found",
+      header: "Oops!",
+    };
+    return <Navigate to="/error" state={err} replace={true} />;
   }
   return (
     <>
@@ -74,7 +94,7 @@ export default function LandlordsBillboardDetail() {
       {/* Images */}
       <AgenciesImageCard
         image={billboardDetail?.image}
-        status={billboardDetail.status}
+        billboard={billboardDetail}
       />
       {/* Description */}
       <Description description={billboardDetail.description} />
@@ -90,11 +110,14 @@ export default function LandlordsBillboardDetail() {
         longitude={billboardDetail.longitude}
       />
       {/* Reviews */}
-      <Rating />
+      <Ratings media={billboardDetail} type="billboards" />
       {/* Message */}
-      <Messages billboardId={billboardDetail.id} />
+      <Messages reviews={reviews} />
       {/* Nearby Places */}
-      <Nearby />
+      <Nearby
+        latitude={billboardDetail.latitude}
+        longitude={billboardDetail.longitude}
+      />
       {/* Footer */}
       <Footer />
     </>

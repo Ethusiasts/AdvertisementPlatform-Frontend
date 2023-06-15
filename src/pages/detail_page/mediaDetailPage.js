@@ -15,6 +15,7 @@ import MediaImageCard from "../../components/mediaDetail/mediaImageCard";
 import Info from "../../components/mediaDetail/info";
 import Footer from "../../components/Landing/Footer";
 import MediaRelated from "../../components/mediaDetail/related";
+import { getReviews } from "../../services/billboard_api";
 
 export default function MediaDetail() {
   let props = useParams();
@@ -36,7 +37,25 @@ export default function MediaDetail() {
     },
     { enabled: !!mediaId }
   );
-  console.log(mediaDetail);
+
+  const type = "agencies";
+  const { data: reviews, refetch } = useQuery(
+    ["reviews"],
+    () => {
+      return getReviews({ mediaId, type })
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    { enabled: !!mediaId }
+  );
+
+  function onReview() {
+    refetch();
+  }
 
   if (isLoading) {
     return (
@@ -71,29 +90,27 @@ export default function MediaDetail() {
     };
     return <Navigate to="/error" state={err} replace={true} />;
   }
-  if (mediaDetail) {
-    return (
-      <>
-        <ToastContainer />
+  return (
+    <>
+      <ToastContainer />
 
-        <Navigation />
-        {/* Images */}
-        <MediaImageCard image={mediaDetail?.image} media={mediaDetail} />
-        {/* Description */}
-        <Description description={mediaDetail?.description} />
-        {/* Media Info */}
-        <Info media={mediaDetail} />
-        {/* Reviews */}
-        <Rating billboard={mediaDetail} type="agencies" />
-        {/* Comments */}
-        <Comments type="Agency" />
-        {/* Message */}
-        <Messages mediaId={mediaDetail.id} type="agencies" />
-        {/* Related Media */}
-        <MediaRelated name={mediaDetail.channel_name} />
-        {/* Footer */}
-        <Footer />
-      </>
-    );
-  }
+      <Navigation />
+      {/* Images */}
+      <MediaImageCard image={mediaDetail?.image} media={mediaDetail} />
+      {/* Description */}
+      <Description description={mediaDetail?.description} />
+      {/* Media Info */}
+      <Info media={mediaDetail} />
+      {/* Reviews */}
+      <Rating media={mediaDetail} type="agencies" />
+      {/* Comments */}
+      <Comments mediaId={mediaDetail.id} type="Agency" onReview={onReview} />
+      {/* Message */}
+      <Messages reviews={reviews} />
+      {/* Related Media */}
+      <MediaRelated name={mediaDetail.channel_name} />
+      {/* Footer */}
+      <Footer />
+    </>
+  );
 }

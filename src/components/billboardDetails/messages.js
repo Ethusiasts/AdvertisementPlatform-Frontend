@@ -1,22 +1,6 @@
-import { getReviews } from "../../services/billboard_api";
-import { useQuery } from "@tanstack/react-query";
 import Rating from "@material-ui/lab/Rating";
 
-export default function Messages({ mediaId, type }) {
-  const { data: reviews, isLoading } = useQuery(
-    ["reviews"],
-    () => {
-      return getReviews({ mediaId, type })
-        .then((res) => {
-          return res.data;
-        })
-        .catch((error) => {
-          return error;
-        });
-    },
-    { mediaId }
-  );
-
+export default function Messages({ reviews }) {
   return (
     <div class="flex mx-16 mb-10">
       <div class="max-w-xl">
@@ -34,12 +18,12 @@ export default function Messages({ mediaId, type }) {
                 <div class="">
                   <img
                     class="w-6 h-6 rounded-full"
-                    src={review.user_id?.image}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6V1NHpqrmEQH_NYts3Lp1X6g4MWRRLH_1gg&usqp=CAU"
                     alt=""
                   />
                 </div>
                 <div class="text-sm font-semibold">
-                  {review.user_id?.first_name} {review.user_id.last_name} •{" "}
+                  {review.user_id?.email} •{" "}
                   <span class="font-normal">
                     {new Date(review.created_at).toLocaleDateString()}
                   </span>

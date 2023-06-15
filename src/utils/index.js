@@ -55,7 +55,7 @@ export const InfiniteLoopSlider = ({ children, duration, reverse = false }) => {
     >
       <div className="inner">
         {children}
-        {children}
+        {/* {children} */}
       </div>
     </div>
   );

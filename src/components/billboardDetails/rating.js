@@ -6,7 +6,7 @@ export default function Ratings({ media, type }) {
   const { data: totalUserCount } = useQuery(["totalUserCount"], () => {
     return axios
       .get(
-        `https://advertisementplatform-0xpy.onrender.com/api/v1/${type}/${media.id}/ratings/`
+        `https://advertisementplatform-0xpy.onrender.com/api/v1/${type}/${media?.id}/ratings`
       )
       .then((res) => {
         return res.data;
@@ -27,13 +27,15 @@ export default function Ratings({ media, type }) {
             <div class="mb-1 tracking-wide px-4">
               <div class="grid grid-cols-4 -mx-8 pb-3">
                 <div class="cols-span-1 mt-1 justify-center">
-                  <h1 class="text-3xl font-bold">{media.average_rating}</h1>
+                  <h1 class="text-3xl font-bold">
+                    {media?.average_rating.toFixed(2)}
+                  </h1>
                   <div class="flex my-2">
                     <Rating
                       name="half-rating"
                       defaultValue={2.5}
                       precision={0.5}
-                      value={media.average_rating}
+                      value={media?.average_rating.toFixed(2)}
                       readOnly
                     />
                   </div>
@@ -42,7 +44,7 @@ export default function Ratings({ media, type }) {
                   </p>
                 </div>
 
-                <div class="cols-span-3 mt-1">
+                {/* <div class="cols-span-3 mt-1">
                   <div class="flex items-center mt-1">
                     <div class="w-1/5 text-indigo-500 tracking-tighter">
                       <span>5 star</span>
@@ -108,7 +110,7 @@ export default function Ratings({ media, type }) {
                       <span class="text-sm">5%</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
