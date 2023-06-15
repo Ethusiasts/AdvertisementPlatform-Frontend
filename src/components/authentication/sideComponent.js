@@ -2,17 +2,13 @@ import { Link } from "react-router-dom";
 
 export default function SideComponent() {
   return (
-    <div className="hidden w-full xl:block xl:w-1/2">
-      <div className="py-17.5 px-26 text-center">
-        <Link className="mb-5.5 inline-block" to="/">
+    <div className="hidden w-full xl:block xl:w-1/2 justify-center align-center">
+      <div className="py-17.5 px-26 mx-auto text-center ">
+        <Link className="mb-6 inline-block" to="/">
           <div className="text-3xl text-blue-800 font-bold"> Advert </div>
         </Link>
 
-        <p className="2xl:px-20 pb-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit suspendisse.
-        </p>
-
-        <span className="mt-15 inline-block">
+        <div className="mt-15 ">
           <svg
             width="350"
             height="350"
@@ -133,7 +129,7 @@ export default function SideComponent() {
               fill="#1C2434"
             />
           </svg>
-        </span>
+        </div>
       </div>
     </div>
   );

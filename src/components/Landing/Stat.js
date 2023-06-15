@@ -1,5 +1,5 @@
 import React from "react";
-
+import CountUp from "react-countup";
 function Stat({ styles, title, description, stat }) {
   return (
     <div className={styles}>
@@ -10,7 +10,7 @@ function Stat({ styles, title, description, stat }) {
           <div className="text-xs font-thin">{description}</div>
         </div>
         <div className="sm:text-3xl md:text-7xl font-black font-Josefin">
-          {stat}
+          <CountUp start={0} end={stat} duration={5} />
         </div>
       </div>
     </div>

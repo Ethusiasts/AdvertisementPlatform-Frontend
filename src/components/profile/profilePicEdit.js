@@ -4,11 +4,18 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import userSix from "../../images/user-06.png";
 import { ImgContext } from "../../App";
 import { toast } from "react-hot-toast";
+import { getCookie } from "../../utils";
 
 export default function ProfilePicEdit({}) {
   const profileImg = useContext(ImgContext);
+  console.log(profileImg.ImgUrl);
+
   const [image, setImage] = useState(null);
 
+  const handleSetProfile = () => {
+    const profile = JSON.parse(getCookie("user_profile") ?? "");
+    profileImg.setImgUrl(profile.profile_picture ?? "");
+  };
   const handleImageChange = (event) => {
     event.preventDefault();
     setImage(event.target.files[0]);
