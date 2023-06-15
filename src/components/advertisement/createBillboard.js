@@ -9,14 +9,14 @@ import Checkbox from "@mui/material/Checkbox";
 import getUser from "../../utils/utils";
 import { toast } from "react-toastify";
 import { CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBillboardAdForm({ photo, title, description }) {
   const user = getUser();
+  const navigate = useNavigate();
   const [advertisementName, setAdvertisementName] = useState("");
   const [height, setHeight] = useState("");
-  const [durationInHour, setDurationInHour] = useState("");
   const [width, setWidth] = useState("");
-  const [quantity, setQuantity] = useState("");
   const [image, setImage] = useState(null);
   const [isAdult, setIsAdult] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,12 +28,10 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
     onSuccess: () => {
       toast.success("Advertisement Successfully created");
       setIsLoading(false);
+
+      return navigate("/Advertisement");
     },
   });
-
-  if (mutation.isLoading) {
-    setIsLoading(true);
-  }
 
   const handleIsAdultChange = (event) => {
     setIsAdult(event.target.checked);
@@ -46,16 +44,8 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
     setHeight(event.target.value);
   };
 
-  const handleDurationInHourChange = (event) => {
-    setDurationInHour(event.target.value);
-  };
-
   const handleWidthChange = (event) => {
     setWidth(event.target.value);
-  };
-
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
   };
 
   const handleImageChange = (event) => {
@@ -70,14 +60,13 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
       advertisement_file: url,
       width: width,
       height: height,
-      quantity: quantity,
       user_id: user?.id,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    if (!image || !quantity || !advertisementName || !width || !height) {
+    if (!image || !advertisementName || !width || !height) {
       toast.error("Please fill in all the required fields");
       return;
     }
@@ -87,27 +76,35 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref)
         .then((url) => {
-          return axios.post(
-            "'https://advertisementplatform-0xpy.onrender.com/api/v1/advertisements/image",
-            {
-              image: url,
-            }
-          );
-        })
-        .then((checkRes) => {
-          console.log(checkRes);
-          if (checkRes?.data === isAdult) {
-            toast.success("Image Passed Profanity Test");
-            handleSubmit(checkRes?.data);
-          } else {
-            setIsLoading(false);
-            toast.error("");
-            return;
-          }
+          return axios
+            .post(
+              "https://advertisementplatform-0xpy.onrender.com/api/v1/advertisements/image",
+              {
+                image: url,
+              }
+            )
+            .then((checkRes) => {
+              if (checkRes?.data?.data === isAdult) {
+                toast.success("Image Passed Profanity Test");
+                return handleSubmit(url);
+              } else {
+                setImage("");
+                setIsLoading(false);
+                toast.error("Image and Profanity Test Do Not Match");
+                return;
+              }
+            })
+            .catch((error) => {
+              setIsLoading(false);
+              toast.error("Could Not Create Ad, Check Your Inputs ", {
+                autoClose: 3000,
+              });
+              return error;
+            });
         })
         .catch((error) => {
           setIsLoading(false);
-          toast.error("Could Not Create Ad, Check Your Inputs ", {
+          toast.error("Could Not Upload The Image", {
             autoClose: 3000,
           });
           return error;
@@ -146,7 +143,7 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
             type="text"
             name="height"
             id="height"
-            placeholder="height"
+            placeholder="Height"
             value={height}
             onChange={handleHeightChange}
             required
@@ -156,37 +153,11 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
             type="text"
-            name="Duration in hour"
-            id="Duration in hour"
-            placeholder="Duration in hour"
-            value={durationInHour}
-            onChange={handleDurationInHourChange}
-          />
-        </div>
-      </div>
-
-      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
             name="width"
             id="width"
-            placeholder="width"
+            placeholder="Width"
             value={width}
             onChange={handleWidthChange}
-          />
-        </div>
-        {/* <CheckboxFour /> */}
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
-            name="Quantity"
-            id="Quantity"
-            placeholder="Quantity"
-            value={quantity}
-            onChange={handleQuantityChange}
           />
         </div>
       </div>
@@ -253,6 +224,10 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
           <p>(max, 800 X 800px)</p>
         </div>
       </div>
+      <p className={`mt-1.5 ${image ? "text-green-400" : "text-red-400"}`}>
+        {image ? "Selected" : "Not Selected"}
+      </p>
+
       <div class="flex justify-end">
         <button
           onClick={uploadImage}

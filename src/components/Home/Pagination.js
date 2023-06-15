@@ -40,7 +40,6 @@ const Pagination = forwardRef(
     const [totalPages, setTotalPages] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [cardData, setCardData] = useState(null);
-    // const [cartItems, setCartItems] = useState([]);
 
     const { data, isLoading } = useQuery(
       ["data", currentPage, isBillboard],
