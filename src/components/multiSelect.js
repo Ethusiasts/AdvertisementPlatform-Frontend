@@ -1,17 +1,6 @@
 import React from "react";
 import { TextField, Autocomplete } from "@mui/material";
-const names = [
-  "Humaira Sims",
-  "Santiago Solis",
-  "Dawid Floyd",
-  "Mateo Barlow",
-  "Samia Navarro",
-  "Kaden Fields",
-  "Genevieve Watkins",
-  "Mariah Hickman",
-  "Rocco Richardson",
-  "Harris Glenn",
-];
+
 export default function MultiSelect({ onData, items }) {
   const handleAutocompleteChange = (event, value) => {
     onData(value);

@@ -3,50 +3,38 @@ import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useMutation } from "@tanstack/react-query";
 import { createAdvertisement } from "../../services/advertisement";
+import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import getUser from "../../utils/utils";
 
 export default function CreateRadioAdForm({ photo, title, description }) {
+  const user = getUser();
+  const navigate = useNavigate();
+
   const mutation = useMutation({
     mutationFn: (advertisement) => {
       return createAdvertisement(advertisement);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      toast.success("Advertisement Successfully created");
+      setIsLoading(false);
+
+      return navigate("/Advertisement");
     },
   });
 
-  if (mutation.isLoading) {
-    alert("is loading");
-  }
-
-  if (mutation.isSuccess) {
-    alert("is successfull");
-  }
-
   const [advertisementName, setAdvertisementName] = useState("");
-  const [height, setHeight] = useState("");
   const [durationInHour, setDurationInHour] = useState("");
-  const [width, setWidth] = useState("");
-  const [quantity, setQuantity] = useState("");
   const [audio, setAudio] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAdvertisementNameChange = (event) => {
     setAdvertisementName(event.target.value);
   };
 
-  const handleHeightChange = (event) => {
-    setHeight(event.target.value);
-  };
-
   const handleDurationInHourChange = (event) => {
     setDurationInHour(event.target.value);
-  };
-
-  const handleWidthChange = (event) => {
-    setWidth(event.target.value);
-  };
-
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
   };
 
   const handleAudioChange = (event) => {
@@ -60,22 +48,31 @@ export default function CreateRadioAdForm({ photo, title, description }) {
       advertisement_type: "radio",
       duration_in_hour: durationInHour,
       advertisement_file: url,
-      quantity: quantity,
-      user_id: 1,
+      user_id: user?.id,
     });
   };
 
   const uploadImage = (event) => {
     event.preventDefault();
-    if (audio == null) return;
+    if (!audio || !advertisementName || !durationInHour) {
+      toast.error("Please fill in all the required fields");
+      return;
+    }
     const audioRef = ref(storage, `Advertisement/audios/` + `${Date.now()}`);
 
     uploadBytes(audioRef, audio).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        // console.log(url)
-        handleSubmit(url);
-        alert("Image Uploaded");
-      });
+      getDownloadURL(snapshot.ref)
+        .then((url) => {
+          toast.success("Audio uploaded successfully");
+          handleSubmit(url);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          toast.error("Could Not Upload The Audio", {
+            autoClose: 3000,
+          });
+          return error;
+        });
     });
   };
 
@@ -90,8 +87,8 @@ export default function CreateRadioAdForm({ photo, title, description }) {
         your brand. Start now!
       </p>
 
-      <div class="mb-4">
-        <div className="w-full">
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
+        <div className="w-full sm:w-1/2">
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
             type="text"
@@ -102,8 +99,6 @@ export default function CreateRadioAdForm({ photo, title, description }) {
             onChange={handleAdvertisementNameChange}
           />
         </div>
-      </div>
-      <div className="mb-4 flex flex-col gap-4 sm:flex-row">
         <div className="w-full sm:w-1/2">
           <input
             className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
@@ -113,17 +108,6 @@ export default function CreateRadioAdForm({ photo, title, description }) {
             placeholder="Duration in hour"
             value={durationInHour}
             onChange={handleDurationInHourChange}
-          />
-        </div>
-        <div className="w-full sm:w-1/2">
-          <input
-            className="w-full rounded border border-stroke bg-gray py-3 px-4 text-black focus:border-blue-400 focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:focus:border-blue-400"
-            type="text"
-            name="Quantity"
-            id="Quantity"
-            placeholder="Quantity"
-            value={quantity}
-            onChange={handleQuantityChange}
           />
         </div>
       </div>
@@ -171,22 +155,16 @@ export default function CreateRadioAdForm({ photo, title, description }) {
             <span className="text-blue-400">Click to upload audio</span> or drag
             and drop
           </p>
-          <p className="mt-1">SVG, PNG, JPG or GIF</p>
-          <p>(max, 800 X 800px)</p>
+          <p className="mt-1">MP3</p>
+          <p>(max, 2mb)</p>
         </div>
       </div>
       <div class="flex justify-end">
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-600 font-semi-bold py-1 px-4 rounded mr-2 w-60">
-          Cancel
-        </button>
         <button
           onClick={uploadImage}
           class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60"
         >
-          Save Only
-        </button>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-semi-bold py-1 px-4 rounded mr-2 w-60">
-          Save and Continue
+          {isLoading ? <CircularProgress /> : "Save"}
         </button>
       </div>
     </div>
