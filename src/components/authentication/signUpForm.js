@@ -29,7 +29,15 @@ export default function SignUpForm() {
           navigate("/signin");
         }, 2000);
       } else {
-        toast.error(data.response?.data?.message);
+        try {
+          var errors = "";
+          Object.keys(data.response.data.message).forEach((key) => {
+            errors += data.response.data.message[key][0] + "\n";
+          });
+        } catch (error) {
+          errors = "Some error occured";
+        }
+        toast.error(errors);
       }
     },
     onError: () => {

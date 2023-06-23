@@ -11,14 +11,12 @@ export default function BillboardProfileCard() {
   const { data: stat, isLoading } = useQuery(["proposals"], () => {
     return getMediaAgencyStats()
       .then((res) => {
-        console.log(res.data);
         return res.data;
       })
       .catch((error) => {
         return error;
       });
   });
-  console.log(stat);
   return (
     <div class="w-full overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div class="relative z-20 h-35 md:h-48">

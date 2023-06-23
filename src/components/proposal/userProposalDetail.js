@@ -10,7 +10,6 @@ export default function UserProposalPopup({
   billboard,
   advertisement,
 }) {
-  console.log(name, description, total_price, approved);
   return (
     <div class="flex items-center justify-center" style={{ width: "50rem" }}>
       {/* <div class="absolute inset-0 bg-gray-900 opacity-75"></div> */}

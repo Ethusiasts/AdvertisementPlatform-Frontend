@@ -14,7 +14,6 @@ export const createProposal = (proposal) => {
 };
 
 export const createMultiProposal = (proposal) => {
-  console.log(proposal);
   return axiosInstance
     .post(`/proposals/multiple`, proposal)
     .then((res) => {
@@ -37,7 +36,6 @@ export const getProposal = (proposal_id) => {
 };
 
 export const getMediaAgencyProposals = ({ currentPage }) => {
-  console.log(id);
   return axiosInstance
     .get(`/media_agencies/${id}/proposals?page=${currentPage}`)
     .then((res) => {

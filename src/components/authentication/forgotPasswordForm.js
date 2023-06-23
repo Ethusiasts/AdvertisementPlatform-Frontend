@@ -32,7 +32,6 @@ export default function ForgotPasswordForm() {
     const user = {
       email: email,
     };
-    console.log(user);
     mutate(user);
   };
   return (

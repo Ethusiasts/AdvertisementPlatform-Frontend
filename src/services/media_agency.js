@@ -7,7 +7,6 @@ export const getMediaAgencyBillbaords = ({ currentPage }) => {
   return axiosInstance
     .get(`/media_agencies/${id}/billboards?page=${currentPage}`)
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .catch((error) => {

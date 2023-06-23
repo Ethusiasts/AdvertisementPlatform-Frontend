@@ -4,14 +4,12 @@ export default function Card() {
   const { data: stat, isLoading } = useQuery(["proposals"], () => {
     return getMediaAgencyStats()
       .then((res) => {
-        console.log(res.data);
         return res.data;
       })
       .catch((error) => {
         return error;
       });
   });
-  console.log(stat);
   return (
     <div class="bg-gray-100  rounded-lg shadow-md overflow-hidden">
       <div class="px-4 py-5 sm:p-6">

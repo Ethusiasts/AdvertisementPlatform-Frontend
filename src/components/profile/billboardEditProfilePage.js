@@ -25,7 +25,6 @@ export default function MediaEditProfileCard({}) {
   const { mutate, isLoading } = useMutation(editUserStepper, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        console.log(data);
         setCookie("user_profile", JSON.stringify(data.data));
 
         toast.success("Successfully updated profile");
@@ -33,7 +32,6 @@ export default function MediaEditProfileCard({}) {
           navigate(-1);
         }, 3000);
       } else {
-        console.log("Inside errors", data);
         toast.error("Check Your Inputs Again");
       }
     },
@@ -44,15 +42,12 @@ export default function MediaEditProfileCard({}) {
   const { mutate: mutateMediaAgencyDetail, isLoading: isLoadingMedia } =
     useMutation(editMediaAgencyStepper, {
       onSuccess: async (data) => {
-        console.log(data);
         if (data.status === 200) {
-          console.log(data);
         } else {
           var errors = "";
           Object.keys(data.response.data.message).forEach((key) => {
             errors += data.response.data.message[key][0] + "\n";
           });
-          console.log(errors);
           toast.error(errors);
         }
       },
@@ -78,7 +73,6 @@ export default function MediaEditProfileCard({}) {
   };
 
   const handleSubmit = (event) => {
-    console.log("Profile Pic", profileImg.ImgUrl);
     event.preventDefault();
     const userInfo = {
       username: userName,

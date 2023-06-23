@@ -13,8 +13,6 @@ export const mediaAgencyStepper = (agency) => {
 };
 
 export const editMediaAgencyStepper = (agency) => {
-  console.log(agency);
-
   return axiosInstance
     .put(`/media_agencies/${agency.user}`, agency)
     .then((res) => {
@@ -22,7 +20,6 @@ export const editMediaAgencyStepper = (agency) => {
     })
     .catch((error) => {
       console.error(error);
-      console.log(error);
 
       return error;
     });

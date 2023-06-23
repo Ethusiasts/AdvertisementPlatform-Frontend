@@ -112,18 +112,15 @@ export default function CreateBillboardForm() {
             .then((snapshot) => {
               getDownloadURL(snapshot.ref).then((url) => {
                 handleSubmit(firstUrl, url);
-                alert("Image Uploaded");
               });
             })
             .catch((error) => {
-              console.log(error);
               handleClose();
               toast.error("Image not successfully uploaded!!");
             });
         });
       })
       .catch((error) => {
-        console.log(error);
         handleClose();
         toast.error("Image not successfully uploaded!!");
       });
@@ -136,26 +133,10 @@ export default function CreateBillboardForm() {
     setOpen(false);
   };
   const handleOpen = () => {
-    console.log("Dfsd");
-
     setOpen(true);
   };
 
   const handleSubmit = (firstUrl, url) => {
-    console.log({
-      daily_rate_per_sq: daily_rate_per_square_feet,
-      latitude: location.lat,
-      longitude: location.lng,
-      image: firstUrl,
-      file: url,
-      width: width,
-      height: height,
-      production: production_fee_per_square_feet,
-      status: "Free",
-      adult_content: isAdult,
-      description: description,
-      media_agency_id: id,
-    });
     mutation.mutate({
       daily_rate_per_sq: daily_rate_per_square_feet,
       latitude: location.lat,

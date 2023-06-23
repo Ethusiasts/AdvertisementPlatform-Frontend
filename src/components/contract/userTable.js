@@ -24,8 +24,6 @@ export default function UserTable() {
     setCurrentPage(pageNumber);
   };
 
-  console.log(contracts);
-
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
@@ -95,17 +93,23 @@ export default function UserTable() {
                     $ {contract.gross_total_fee}
                   </td>
                   <td class="px-4 py-3 text-xs">
-                    {contract.approved ? (
+                    {contract.customer_signature &&
+                    contract.agency_signature ? (
                       <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
                         Approved
                       </p>
                     ) : (
-                      <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
-                        Rejected
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
                       </p>
                     )}
                   </td>
-                  <td class="px-4 py-3 text-sm">15-01-2021</td>
+                  <td class="px-4 py-3 text-sm">
+                    {" "}
+                    <td class="px-4 py-3 text-sm">
+                      {new Date(contract?.created_at).toLocaleDateString()}
+                    </td>
+                  </td>
                   <td class="px-4 py-3 text-sm">
                     <div className="flex justify-center items-center space-x-3">
                       {contract.customer_signature ? (

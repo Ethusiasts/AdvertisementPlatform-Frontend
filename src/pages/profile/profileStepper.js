@@ -35,8 +35,7 @@ export const PlaceOrder = () => {
 
   const { mutate, isLoading: isLoadingUser } = useMutation(userStepper, {
     onSuccess: async (data) => {
-      console.log(data);
-      if (data.status === 201 || 200) {
+      if (data.status === 201 || data.status === 200) {
         toast.success(data.message);
 
         setCookie("user_profile", JSON.stringify(data.data));
@@ -46,10 +45,14 @@ export const PlaceOrder = () => {
         }, 3000);
       } else {
         var errors = "";
-        Object.keys(data.response.data.message).forEach((key) => {
-          errors += data.response.data.message[key][0] + "\n";
-        });
-        console.log(errors);
+
+        try {
+          Object.keys(data.response.data.message).forEach((key) => {
+            errors += data.response.data.message[key][0] + "\n";
+          });
+        } catch (error) {
+          errors = "Some error occured ... try again";
+        }
         toast.error(errors);
       }
     },
@@ -61,14 +64,17 @@ export const PlaceOrder = () => {
     mediaAgencyStepper,
     {
       onSuccess: async (data) => {
-        console.log(data);
         if (data.status === 200) {
         } else {
           var errors = "";
-          Object.keys(data.response.data.message).forEach((key) => {
-            errors += data.response.data.message[key][0] + "\n";
-          });
-          console.log(errors);
+
+          try {
+            Object.keys(data.response.data.message).forEach((key) => {
+              errors += data.response.data.message[key][0] + "\n";
+            });
+          } catch (error) {
+            errors = "Some error occured ... try again";
+          }
           toast.error(errors);
         }
       },

@@ -49,7 +49,6 @@ const Pagination = forwardRef(
               return res.results;
             })
             .catch((error) => {
-              console.log(error);
               return error;
             });
         } else {
@@ -60,7 +59,6 @@ const Pagination = forwardRef(
               return res.results;
             })
             .catch((error) => {
-              console.log(error);
               return error;
             });
         }
@@ -135,8 +133,6 @@ const Pagination = forwardRef(
             item1 = parseFloat(a[property]);
             item2 = parseFloat(b[property]);
           }
-
-          console.log(item1, item2);
 
           if (property === "size") {
             let a_val = a["width"] * a["height"];

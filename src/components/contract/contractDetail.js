@@ -6,7 +6,6 @@ import { getContract } from "../../services/contract";
 
 export default function ContractDetailCard({ photo, title, description }) {
   let { contractId } = useParams();
-  console.log(contractId);
   const {
     data: contract,
     isLoading,
@@ -25,9 +24,7 @@ export default function ContractDetailCard({ photo, title, description }) {
     { contractId }
   );
 
-  console.log(contract);
   function downloadPdf() {
-    console.log(contract?.agency_signature, "akhdfasd");
     const element = document.getElementById("contract");
     const opt = {
       margin: 1,

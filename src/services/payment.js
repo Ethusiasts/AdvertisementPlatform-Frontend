@@ -15,11 +15,9 @@ function generateCSRFToken(length) {
 const csrf_token = generateCSRFToken(32);
 
 export const sendPaymentInfo = (paymentInfo) => {
-  console.log(paymentInfo);
   return axiosInstance
     .post("payments/initialize", paymentInfo)
     .then((res) => {
-      console.log(res, res.data, res.data.data, "eakhjsdaf");
       return res.data.data;
     })
     .catch((error) => {

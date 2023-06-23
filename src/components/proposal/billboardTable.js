@@ -24,7 +24,6 @@ export default function BillboardTable() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log(proposals?.results);
   if (isLoading) {
     return (
       <div class="flex justify-center items-center h-screen">
@@ -94,9 +93,13 @@ export default function BillboardTable() {
                   <td class="px-4 py-3 text-sm">{proposal.description}</td>
                   <td class="px-4 py-3 text-sm">$ {proposal.total_price}</td>
                   <td class="px-4 py-3 text-xs">
-                    {proposal.approved ? (
+                    {proposal.approved === 2 ? (
                       <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
                         Approved
+                      </p>
+                    ) : proposal.approved === 1 ? (
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
                       </p>
                     ) : (
                       <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">

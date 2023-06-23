@@ -25,7 +25,6 @@ export default function UserEditProfileCard() {
   const { mutate, isLoading } = useMutation(editUserStepper, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        console.log(data);
         toast.success("Successfully Updated Profile");
         setTimeout(() => {
           navigate(-1);
@@ -35,7 +34,6 @@ export default function UserEditProfileCard() {
         Object.keys(data.response.data.message).forEach((key) => {
           errors += data.response.data.message[key][0] + "\n";
         });
-        console.log(errors);
         toast.error(errors);
       }
     },

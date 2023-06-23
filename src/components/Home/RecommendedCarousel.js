@@ -27,13 +27,11 @@ export default function RecommendedCarousel({ isBillboard }) {
     () => {
       if (isBillboard) {
         return getBillboardRecommendations().then((res) => {
-          console.log(res.results);
           setRecommendationData(res.results);
           return res.data;
         });
       } else {
         return getAgencyRecommendations().then((res) => {
-          console.log(res.results);
           setRecommendationData(res.results);
           return res.data;
         });

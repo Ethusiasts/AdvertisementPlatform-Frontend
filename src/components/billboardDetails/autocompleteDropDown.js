@@ -24,7 +24,6 @@ export default function AdvertisementSelect({ onData }) {
     },
     []
   );
-  console.log(advertisements);
   return (
     <Autocomplete
       id="country-select-demo"

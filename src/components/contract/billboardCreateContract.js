@@ -6,12 +6,12 @@ import { getProposal } from "../../services/proposal";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { createContract } from "../../services/contract";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getUser from "../../utils/utils";
 
 export default function BillboardCreateContractForm() {
+  const navigate = useNavigate();
   const { proposalId } = useParams();
-  console.log(proposalId);
   const { data: proposal, isLoading } = useQuery(
     ["proposals"],
     () => {
@@ -25,13 +25,12 @@ export default function BillboardCreateContractForm() {
     },
     { proposalId }
   );
-  console.log(proposal);
   const mutation = useMutation({
     mutationFn: (contract) => {
       return createContract(contract);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      return navigate("/BillboardContract");
     },
   });
 
@@ -57,10 +56,8 @@ export default function BillboardCreateContractForm() {
       net_free: String((proposal?.total_price * 0.85)?.toFixed(2)),
       proposal_id: proposalId,
       agency_signature: mediaAgencySignature,
-      media_agency_id:
-        proposal?.billboard_id?.media_agency_id ||
-        proposal?.agency_id?.media_agency_id,
-      user_id: getUser()?.id,
+      media_agency_id: getUser()?.id,
+      user_id: proposal?.advertisement_id?.user_id,
     });
   };
   return (
@@ -123,7 +120,6 @@ export default function BillboardCreateContractForm() {
             </div>
             <div className="flex justify-start items-center w-1/2 gap-5">
               <p className="font-semibold">Owner:</p>
-
               {mediaAgencySignature ? (
                 <img
                   class="w-auto h-16"

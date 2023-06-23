@@ -1,13 +1,14 @@
-export default function SideBar({
-  status,
-  place,
-  city,
-  width,
-  height,
-  location,
-  imageSrc,
-  alt,
-}) {
+import { removeCookie } from "../../utils";
+import { useNavigate } from "react-router-dom";
+export default function SideBar() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Remove the token from the cookie
+    removeCookie("user");
+    removeCookie("user_profile");
+    // Redirect to the home page
+    return navigate("/signin");
+  };
   return (
     <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
       <ul class="flex flex-col">
@@ -205,8 +206,8 @@ export default function SideBar({
           </a>
         </li>
         <li>
-          <a
-            href="#"
+          <button
+            onClick={handleLogout}
             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-400 text-black hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
           >
             <span class="inline-flex justify-center items-center ml-4">
@@ -224,7 +225,7 @@ export default function SideBar({
               </svg>{" "}
             </span>
             <span class="ml-2 text-sm tracking-wide truncate">Sign Out</span>
-          </a>
+          </button>
         </li>
       </ul>
       <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">

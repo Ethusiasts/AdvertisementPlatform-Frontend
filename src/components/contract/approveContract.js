@@ -1,13 +1,15 @@
 import SignatureCanvas from "react-signature-canvas";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { approveContract, getContract } from "../../services/contract";
 import { useState } from "react";
+import { CircularProgress } from "@material-ui/core";
 
 export default function ApproveContractForm() {
+  const navigate = useNavigate();
   let { contractId } = useParams();
-  const { data: contract } = useQuery(
+  const { data: contract, isLoading } = useQuery(
     ["contract", contractId],
     () => {
       return getContract(contractId)
@@ -20,16 +22,14 @@ export default function ApproveContractForm() {
     },
     [contractId]
   );
-
   console.log(contract);
-  console.log(contract?.agency_signature);
 
   const mutation = useMutation({
     mutationFn: ([contract_id, contract]) => {
       return approveContract(contract_id, contract);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      navigate("/UserContract");
     },
   });
 
@@ -132,14 +132,12 @@ export default function ApproveContractForm() {
               <p className="font-semibold">Owner:</p>
 
               {contract?.agency_signature ? (
-                -(
-                  <img
-                    class="w-auto h-16"
-                    src={contract?.agency_signature}
-                    alt=""
-                    loading="lazy"
-                  />
-                )
+                <img
+                  class="w-auto h-16"
+                  src={contract?.agency_signature}
+                  alt=""
+                  loading="lazy"
+                />
               ) : (
                 <p>______________________________</p>
               )}
@@ -182,11 +180,13 @@ export default function ApproveContractForm() {
             </div>
           </div>
           <div>
+            {}
             <button
               type="submit"
               class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-2 px-20 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+              disabled={isLoading}
             >
-              Approve Contract
+              {isLoading ? <CircularProgress /> : "Approve Contract"}
             </button>
           </div>
         </div>

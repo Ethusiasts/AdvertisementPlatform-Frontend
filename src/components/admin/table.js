@@ -25,14 +25,11 @@ export default function Table() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log(users);
   const mutation = useMutation({
     mutationFn: ([user_id, isBlocked]) => {
       return changeUSerState(user_id, isBlocked);
     },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
+    onSuccess: () => {},
   });
 
   const handleDeactivate = (event) => {

@@ -242,10 +242,11 @@ export default function Table() {
                           />
                         </svg>
                       </button>
-
-                      <ButtonWithModal
-                        modalContent={<PaymentForm billboard={billboard} />}
-                      />
+                      {!billboard.paid && billboard.approved && (
+                        <ButtonWithModal
+                          modalContent={<PaymentForm billboard={billboard} />}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>

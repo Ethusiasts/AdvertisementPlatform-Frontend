@@ -1,6 +1,5 @@
 import React from "react";
 export default function AdPopup({ name, type, mediaUrl }) {
-  console.log(name, type, mediaUrl);
   return (
     <div>
       <div className="mb-6" style={{ height: "30rem" }}>

@@ -40,8 +40,6 @@ export default function Nearby({ latitude, longitude }) {
       });
   });
 
-  console.log(location);
-
   if (isLoading) {
     return (
       <div class="flex justify-center items-center mt-4">

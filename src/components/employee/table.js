@@ -11,8 +11,12 @@ export default function Table() {
   const [totalPages, setTotalPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: users, isLoading } = useQuery(
-    ["user.billboard_ids", currentPage],
+  const {
+    data: users,
+    isLoading,
+    refetch,
+  } = useQuery(
+    ["Billboards.", currentPage],
     () => {
       return getEmployeeBillboards({ currentPage })
         .then((res) => {
@@ -25,13 +29,12 @@ export default function Table() {
     },
     [currentPage]
   );
-  console.log(users);
   const mutation = useMutation({
     mutationFn: ([billboard_id, approved]) => {
       return changeBillboardState(billboard_id, approved);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      refetch();
     },
   });
 

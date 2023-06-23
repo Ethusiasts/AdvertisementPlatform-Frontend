@@ -14,11 +14,9 @@ export const getAdminStat = () => {
 };
 
 export const changeUSerState = (user_id, isBlocked) => {
-  console.log(isBlocked, user_id);
   return axiosInstance
     .put(`/admins/${user_id}`, isBlocked)
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .catch((error) => {

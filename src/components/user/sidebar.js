@@ -219,8 +219,8 @@ export default function SideBar({
           </a>
         </li>
         <li>
-          <a
-            href="#"
+          <button
+            onClick={handleLogout}
             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-400 text-black hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
           >
             <span class="inline-flex justify-center items-center ml-4">
@@ -237,13 +237,10 @@ export default function SideBar({
                 <path d="M10 3H6a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h4M16 17l5-5-5-5M19.8 12H9" />
               </svg>{" "}
             </span>
-            <span
-              class="ml-2 text-sm tracking-wide truncate cursor-pointer"
-              onClick={handleLogout}
-            >
+            <span class="ml-2 text-sm tracking-wide truncate cursor-pointer">
               Sign Out
             </span>
-          </a>
+          </button>
         </li>
       </ul>
       <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">

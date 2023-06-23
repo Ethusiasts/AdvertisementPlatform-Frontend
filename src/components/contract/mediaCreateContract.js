@@ -11,7 +11,6 @@ import getUser from "../../utils/utils";
 
 export default function MediaCreateContractForm({ photo, title, description }) {
   const { proposalId } = useParams();
-  console.log(proposalId);
   const { data: proposal, isLoading } = useQuery(
     ["proposals"],
     () => {
@@ -25,14 +24,11 @@ export default function MediaCreateContractForm({ photo, title, description }) {
     },
     { proposalId }
   );
-  console.log(proposal);
   const mutation = useMutation({
     mutationFn: (contract) => {
       return createContract(contract);
     },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
+    onSuccess: () => {},
   });
 
   const [signatureRef, setSignatureRef] = useState("");

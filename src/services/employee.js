@@ -1,9 +1,10 @@
 import { axiosInstance } from "../utils/axiosInstance";
+import getUser from "../utils/utils";
 
 export const getEmployeeBillboards = ({ currentPage }) => {
-  const id = 11;
+  const user = getUser();
   return axiosInstance
-    .get(`/employees/${id}/billboards?page=${currentPage}`)
+    .get(`/employees/${user.id}/billboards?page=${currentPage}`)
     .then((res) => {
       return res.data;
     })
@@ -17,7 +18,6 @@ export const changeBillboardState = (billboard_id, approved) => {
   return axiosInstance
     .put(`/billboards/${billboard_id}`, approved)
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .catch((error) => {

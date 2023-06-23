@@ -8,7 +8,6 @@ import { getCookie } from "../../utils";
 export default function ProfilePicEdit({}) {
   const userProfile = JSON.parse(getCookie("user_profile"));
   const profileImg = useContext(ImgContext);
-  console.log(profileImg.ImgUrl);
 
   const [image, setImage] = useState(null);
 
@@ -34,7 +33,6 @@ export default function ProfilePicEdit({}) {
       getDownloadURL(snapshot.ref).then((url) => {
         profileImg.setImgUrl(url);
         toast.success("successfully uploaded");
-        console.log("profileUrl", profileImg.ImgUrl);
       });
     });
   };

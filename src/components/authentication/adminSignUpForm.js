@@ -27,7 +27,6 @@ export default function AdminSignUpForm() {
       }
     },
     onError: () => {
-      console.log("error2");
       toast.error("Some error occurred...");
     },
   });
