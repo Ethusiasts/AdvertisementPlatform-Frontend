@@ -78,7 +78,7 @@ export default function Table() {
                   <td class="px-4 py-3">
                     <div class="flex items-center text-sm">
                       <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                        {advertisement.advertisement_type == "billboard" && (
+                        {advertisement.advertisement_type === "billboard" && (
                           <img
                             class="object-cover w-full h-full rounded-full"
                             src={advertisement.advertisement_file}
@@ -86,26 +86,18 @@ export default function Table() {
                             loading="lazy"
                           />
                         )}
-                        {advertisement.advertisement_type == "Tv" && (
+                        {advertisement.advertisement_type === "tv" && (
                           <img
                             class="object-cover w-full h-full rounded-full"
-                            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1159&q=80"
+                            src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
                             alt=""
                             loading="lazy"
                           />
                         )}
-                        {advertisement.advertisement_type == "Radio" && (
+                        {advertisement.advertisement_type === "radio" && (
                           <img
                             class="object-cover w-full h-full rounded-full"
-                            src="https://images.unsplash.com/photo-1520444451380-ebe0f7b9cfd5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                            alt=""
-                            loading="lazy"
-                          />
-                        )}
-                        {advertisement.advertisement_type == "Magazine" && (
-                          <img
-                            class="object-cover w-full h-full rounded-full"
-                            src="https://images.unsplash.com/photo-1620482061144-696c3a864f86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                            src="https://images.unsplash.com/photo-1593078166039-c9878df5c520?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
                             alt=""
                             loading="lazy"
                           />
@@ -129,13 +121,13 @@ export default function Table() {
                     {advertisement.advertisement_type}
                   </td>
                   <td class="px-4 py-3 text-sm">
-                    {advertisement.approved ? (
+                    {advertisement?.approved ? (
                       <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
                         Approved
                       </p>
                     ) : (
-                      <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
-                        Rejected
+                      <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                        Pending
                       </p>
                     )}
                   </td>

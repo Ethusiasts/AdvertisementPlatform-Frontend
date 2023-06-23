@@ -55,10 +55,7 @@ export default function BillboardFilterBar({
   useEffect(() => {
     getLocations({ location })
       .then((res) => {
-        // console.log(location);
-        // console.log("dataaaaa");
-        // console.log(res.data);
-        setSuggestions(res.data);
+        //         //         //         setSuggestions(res.data);
         return res;
       })
       .catch((error) => {
@@ -87,10 +84,6 @@ export default function BillboardFilterBar({
   const handleLocationSelect = (selectedLocation) => {
     // Get the latitude and longitude of the selected location
     const { lat, lon } = selectedLocation;
-
-    console.log(`Selected Location:, ${selectedLocation}`);
-    console.log(`Latitude:, ${lat}`);
-    console.log(`Longitude:, ${lon}`);
 
     // Further processing or actions with the selected location
     setLatitude(lat);
@@ -145,7 +138,6 @@ export default function BillboardFilterBar({
           return res.results;
         })
         .catch((error) => {
-          console.log(error);
           return error;
         });
     } else {
@@ -163,7 +155,6 @@ export default function BillboardFilterBar({
           return res.results;
         })
         .catch((error) => {
-          console.log(error);
           return error;
         });
     }
@@ -178,7 +169,6 @@ export default function BillboardFilterBar({
     onFilterStateChange(true);
   };
 
-  console.log(suggestions);
   return (
     <div className=" bg-white p-4 rounded-md shadow-lg md:float-left md:w-1/4 mt-8">
       <div className="">

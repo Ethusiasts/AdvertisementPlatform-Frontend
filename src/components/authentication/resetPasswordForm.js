@@ -15,7 +15,6 @@ export default function ResetPasswordForm() {
   const { mutate, isLoading } = useMutation(resetPassword, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        console.log(data);
         setNotification(data.message);
         setType("success");
 
@@ -25,7 +24,6 @@ export default function ResetPasswordForm() {
       } else {
         setType("error");
         setNotification(data.response.data.message);
-        console.log(data.response);
       }
     },
     onError: () => {
@@ -42,7 +40,6 @@ export default function ResetPasswordForm() {
       const user = {
         password: password,
       };
-      console.log(jwtDecode("c167779c31deeedcba4fc9ceb9682375e6c78319"));
       // mutate(user);
     }
   };

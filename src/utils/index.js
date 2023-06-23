@@ -11,6 +11,14 @@ export const selectOptionsSignUp = [
   { value: "customer", label: "Customer" },
   { value: "landowner", label: " Landowner" },
 ];
+
+export const selectOptionsAdminSignUp = [
+  { value: "customer", label: "Customer" },
+  { value: "landowner", label: " Landowner" },
+  { value: "TV", label: "TV Media Agency" },
+  { value: "RADIO", label: "Radio Media Agency" },
+  { value: "Employee", label: "Employee" },
+];
 export const heroSectionTitle = "Advertising your brands";
 export const trustSectionTitle = "Trusted by content creators across the world";
 export const advertisementTitle = "For Advertisers";

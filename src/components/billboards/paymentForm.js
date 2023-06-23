@@ -25,7 +25,7 @@ export default function PaymentForm({ billboard }) {
   const [taxReference, setTaxReference] = useState(
     `${user?.id}-${billboard.id}-${Date.now()}`
   );
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("500");
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -62,7 +62,7 @@ export default function PaymentForm({ billboard }) {
       amount: amount,
       callback_url:
         "https://advertisementplatform-0xpy.onrender.com/api/v1/payments/",
-      return_url: "https://www.google.com/",
+      return_url: "http://localhost:3000/BillboardDashboard",
       currency: "ETB",
     });
   };
@@ -130,11 +130,11 @@ export default function PaymentForm({ billboard }) {
               type="text"
               name="amount"
               id="amount"
-              p
               placeholder="Amount"
               value={amount}
               onChange={handleAmountChange}
               required
+              disabled
             />
           </div>
           <div className="w-full sm:w-1/2">

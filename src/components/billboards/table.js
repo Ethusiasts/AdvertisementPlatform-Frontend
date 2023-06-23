@@ -14,16 +14,20 @@ export default function Table() {
     data: billboards,
     isLoading,
     refetch,
-  } = useQuery(["billboards"], () => {
-    return getMediaAgencyBillbaords({ currentPage })
-      .then((res) => {
-        setTotalPages(Math.ceil(res.count / 6));
-        return res;
-      })
-      .catch((error) => {
-        return error;
-      });
-  });
+  } = useQuery(
+    ["billboards", currentPage],
+    () => {
+      return getMediaAgencyBillbaords({ currentPage })
+        .then((res) => {
+          setTotalPages(Math.ceil(res.count / 6));
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    [currentPage]
+  );
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -238,10 +242,11 @@ export default function Table() {
                           />
                         </svg>
                       </button>
-
-                      <ButtonWithModal
-                        modalContent={<PaymentForm billboard={billboard} />}
-                      />
+                      {!billboard.paid && billboard.approved && (
+                        <ButtonWithModal
+                          modalContent={<PaymentForm billboard={billboard} />}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>

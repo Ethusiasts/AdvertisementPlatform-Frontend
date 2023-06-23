@@ -11,7 +11,6 @@ export const resetPassword = ({ password }) => {
       ),
     },
   };
-  console.log(body);
   return axiosInstance
     .post("/auth/reset_password", body, config)
     .then((res) => {

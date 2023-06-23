@@ -4,16 +4,19 @@ import StatCard from "../../components/admin/statCard";
 import { getAdminStats } from "../../services/adminStat";
 import { useQuery } from "@tanstack/react-query";
 export default function AdminDashboard() {
-  const { data: stat, isLoading } = useQuery(["proposals"], () => {
-    return getAdminStats()
-      .then((res) => {
-        return res;
-      })
-      .catch((error) => {
-        return error;
-      });
-  });
-  console.log(stat);
+  const { data: stat, isLoading } = useQuery(
+    ["users"],
+    () => {
+      return getAdminStats()
+        .then((res) => {
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    []
+  );
   return (
     <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 bg-gray-300">
       <div class="fixed flex flex-col left-0 w-14 hover:w-64 md:w-64 bg-gray-100 h-full text-white transition-all duration-300 border-none z-10 sidebar">

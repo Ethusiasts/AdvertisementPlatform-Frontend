@@ -22,9 +22,7 @@ export default function ProfileForm() {
 
   const { mutate, isLoading } = useMutation(userStepper, {
     onSuccess: async (data) => {
-      console.log(data);
       if (data.status === 201) {
-        console.log(data);
         toast.success("Success");
         setCookie("user_profile", JSON.stringify(data.data));
 
@@ -33,10 +31,15 @@ export default function ProfileForm() {
         }, 3000);
       } else {
         var errors = "";
-        Object.keys(data.response.data.message).forEach((key) => {
-          errors += data.response.data.message[key][0] + "\n";
-        });
-        console.log(errors);
+
+        try {
+          Object.keys(data.response.data.message).forEach((key) => {
+            errors += data.response.data.message[key][0] + "\n";
+          });
+        } catch (error) {
+          errors = "Some error occured ... try again";
+        }
+
         toast.error(errors);
       }
     },

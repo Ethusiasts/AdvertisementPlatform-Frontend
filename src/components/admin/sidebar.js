@@ -1,4 +1,14 @@
+import { removeCookie } from "../../utils";
+import { useNavigate } from "react-router-dom";
 export default function SideBar() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Remove the token from the cookie
+    removeCookie("user");
+    removeCookie("user_profile");
+    // Redirect to the home page
+    return navigate("/signin");
+  };
   return (
     <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
       <ul class="flex flex-col">
@@ -94,10 +104,42 @@ export default function SideBar() {
             </span>
           </a>
         </li>
-
         <li>
           <a
-            href="#"
+            href="/Account"
+            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-400 text-black hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
+          >
+            <span class="inline-flex justify-center items-center ml-4">
+              <svg
+                class="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate">
+              Account Setup
+            </span>
+          </a>
+        </li>
+
+        <li>
+          <button
+            onClick={handleLogout}
             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-400 text-black hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6"
           >
             <span class="inline-flex justify-center items-center ml-4">
@@ -115,7 +157,7 @@ export default function SideBar() {
               </svg>{" "}
             </span>
             <span class="ml-2 text-sm tracking-wide truncate">Sign Out</span>
-          </a>
+          </button>
         </li>
       </ul>
       <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">

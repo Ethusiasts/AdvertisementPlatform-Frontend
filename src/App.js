@@ -59,6 +59,9 @@ import CreateMedia from "./pages/medias/createMedia";
 import BillboardCreateContract from "./pages/contract/billboardCreateContract";
 import MediaCreateContract from "./pages/contract/mediaCreateContract";
 import EmployeeDashboard from "./pages/employee/employeeDashboard";
+import Account from "./pages/admin/account";
+import BillboardContractDetail from "./pages/contract/billboardContractDetail";
+import MediaContractDetail from "./pages/contract/mediaContractDetail";
 // HOC for checking authentication and authorization
 export const ImgContext = React.createContext();
 
@@ -246,9 +249,25 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/ContractDetail/:contractId",
+    path: "/UserContractDetail/:contractId",
     element: (
-      <ProtectedRoute Component={UserContractDetail} roles={["landowner"]} />
+      <ProtectedRoute Component={UserContractDetail} roles={["customer"]} />
+    ),
+  },
+
+  {
+    path: "/BillboardContractDetail/:contractId",
+    element: (
+      <ProtectedRoute
+        Component={BillboardContractDetail}
+        roles={["landowner"]}
+      />
+    ),
+  },
+  {
+    path: "/MediaContractDetail/:contractId",
+    element: (
+      <ProtectedRoute Component={MediaContractDetail} roles={["TV", "RADIO"]} />
     ),
   },
   {
@@ -312,6 +331,11 @@ const router = createBrowserRouter([
   {
     path: "/UserControl",
     element: <UserControl />,
+    // element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
+  },
+  {
+    path: "/Account",
+    element: <Account />,
     // element: <ProtectedRoute Component={UserControl} roles={["admin"]} />,
   },
 

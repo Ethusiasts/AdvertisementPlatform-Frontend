@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import getUser from "../../utils/utils";
 export default function MediaCard({ media }) {
+  const user = getUser();
   return (
-    <Link to={`/agencies/${media.id}`}>
-      <div class="flex flex-col w-full items-center bg-gray-100 border border-gray-200 rounded-lg shadow md:flex-row my-2">
+    <Link to={`/user/${user.id}/agencies/${media.id}`}>
+      <div class="flex flex-scol w-full items-center bg-gray-100 border border-gray-200 rounded-lg shadow md:flex-row my-2">
         <img
           class="md:rounded-none md:rounded-l-lg h-36 md:w-36"
           src={media.image}

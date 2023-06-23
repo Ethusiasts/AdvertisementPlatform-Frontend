@@ -34,7 +34,6 @@ export const createAgency = (agency) => {
 };
 
 export const deleteAgency = ({ agencyId }) => {
-  console.log(agencyId);
   return axiosInstance
     .delete(`/agencies/${agencyId}`)
     .then((res) => {
@@ -50,7 +49,6 @@ export const searchAgenciesWithQueryOnly = ({ query, currentPage }) => {
   return axiosInstance
     .get(`/agencies/search?q=${query}&page=${currentPage}`)
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
@@ -91,14 +89,10 @@ export const searchAgencies = ({
     url = url.replace("&", "?");
   }
   url += `&page=${currentPage}`;
-  console.log("url");
-  console.log(url);
 
   return axiosInstance
     .get(url)
     .then((res) => {
-      console.log("filter:");
-      console.log(res.data);
       return res.data;
     })
     .catch((error) => {

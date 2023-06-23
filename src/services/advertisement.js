@@ -4,7 +4,6 @@ import getUser from "../utils/utils";
 const id = getUser()?.id;
 
 export const createAdvertisement = (advertisement) => {
-  console.log(advertisement);
   return axiosInstance
     .post(`/advertisements/`, advertisement)
     .then((res) => {
@@ -23,7 +22,6 @@ export const getUserAdvertisements = ({ currentPage }) => {
       return res.data;
     })
     .catch((error) => {
-      console.log("first");
       console.error(error);
       return error;
     });

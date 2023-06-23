@@ -7,29 +7,29 @@ export default function Table() {
   const [totalPages, setTotalPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: users, isLoading } = useQuery(["proposals"], () => {
-    return getAllUsers({ currentPage })
-      .then((res) => {
-        console.log(res, "aebni");
-        setTotalPages(Math.ceil(res.count / 6));
-        return res;
-      })
-      .catch((error) => {
-        return error;
-      });
-  });
+  const { data: users, isLoading } = useQuery(
+    ["admin_proposals", currentPage],
+    () => {
+      return getAllUsers({ currentPage })
+        .then((res) => {
+          setTotalPages(Math.ceil(res.count / 6));
+          return res;
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+    [currentPage]
+  );
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log(users);
   const mutation = useMutation({
     mutationFn: ([user_id, isBlocked]) => {
       return changeUSerState(user_id, isBlocked);
     },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
+    onSuccess: () => {},
   });
 
   const handleDeactivate = (event) => {

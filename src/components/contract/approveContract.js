@@ -1,16 +1,16 @@
 import SignatureCanvas from "react-signature-canvas";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { approveContract, getContract } from "../../services/contract";
 import { useState } from "react";
-import { storage } from "../../firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { CircularProgress } from "@material-ui/core";
 
-export default function ApproveContractForm({ photo, title, description }) {
+export default function ApproveContractForm() {
+  const navigate = useNavigate();
   let { contractId } = useParams();
-  const { data: contract } = useQuery(
-    ["contract"],
+  const { data: contract, isLoading } = useQuery(
+    ["contract", contractId],
     () => {
       return getContract(contractId)
         .then((res) => {
@@ -20,9 +20,8 @@ export default function ApproveContractForm({ photo, title, description }) {
           throw new Error(error);
         });
     },
-    { contractId }
+    [contractId]
   );
-
   console.log(contract);
 
   const mutation = useMutation({
@@ -30,27 +29,17 @@ export default function ApproveContractForm({ photo, title, description }) {
       return approveContract(contract_id, contract);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      navigate("/UserContract");
     },
   });
 
   const [signatureRef, setSignatureRef] = useState("");
   const [customerSignature, setcustomerSignature] = useState(null);
-  const [customerSignatureImage, setcustomerSignatureImage] = useState(null);
 
   function handleSave(event) {
     event.preventDefault();
     const sign = signatureRef.getTrimmedCanvas().toDataURL();
-    const signToBe = signatureRef.toDataURL();
-    // Convert the data URL to a Blob object
-    const blobBin = atob(signToBe.split(",")[1]);
-    const array = [];
-    for (let i = 0; i < blobBin.length; i++) {
-      array.push(blobBin.charCodeAt(i));
-    }
-    const file = new Blob([new Uint8Array(array)], { type: "image/png" });
     setcustomerSignature(sign);
-    setcustomerSignatureImage(file);
   }
 
   function handleClear(event) {
@@ -59,35 +48,8 @@ export default function ApproveContractForm({ photo, title, description }) {
     setcustomerSignature(null);
   }
 
-  const uploadImage = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (customerSignatureImage == null) return;
-    const imageRef = ref(
-      storage,
-      `Advertisement/signatures/` + `${Date.now()}`
-    );
-
-    uploadBytes(imageRef, customerSignatureImage).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        handleSubmit(url);
-        alert("Image Uploaded");
-      });
-    });
-  };
-
-  const handleSubmit = (url) => {
-    console.log({
-      total_tax: contract?.total_tax,
-      gross_total_fee: contract?.gross_total_fee,
-      net_free: contract?.net_free,
-      proposal_id: contract?.proposal_id.id,
-      agency_signature: contract?.agency_signature,
-      customer_signature: url,
-      media_agency_id: contract?.media_agency_id.id,
-      user_id: contract?.user_id.id,
-    });
-
     mutation.mutate([
       contract?.id,
       {
@@ -104,7 +66,7 @@ export default function ApproveContractForm({ photo, title, description }) {
   };
 
   return (
-    <form onSubmit={uploadImage}>
+    <form onSubmit={handleSubmit}>
       <div className="container mx-auto py-10 px-8">
         <div className="bg-white shadow-md rounded p-8" id="contract">
           <h1 className="text-3xl font-semibold mb-4">
@@ -170,14 +132,12 @@ export default function ApproveContractForm({ photo, title, description }) {
               <p className="font-semibold">Owner:</p>
 
               {contract?.agency_signature ? (
-                -(
-                  <img
-                    class="w-auto h-16"
-                    src={contract?.agency_signature}
-                    alt=""
-                    loading="lazy"
-                  />
-                )
+                <img
+                  class="w-auto h-16"
+                  src={contract?.agency_signature}
+                  alt=""
+                  loading="lazy"
+                />
               ) : (
                 <p>______________________________</p>
               )}
@@ -220,11 +180,13 @@ export default function ApproveContractForm({ photo, title, description }) {
             </div>
           </div>
           <div>
+            {}
             <button
               type="submit"
               class="flex cursor-pointer items-center justify-center gap-2 rounded bg-blue-700 py-2 px-20 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+              disabled={isLoading}
             >
-              Approve Contract
+              {isLoading ? <CircularProgress /> : "Approve Contract"}
             </button>
           </div>
         </div>

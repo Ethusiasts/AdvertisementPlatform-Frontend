@@ -6,16 +6,12 @@ import { getProposal } from "../../services/proposal";
 import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { createContract } from "../../services/contract";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getUser from "../../utils/utils";
 
-export default function BillboardCreateContractForm({
-  photo,
-  title,
-  description,
-}) {
+export default function BillboardCreateContractForm() {
+  const navigate = useNavigate();
   const { proposalId } = useParams();
-  console.log(proposalId);
   const { data: proposal, isLoading } = useQuery(
     ["proposals"],
     () => {
@@ -29,35 +25,21 @@ export default function BillboardCreateContractForm({
     },
     { proposalId }
   );
-  console.log(proposal);
   const mutation = useMutation({
     mutationFn: (contract) => {
       return createContract(contract);
     },
     onSuccess: () => {
-      alert("successfully posted");
+      return navigate("/BillboardContract");
     },
   });
 
   const [signatureRef, setSignatureRef] = useState("");
   const [mediaAgencySignature, setmediaAgencySignature] = useState(null);
-  const [mediaAgencySignatureImage, setmediaAgencySignatureImage] =
-    useState(null);
-
   function handleSave(event) {
     event.preventDefault();
     const sign = signatureRef.getTrimmedCanvas().toDataURL();
-    const signToBe = signatureRef.toDataURL();
-
-    // Convert the data URL to a Blob object
-    const blobBin = atob(signToBe.split(",")[1]);
-    const array = [];
-    for (let i = 0; i < blobBin.length; i++) {
-      array.push(blobBin.charCodeAt(i));
-    }
-    const file = new Blob([new Uint8Array(array)], { type: "image/png" });
     setmediaAgencySignature(sign);
-    setmediaAgencySignatureImage(file);
   }
 
   function handleClear(event) {
@@ -66,38 +48,20 @@ export default function BillboardCreateContractForm({
     setmediaAgencySignature(null);
   }
 
-  const uploadImage = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (mediaAgencySignatureImage == null) return;
-    const imageRef = ref(
-      storage,
-      `Advertisement/signatures/` + `${Date.now()}`
-    );
-
-    uploadBytes(imageRef, mediaAgencySignatureImage).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        handleSubmit(url);
-        alert("Image Uploaded");
-      });
-    });
-  };
-
-  const handleSubmit = (url) => {
     mutation.mutate({
       total_tax: String((proposal?.total_price * 0.15)?.toFixed(2)),
       gross_total_fee: String((proposal?.total_price * 1)?.toFixed(2)),
       net_free: String((proposal?.total_price * 0.85)?.toFixed(2)),
       proposal_id: proposalId,
-      agency_signature: url,
-      media_agency_id:
-        proposal?.billboard_id?.media_agency_id ||
-        proposal?.agency_id?.media_agency_id,
-      user_id: getUser()?.id,
+      agency_signature: mediaAgencySignature,
+      media_agency_id: getUser()?.id,
+      user_id: proposal?.advertisement_id?.user_id,
     });
   };
   return (
-    <form onSubmit={uploadImage}>
+    <form onSubmit={handleSubmit}>
       <div className="container mx-auto py-5 px-8">
         <div className="bg-white shadow-md rounded p-8" id="contract">
           <h1 className="text-3xl font-semibold mb-4">
@@ -156,7 +120,6 @@ export default function BillboardCreateContractForm({
             </div>
             <div className="flex justify-start items-center w-1/2 gap-5">
               <p className="font-semibold">Owner:</p>
-
               {mediaAgencySignature ? (
                 <img
                   class="w-auto h-16"

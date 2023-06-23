@@ -9,6 +9,8 @@ export default function ProfilePictureForm() {
   const profileImg = useContext(ImgContext);
 
   const handleImageChange = (event) => {
+    toast.success("Uploading");
+
     setImage(event.target.files[0]);
     uploadImage();
   };
@@ -24,12 +26,11 @@ export default function ProfilePictureForm() {
       `images/` + `${Date.now()}` + `${image.name}`
     );
 
-    console.log("dfasd");
-    console.log(image);
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         profileImg.setImgUrl(url);
         handleSubmit(url);
+        toast.success("Image uploaded successfully");
       });
     });
   };

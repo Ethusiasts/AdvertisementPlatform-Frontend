@@ -88,7 +88,6 @@ export default function CreateBillboardAdForm({ photo, title, description }) {
                 toast.success("Image Passed Profanity Test");
                 return handleSubmit(url);
               } else {
-                setImage("");
                 setIsLoading(false);
                 toast.error("Image and Profanity Test Do Not Match");
                 return;

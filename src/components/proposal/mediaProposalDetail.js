@@ -11,7 +11,15 @@ export default function MediaProposalPopup({
   advertisement,
   media,
 }) {
-  console.log(name, description, total_price, approved);
+  console.log(
+    id,
+    name,
+    description,
+    total_price,
+    approved,
+    advertisement,
+    media
+  );
   return (
     <div class="flex items-center justify-center" style={{ width: "50rem" }}>
       {/* <div class="absolute inset-0 bg-gray-900 opacity-75"></div> */}
@@ -66,7 +74,19 @@ export default function MediaProposalPopup({
               Status:
             </label>
             <span id="proposal-status" class="text-gray-800">
-              {approved}
+              {approved === 2 ? (
+                <p className="inline-flex rounded-full bg-green-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-green-500">
+                  Approved
+                </p>
+              ) : approved === 1 ? (
+                <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
+                  Pending
+                </p>
+              ) : (
+                <p className="inline-flex rounded-full bg-red-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-red-500">
+                  Rejected
+                </p>
+              )}
             </span>
           </div>
         </div>

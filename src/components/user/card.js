@@ -5,7 +5,6 @@ export default function Card() {
   const { data: stat, isLoading } = useQuery(["stats"], () => {
     return getUserStats()
       .then((res) => {
-        console.log(res.data);
         return res.data;
       })
       .catch((error) => {

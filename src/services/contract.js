@@ -3,7 +3,6 @@ import getUser from "../utils/utils";
 
 const id = getUser()?.id;
 export const createContract = (contract) => {
-  console.log(contract);
   return axiosInstance
     .post(`/contracts/`, contract)
     .then((res) => {
@@ -16,7 +15,6 @@ export const createContract = (contract) => {
 };
 
 export const approveContract = (contract_id, contract) => {
-  console.log(contract);
   return axiosInstance
     .put(`/contracts/${contract_id}`, contract)
     .then((res) => {
@@ -66,7 +64,6 @@ export const getContract = (contractId) => {
   return axiosInstance
     .get(`/contracts/${contractId}`)
     .then((res) => {
-      console.log(res);
       return res.data;
     })
     .catch((error) => {

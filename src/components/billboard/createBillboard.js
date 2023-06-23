@@ -9,7 +9,11 @@ import getUser from "../../utils/utils";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
-import { CircularProgress } from "@material-ui/core";
+import {
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+} from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateBillboardForm() {
@@ -38,6 +42,7 @@ export default function CreateBillboardForm() {
   const [height, setHeight] = useState(null);
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
+  const [isAdult, setIsAdult] = useState(false);
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -71,22 +76,10 @@ export default function CreateBillboardForm() {
   const handleProductionFeeChange = (event) => {
     setproduction_fee_per_square_feet(event.target.value);
   };
-  const handleSubmit = (url) => {
-    mutation.mutate({
-      daily_rate_per_sq: daily_rate_per_square_feet,
-      latitude: location.lat,
-      longitude: location.lng,
-      image: image,
-      file: url,
-      width: width,
-      height: height,
-      production: production_fee_per_square_feet,
-      status: "Free",
-      description: description,
-      media_agency_id: id,
-    });
-  };
 
+  const handleIsAdultChange = (event) => {
+    setIsAdult(event.target.checked);
+  };
   const uploadImage = (event) => {
     handleOpen();
     event.preventDefault();
@@ -102,9 +95,7 @@ export default function CreateBillboardForm() {
 
     uploadBytes(imageRef, image)
       .then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          setImage(url);
-          console.log(image);
+        getDownloadURL(snapshot.ref).then((firstUrl) => {
           if (ownerShipImage == null) {
             toast.error("Please Upload your Ownership Credentials!");
             handleClose();
@@ -120,20 +111,16 @@ export default function CreateBillboardForm() {
           uploadBytes(ownerShipImageRef, ownerShipImage)
             .then((snapshot) => {
               getDownloadURL(snapshot.ref).then((url) => {
-                console.log(url);
-                handleSubmit(url);
-                alert("Image Uploaded");
+                handleSubmit(firstUrl, url);
               });
             })
             .catch((error) => {
-              console.log(error);
               handleClose();
               toast.error("Image not successfully uploaded!!");
             });
         });
       })
       .catch((error) => {
-        console.log(error);
         handleClose();
         toast.error("Image not successfully uploaded!!");
       });
@@ -146,9 +133,24 @@ export default function CreateBillboardForm() {
     setOpen(false);
   };
   const handleOpen = () => {
-    console.log("Dfsd");
-
     setOpen(true);
+  };
+
+  const handleSubmit = (firstUrl, url) => {
+    mutation.mutate({
+      daily_rate_per_sq: daily_rate_per_square_feet,
+      latitude: location.lat,
+      longitude: location.lng,
+      image: firstUrl,
+      file: url,
+      width: width,
+      height: height,
+      production: production_fee_per_square_feet,
+      status: "Free",
+      adult_content: isAdult,
+      description: description,
+      media_agency_id: id,
+    });
   };
 
   return (
@@ -334,6 +336,22 @@ export default function CreateBillboardForm() {
                 </div>
               </div>
             </div>
+          </div>
+          <div class="mb-2">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isAdult}
+                  onChange={handleIsAdultChange}
+                  required
+                />
+              }
+              label={
+                <span style={{ color: isAdult ? "red" : "inherit" }}>
+                  Allow Adult Content
+                </span>
+              }
+            />
           </div>
 
           <div class="flex justify-end">

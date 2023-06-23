@@ -6,13 +6,12 @@ import { getContract } from "../../services/contract";
 
 export default function ContractDetailCard({ photo, title, description }) {
   let { contractId } = useParams();
-  console.log(contractId);
   const {
     data: contract,
     isLoading,
     error,
   } = useQuery(
-    ["contract"],
+    ["contract", contractId],
     () => {
       return getContract(contractId)
         .then((res) => {
@@ -25,7 +24,6 @@ export default function ContractDetailCard({ photo, title, description }) {
     { contractId }
   );
 
-  console.log(contract);
   function downloadPdf() {
     const element = document.getElementById("contract");
     const opt = {
@@ -111,7 +109,7 @@ export default function ContractDetailCard({ photo, title, description }) {
           <div className="flex justify-start items-center w-1/2 gap-5">
             <p className="font-semibold">Client:</p>
 
-            {contract?.customer_signature != "1" ? (
+            {contract?.customer_signature ? (
               <img
                 class="w-auto h-16"
                 src={contract?.customer_signature}

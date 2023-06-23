@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navigation from "../../components/Landing/Navigation";
-import AgenciesImageCard from "../../components/billboardDetails/agenciesImageCard";
 import Description from "../../components/billboardDetails/description";
 import MediaInfo from "../../components/billboardDetails/mediaInfo";
 import Messages from "../../components/billboardDetails/messages";
@@ -14,6 +13,7 @@ import Nearby from "../../components/billboardDetails/nearby";
 import Footer from "../../components/Landing/Footer";
 import { Navigate } from "react-router-dom";
 import Ratings from "../../components/billboardDetails/rating";
+import ImageCard from "../../components/billboardDetails/imageCard";
 
 export default function LandlordsBillboardDetail() {
   let props = useParams();
@@ -92,10 +92,7 @@ export default function LandlordsBillboardDetail() {
 
       <Navigation />
       {/* Images */}
-      <AgenciesImageCard
-        image={billboardDetail?.image}
-        billboard={billboardDetail}
-      />
+      <ImageCard image={billboardDetail?.image} billboard={billboardDetail} />
       {/* Description */}
       <Description description={billboardDetail.description} />
       {/* Media Info */}

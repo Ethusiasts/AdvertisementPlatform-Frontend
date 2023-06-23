@@ -9,17 +9,13 @@ export default function CreateMagazineAdForm({ photo, title, description }) {
     mutationFn: (advertisement) => {
       return createAdvertisement(advertisement);
     },
-    onSuccess: () => {
-      alert("successfully posted");
-    },
+    onSuccess: () => {},
   });
 
   if (mutation.isLoading) {
-    alert("is loading");
   }
 
   if (mutation.isSuccess) {
-    alert("is successfull");
   }
 
   const [advertisementName, setAdvertisementName] = useState("");
@@ -75,7 +71,6 @@ export default function CreateMagazineAdForm({ photo, title, description }) {
       getDownloadURL(snapshot.ref).then((url) => {
         // console.log(url)
         handleSubmit(url);
-        alert("Image Uploaded");
       });
     });
   };

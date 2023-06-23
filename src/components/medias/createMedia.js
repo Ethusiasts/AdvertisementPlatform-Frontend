@@ -82,7 +82,6 @@ export default function CreateMediaForm() {
         });
       })
       .catch((error) => {
-        console.log(error);
         handleClose();
         toast.error("Image not successfully uploaded!!");
       });
@@ -95,8 +94,6 @@ export default function CreateMediaForm() {
     setOpen(false);
   };
   const handleOpen = () => {
-    console.log("Dfsd");
-
     setOpen(true);
   };
 

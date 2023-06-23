@@ -1,4 +1,4 @@
-import Header from "../../components/billboards/header";
+import Header from "../../components/mediaAgency/header";
 import ContractDetailCard from "../../components/contract/contractDetail";
 import SideBar from "../../components/mediaAgency/sidebar";
 export default function MediaContractDetail() {

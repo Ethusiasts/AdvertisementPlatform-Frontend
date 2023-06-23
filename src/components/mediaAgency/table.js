@@ -27,7 +27,6 @@ export default function Table() {
 
   const mutation = useMutation({
     mutationFn: (agencyId) => {
-      console.log(agencyId);
       return deleteAgency({ agencyId })
         .then((res) => {
           refetch();
@@ -42,7 +41,6 @@ export default function Table() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log(agencies);
   function handleDelete(event) {
     if (window.confirm("Are you sure you want to delete?")) {
       const id = event.currentTarget.dataset.id; // Read the id from the data attribute

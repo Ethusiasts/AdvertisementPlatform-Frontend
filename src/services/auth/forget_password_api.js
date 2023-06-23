@@ -4,7 +4,6 @@ export const forgetPassword = (body) => {
   // const body = {
   //   email: email,
   // };
-  console.log(body);
   return axiosInstance
     .post("/auth/forgot-password", body)
     .then((res) => {

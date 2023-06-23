@@ -18,31 +18,32 @@ export default function SignInForm() {
   const { mutate, isLoading } = useMutation(signIn, {
     onSuccess: async (data) => {
       if (data.status === 200) {
-        toast.success(data.message);
+        // toast.success(data.message);
 
         const cred = jwt_decode(data.token);
 
-        setCookie("user", data.token, cred.exp);
-        data.firstTimeLogin
-          ? setTimeout(() => {
-              if (cred.role === "customer") {
-                navigate("/userstepper");
-              } else {
-                navigate("/mediaAgencyStepper");
-              }
-            }, 3000)
-          : setTimeout(() => {
-              getUserStepper(cred.id);
-              if (cred.role === "customer") {
-                navigate("/search");
-              } else if (cred.role === "landowner") {
-                navigate("/BillboardDashboard");
-              } else {
-                navigate("/MediaDashboard");
-              }
-            }, 3000);
+        await setCookie("user", data.token, cred.exp);
+        if (data.firstTimeLogin) {
+          if (cred.role === "customer") {
+            navigate("/userStepper");
+          } else {
+            navigate("/mediaAgencyStepper");
+          }
+        } else {
+          await getUserStepper(cred.id);
+          if (cred.role === "customer") {
+            navigate("/search");
+          } else if (cred.role === "landowner") {
+            navigate("/BillboardDashboard");
+          } else if (cred.role === "admin") {
+            navigate("/AdminDashboard");
+          } else if (cred.role === "Employee") {
+            navigate("/EmployeeDashboard");
+          } else {
+            navigate("/MediaDashboard");
+          }
+        }
       } else {
-        console.log(data);
         toast.error(data.response?.data?.message);
       }
     },
