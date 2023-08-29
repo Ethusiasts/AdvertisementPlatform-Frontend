@@ -1,6 +1,1 @@
 ![Screenshot 2023-06-11 224331](https://github.com/Ethusiasts/AdvertisementPlatform-Frontend/assets/61549951/77584eba-af6a-4ff1-aa84-47dc6e4681b2)
-![Screenshot 2023-06-11 231214](https://github.com/Ethusiasts/AdvertisementPlatform-Frontend/assets/61549951/a337d3aa-989d-4cc3-a564-8eab602539ff)
-![Screenshot 2023-06-11 230244](https://github.com/Ethusiasts/AdvertisementPlatform-Frontend/assets/61549951/28042bbd-0ef3-45f3-97fc-af43352c3083)
-![Screenshot 2023-06-11 225859](https://github.com/Ethusiasts/AdvertisementPlatform-Frontend/assets/61549951/669071f4-6982-4bd8-b91f-ef9e07ddab4a)
-![Screenshot 2023-06-11 225744](https://github.com/Ethusiasts/AdvertisementPlatform-Frontend/assets/61549951/a56d45c2-9d33-4862-97d6-2855285a6970)
-![Screenshot 2023-06-11 230355](https://github.com/Ethusiasts/AdvertisementPlatform-Frontend/assets/61549951/daac9949-9a2f-4494-bc04-fe53e1b885ee)
